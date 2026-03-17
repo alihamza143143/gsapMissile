@@ -1,0 +1,652 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monobore Frac Missile System - Assembly</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===== HERO / INTRO ===== -->
+  <section id="hero" class="hero-section">
+    <!-- Particle canvas background -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- Grid overlay -->
+    <div class="hero-grid-overlay" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <p class="hero-brand">FLX ENERGY SERVICES</p>
+      <p class="hero-eyebrow">Precision Engineered</p>
+      <h1 class="glitch-text" data-text="Large Bore Missile System">Large Bore<br>Missile System</h1>
+      <p class="hero-subtitle">Scroll to assemble</p>
+
+      <!-- Stats bar -->
+      <div class="hero-stats" aria-label="Key specifications">
+        <div class="hero-stat">
+          <span class="hero-stat-value">15,000</span>
+          <span class="hero-stat-label">MAX PSI</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">135+</span>
+          <span class="hero-stat-label">BPM RATE</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">4 HR</span>
+          <span class="hero-stat-label">RIG UP</span>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">API 6A</span>
+          <span class="hero-stat-label">CERTIFIED</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-indicator" aria-hidden="true">
+      <span class="scroll-dot"></span>
+      <span class="scroll-text">SCROLL TO EXPLORE</span>
+    </div>
+  </section>
+
+  <!-- ===== ASSEMBLY VIEWPORT (pinned during scroll) ===== -->
+  <section id="assembly-viewport" class="assembly-section">
+
+    <!-- Scanline overlay -->
+    <div class="scanline-overlay" aria-hidden="true"></div>
+
+    <!-- Animated gradient border -->
+    <div class="viewport-glow-border" aria-hidden="true"></div>
+
+    <!-- HUD Callout overlays — positioned via CSS, animated via GSAP -->
+    <div id="hud-callouts" class="hud-callouts">
+      <!-- Stage 1: Pipe Formation -->
+      <div class="hud-callout hud-callout-left" id="callout-stage1" aria-hidden="true">
+        <div class="hud-line"></div>
+        <div class="hud-box">
+          <span class="hud-label">MODULAR BODY</span>
+          <span class="hud-detail">3-Section Design &bull; 7" High-Pressure Bore</span>
+        </div>
+      </div>
+
+      <!-- Stage 2: Pump Ports -->
+      <div class="hud-callout hud-callout-top" id="callout-stage2" aria-hidden="true">
+        <div class="hud-line"></div>
+        <div class="hud-box">
+          <span class="hud-label">SPLIT-STREAM PORTS</span>
+          <span class="hud-detail">Sand-Laden &amp; Clean Fluid Separation</span>
+        </div>
+      </div>
+
+      <!-- Stage 3: Valves -->
+      <div class="hud-callout hud-callout-right" id="callout-stage3" aria-hidden="true">
+        <div class="hud-line"></div>
+        <div class="hud-box">
+          <span class="hud-label">API 6A FLANGES</span>
+          <span class="hud-detail">DC-15 Connections &bull; Zero Hammer Unions</span>
+        </div>
+      </div>
+
+      <!-- Stage 4: Skid Frame -->
+      <div class="hud-callout hud-callout-bottom" id="callout-stage4" aria-hidden="true">
+        <div class="hud-line"></div>
+        <div class="hud-box">
+          <span class="hud-label">RAPID DEPLOY SKID</span>
+          <span class="hud-detail">4-Pump 5-Skid Assembly &bull; Modular Config</span>
+        </div>
+      </div>
+
+      <!-- Stage 5: Hoses -->
+      <div class="hud-callout hud-callout-top-right" id="callout-stage5" aria-hidden="true">
+        <div class="hud-line"></div>
+        <div class="hud-box">
+          <span class="hud-label">HYDRAULIC LINES</span>
+          <span class="hud-detail">Dual Low-Pressure Redundancy &bull; 56 Actuators</span>
+        </div>
+      </div>
+
+      <!-- Stage 6: Final Lock -->
+      <div class="hud-callout hud-callout-center" id="callout-stage6" aria-hidden="true">
+        <div class="hud-line"></div>
+        <div class="hud-box hud-box-highlight">
+          <span class="hud-label">SYSTEM LOCKED</span>
+          <span class="hud-detail">15,000 PSI &bull; 135+ BPM &bull; Mission Ready</span>
+        </div>
+      </div>
+    </div>
+
+    <svg id="missile-svg"
+         xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 1200 500"
+         preserveAspectRatio="xMidYMid meet"
+         role="img"
+         aria-label="Monobore Frac Missile System Assembly Diagram">
+
+      <!-- ===== DEFS: Gradients, Patterns, Filters ===== -->
+      <defs>
+        <!-- Steel gradient A (body sections) -->
+        <linearGradient id="steelGradientA" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#4a4e57"/>
+          <stop offset="50%" stop-color="#6b7080"/>
+          <stop offset="100%" stop-color="#555962"/>
+        </linearGradient>
+
+        <!-- Steel gradient B (slightly different angle) -->
+        <linearGradient id="steelGradientB" x1="0%" y1="0%" x2="100%" y2="10%">
+          <stop offset="0%" stop-color="#4d5160"/>
+          <stop offset="50%" stop-color="#6e7385"/>
+          <stop offset="100%" stop-color="#585d68"/>
+        </linearGradient>
+
+        <!-- Dark steel gradient (couplers) -->
+        <linearGradient id="darkSteelGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#3d414a"/>
+          <stop offset="50%" stop-color="#555b66"/>
+          <stop offset="100%" stop-color="#3d414a"/>
+        </linearGradient>
+
+        <!-- Nozzle gradient (darker at tip) -->
+        <linearGradient id="nozzleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#4a4e57"/>
+          <stop offset="100%" stop-color="#333740"/>
+        </linearGradient>
+
+        <!-- Blue accent -->
+        <linearGradient id="greenAccentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#00CC44"/>
+          <stop offset="100%" stop-color="#39FF14"/>
+        </linearGradient>
+
+        <!-- Grid pattern -->
+        <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#3a3f4a" stroke-width="0.5" opacity="0.3"/>
+        </pattern>
+
+        <!-- Pressure glow filter -->
+        <filter id="pressureGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+          <feFlood flood-color="#39FF14" flood-opacity="0.5" result="color"/>
+          <feComposite in="color" in2="blur" operator="in" result="glow"/>
+          <feMerge>
+            <feMergeNode in="glow"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <!-- Green glow filter (final lock stage) -->
+        <filter id="greenGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+          <feFlood flood-color="#39FF14" flood-opacity="0.7" result="color"/>
+          <feComposite in="color" in2="blur" operator="in" result="glow"/>
+          <feMerge>
+            <feMergeNode in="glow"/>
+            <feMergeNode in="glow"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <!-- Drop shadow filter -->
+        <filter id="shadowFilter" x="-10%" y="-10%" width="120%" height="130%">
+          <feDropShadow dx="2" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/>
+        </filter>
+
+        <!-- Label text clip mask -->
+        <clipPath id="labelTextClip">
+          <rect id="label-text-mask" x="520" y="282" width="0" height="24"/>
+        </clipPath>
+      </defs>
+
+      <!-- ===== COMPONENT 1: Background Grid ===== -->
+      <g id="bg-grid">
+        <rect width="1200" height="500" fill="url(#gridPattern)" opacity="0.15"/>
+      </g>
+
+      <!-- ===== COMPONENT 15: Skid Frame / Base ===== -->
+      <g id="skid-frame">
+        <!-- Main rail top -->
+        <rect x="130" y="298" width="940" height="8" rx="2" ry="2"
+              fill="#3d414a" stroke="#2a2d35" stroke-width="1"/>
+        <!-- Main rail bottom -->
+        <rect x="130" y="322" width="940" height="8" rx="2" ry="2"
+              fill="#3d414a" stroke="#2a2d35" stroke-width="1"/>
+        <!-- Cross members -->
+        <rect x="190" y="298" width="6" height="32" fill="#555b66" stroke="#2a2d35" stroke-width="0.5"/>
+        <rect x="350" y="298" width="6" height="32" fill="#555b66" stroke="#2a2d35" stroke-width="0.5"/>
+        <rect x="510" y="298" width="6" height="32" fill="#555b66" stroke="#2a2d35" stroke-width="0.5"/>
+        <rect x="670" y="298" width="6" height="32" fill="#555b66" stroke="#2a2d35" stroke-width="0.5"/>
+        <rect x="830" y="298" width="6" height="32" fill="#555b66" stroke="#2a2d35" stroke-width="0.5"/>
+        <rect x="990" y="298" width="6" height="32" fill="#555b66" stroke="#2a2d35" stroke-width="0.5"/>
+        <!-- Support feet -->
+        <rect x="170" y="330" width="30" height="12" rx="2" ry="2"
+              fill="#4a4e57" stroke="#2a2d35" stroke-width="1"/>
+        <rect x="500" y="330" width="30" height="12" rx="2" ry="2"
+              fill="#4a4e57" stroke="#2a2d35" stroke-width="1"/>
+        <rect x="830" y="330" width="30" height="12" rx="2" ry="2"
+              fill="#4a4e57" stroke="#2a2d35" stroke-width="1"/>
+        <!-- Mounting bolts on feet -->
+        <circle cx="178" cy="336" r="2" fill="#222530" stroke="#6b7080" stroke-width="0.5"/>
+        <circle cx="192" cy="336" r="2" fill="#222530" stroke="#6b7080" stroke-width="0.5"/>
+        <circle cx="508" cy="336" r="2" fill="#222530" stroke="#6b7080" stroke-width="0.5"/>
+        <circle cx="522" cy="336" r="2" fill="#222530" stroke="#6b7080" stroke-width="0.5"/>
+        <circle cx="838" cy="336" r="2" fill="#222530" stroke="#6b7080" stroke-width="0.5"/>
+        <circle cx="852" cy="336" r="2" fill="#222530" stroke="#6b7080" stroke-width="0.5"/>
+      </g>
+
+      <!-- ===== COMPONENT 2: Body Section A (left) ===== -->
+      <g id="body-section-a">
+        <rect x="170" y="220" width="280" height="60" rx="6" ry="6"
+              fill="url(#steelGradientA)" stroke="#2a2d35" stroke-width="1.5"/>
+        <!-- Machining marks -->
+        <line x1="178" y1="238" x2="442" y2="238" stroke="#555b66" stroke-width="0.5" opacity="0.4"/>
+        <line x1="178" y1="250" x2="442" y2="250" stroke="#555b66" stroke-width="0.5" opacity="0.25"/>
+        <line x1="178" y1="262" x2="442" y2="262" stroke="#555b66" stroke-width="0.5" opacity="0.4"/>
+        <!-- Joint line right -->
+        <line x1="450" y1="222" x2="450" y2="278" stroke="#2a2d35" stroke-width="1" opacity="0.6"/>
+      </g>
+
+      <!-- ===== COMPONENT 3: Body Section B (center) ===== -->
+      <g id="body-section-b">
+        <rect x="450" y="220" width="300" height="60"
+              fill="url(#steelGradientB)" stroke="#2a2d35" stroke-width="1.5"/>
+        <!-- Machining marks -->
+        <line x1="455" y1="238" x2="745" y2="238" stroke="#555b66" stroke-width="0.5" opacity="0.4"/>
+        <line x1="455" y1="250" x2="745" y2="250" stroke="#555b66" stroke-width="0.5" opacity="0.25" stroke-dasharray="4,3"/>
+        <line x1="455" y1="262" x2="745" y2="262" stroke="#555b66" stroke-width="0.5" opacity="0.4"/>
+        <!-- Joint lines -->
+        <line x1="450" y1="222" x2="450" y2="278" stroke="#2a2d35" stroke-width="1" opacity="0.6"/>
+        <line x1="750" y1="222" x2="750" y2="278" stroke="#2a2d35" stroke-width="1" opacity="0.6"/>
+      </g>
+
+      <!-- ===== COMPONENT 4: Body Section C (right) ===== -->
+      <g id="body-section-c">
+        <rect x="750" y="220" width="280" height="60" rx="6" ry="6"
+              fill="url(#steelGradientA)" stroke="#2a2d35" stroke-width="1.5"/>
+        <!-- Machining marks -->
+        <line x1="758" y1="238" x2="1022" y2="238" stroke="#555b66" stroke-width="0.5" opacity="0.4"/>
+        <line x1="758" y1="250" x2="1022" y2="250" stroke="#555b66" stroke-width="0.5" opacity="0.25"/>
+        <line x1="758" y1="262" x2="1022" y2="262" stroke="#555b66" stroke-width="0.5" opacity="0.4"/>
+        <!-- Joint line left -->
+        <line x1="750" y1="222" x2="750" y2="278" stroke="#2a2d35" stroke-width="1" opacity="0.6"/>
+      </g>
+
+      <!-- ===== COMPONENT 5: Coupler / Union â€” Front ===== -->
+      <g id="coupler-front">
+        <rect x="130" y="212" width="44" height="76" rx="3" ry="3"
+              fill="url(#darkSteelGradient)" stroke="#222530" stroke-width="2"/>
+        <!-- Threading notches -->
+        <line x1="132" y1="218" x2="172" y2="218" stroke="#6b7080" stroke-width="0.8" opacity="0.5"/>
+        <line x1="132" y1="224" x2="172" y2="224" stroke="#6b7080" stroke-width="0.8" opacity="0.3"/>
+        <line x1="132" y1="276" x2="172" y2="276" stroke="#6b7080" stroke-width="0.8" opacity="0.3"/>
+        <line x1="132" y1="282" x2="172" y2="282" stroke="#6b7080" stroke-width="0.8" opacity="0.5"/>
+        <!-- Center bore -->
+        <circle cx="152" cy="250" r="16" fill="none" stroke="#2a2d35" stroke-width="1" opacity="0.4"/>
+      </g>
+
+      <!-- ===== COMPONENT 6: Coupler / Union â€” Rear ===== -->
+      <g id="coupler-rear">
+        <rect x="1026" y="212" width="44" height="76" rx="3" ry="3"
+              fill="url(#darkSteelGradient)" stroke="#222530" stroke-width="2"/>
+        <!-- Threading notches -->
+        <line x1="1028" y1="218" x2="1068" y2="218" stroke="#6b7080" stroke-width="0.8" opacity="0.5"/>
+        <line x1="1028" y1="224" x2="1068" y2="224" stroke="#6b7080" stroke-width="0.8" opacity="0.3"/>
+        <line x1="1028" y1="276" x2="1068" y2="276" stroke="#6b7080" stroke-width="0.8" opacity="0.3"/>
+        <line x1="1028" y1="282" x2="1068" y2="282" stroke="#6b7080" stroke-width="0.8" opacity="0.5"/>
+        <!-- Center bore -->
+        <circle cx="1048" cy="250" r="16" fill="none" stroke="#2a2d35" stroke-width="1" opacity="0.4"/>
+      </g>
+
+      <!-- ===== COMPONENT 7: Clamp / Collar â€” Front ===== -->
+      <g id="clamp-front">
+        <!-- Top half -->
+        <rect x="135" y="200" width="34" height="12" rx="2" ry="2"
+              fill="#3a4055" stroke="#39FF14" stroke-width="1" opacity="0.9"/>
+        <!-- Bottom half -->
+        <rect x="135" y="288" width="34" height="12" rx="2" ry="2"
+              fill="#3a4055" stroke="#39FF14" stroke-width="1" opacity="0.9"/>
+        <!-- Bolt holes top -->
+        <circle cx="142" cy="206" r="3.5" fill="#222530" stroke="#6b7080" stroke-width="0.5"/>
+        <circle cx="162" cy="206" r="3.5" fill="#222530" stroke="#6b7080" stroke-width="0.5"/>
+        <!-- Bolt holes bottom -->
+        <circle cx="142" cy="294" r="3.5" fill="#222530" stroke="#6b7080" stroke-width="0.5"/>
+        <circle cx="162" cy="294" r="3.5" fill="#222530" stroke="#6b7080" stroke-width="0.5"/>
+      </g>
+
+      <!-- ===== COMPONENT 8: Clamp / Collar â€” Rear ===== -->
+      <g id="clamp-rear">
+        <!-- Top half -->
+        <rect x="1031" y="200" width="34" height="12" rx="2" ry="2"
+              fill="#3a4055" stroke="#39FF14" stroke-width="1" opacity="0.9"/>
+        <!-- Bottom half -->
+        <rect x="1031" y="288" width="34" height="12" rx="2" ry="2"
+              fill="#3a4055" stroke="#39FF14" stroke-width="1" opacity="0.9"/>
+        <!-- Bolt holes top -->
+        <circle cx="1038" cy="206" r="3.5" fill="#222530" stroke="#6b7080" stroke-width="0.5"/>
+        <circle cx="1058" cy="206" r="3.5" fill="#222530" stroke="#6b7080" stroke-width="0.5"/>
+        <!-- Bolt holes bottom -->
+        <circle cx="1038" cy="294" r="3.5" fill="#222530" stroke="#6b7080" stroke-width="0.5"/>
+        <circle cx="1058" cy="294" r="3.5" fill="#222530" stroke="#6b7080" stroke-width="0.5"/>
+      </g>
+
+      <!-- ===== COMPONENT 9: Hose Restraint / Tether Point ===== -->
+      <g id="hose-restraint">
+        <!-- U-bracket -->
+        <path d="M 585,220 L 585,195 Q 600,175 615,195 L 615,220"
+              fill="none" stroke="#4a4e57" stroke-width="4" stroke-linecap="round"/>
+        <!-- Base plate -->
+        <rect x="580" y="216" width="40" height="6" rx="1" ry="1"
+              fill="#3d414a" stroke="#2a2d35" stroke-width="1"/>
+        <!-- Tether ring -->
+        <circle cx="600" cy="180" r="8" fill="none" stroke="#39FF14" stroke-width="2.5"/>
+        <!-- Inner ring detail -->
+        <circle cx="600" cy="180" r="4" fill="none" stroke="#39FF14" stroke-width="1" opacity="0.4"/>
+      </g>
+
+      <!-- ===== COMPONENT 10: Nozzle / End Cap ===== -->
+      <g id="nozzle-endcap">
+        <!-- Tapered body (truncated cone side view) -->
+        <polygon points="1070,220 1130,232 1130,268 1070,280"
+                 fill="url(#nozzleGradient)" stroke="#2a2d35" stroke-width="1.5"/>
+        <!-- Bore opening -->
+        <circle cx="1130" cy="250" r="12" fill="#1a1d24" stroke="#2a2d35" stroke-width="1"/>
+        <circle cx="1130" cy="250" r="6" fill="#0d0f14" stroke="#333740" stroke-width="0.5"/>
+        <!-- Sealing ring -->
+        <line x1="1072" y1="221" x2="1072" y2="279" stroke="#39FF14" stroke-width="1.5" opacity="0.6"/>
+        <!-- Surface detail -->
+        <line x1="1090" y1="228" x2="1090" y2="272" stroke="#555b66" stroke-width="0.5" opacity="0.3"/>
+        <line x1="1110" y1="231" x2="1110" y2="269" stroke="#555b66" stroke-width="0.5" opacity="0.3"/>
+      </g>
+
+      <!-- ===== COMPONENT 11: Port / Fitting 1 ===== -->
+      <g id="port-fitting-1">
+        <!-- Port stem (vertical) -->
+        <rect x="284" y="192" width="12" height="30" rx="2" ry="2"
+              fill="#555b66" stroke="#2a2d35" stroke-width="1"/>
+        <!-- Fitting flange (horizontal) -->
+        <rect x="278" y="188" width="24" height="8" rx="1" ry="1"
+              fill="#4a4e57" stroke="#39FF14" stroke-width="1"/>
+        <!-- Port opening -->
+        <circle cx="290" cy="192" r="3" fill="#1a1d24" stroke="#333740" stroke-width="0.5"/>
+      </g>
+
+      <!-- ===== COMPONENT 12: Port / Fitting 2 ===== -->
+      <g id="port-fitting-2">
+        <!-- Port stem (vertical) -->
+        <rect x="864" y="192" width="12" height="30" rx="2" ry="2"
+              fill="#555b66" stroke="#2a2d35" stroke-width="1"/>
+        <!-- Fitting flange (horizontal) -->
+        <rect x="858" y="188" width="24" height="8" rx="1" ry="1"
+              fill="#4a4e57" stroke="#39FF14" stroke-width="1"/>
+        <!-- Port opening -->
+        <circle cx="870" cy="192" r="3" fill="#1a1d24" stroke="#333740" stroke-width="0.5"/>
+      </g>
+
+      <!-- ===== COMPONENT 16: Hose Connections ===== -->
+      <g id="hose-connections">
+        <!-- Hose 1: Left coupler to port fitting 1 -->
+        <path id="hose-1" d="M 152,212 C 152,175 200,158 240,158 L 278,158 C 286,158 290,168 290,188"
+              fill="none" stroke="#4a4e57" stroke-width="5" stroke-linecap="round"/>
+        <path d="M 152,212 C 152,175 200,158 240,158 L 278,158 C 286,158 290,168 290,188"
+              fill="none" stroke="#555b66" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+        <!-- Hose 2: Port fitting 1 to center tether -->
+        <path id="hose-2" d="M 290,188 C 290,152 340,140 400,140 L 555,140 C 578,140 600,155 600,175"
+              fill="none" stroke="#4a4e57" stroke-width="5" stroke-linecap="round"/>
+        <path d="M 290,188 C 290,152 340,140 400,140 L 555,140 C 578,140 600,155 600,175"
+              fill="none" stroke="#555b66" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+        <!-- Hose 3: Center tether to port fitting 2 -->
+        <path id="hose-3" d="M 600,175 C 600,155 622,140 660,140 L 830,140 C 855,140 870,152 870,188"
+              fill="none" stroke="#4a4e57" stroke-width="5" stroke-linecap="round"/>
+        <path d="M 600,175 C 600,155 622,140 660,140 L 830,140 C 855,140 870,152 870,188"
+              fill="none" stroke="#555b66" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+        <!-- Hose 4: Port fitting 2 to right end / nozzle -->
+        <path id="hose-4" d="M 870,188 C 870,168 878,158 910,158 L 1000,158 C 1030,158 1048,175 1048,212"
+              fill="none" stroke="#4a4e57" stroke-width="5" stroke-linecap="round"/>
+        <path d="M 870,188 C 870,168 878,158 910,158 L 1000,158 C 1030,158 1048,175 1048,212"
+              fill="none" stroke="#555b66" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+        <!-- Connection fittings (green accent nodes) -->
+        <circle class="hose-node" cx="152" cy="212" r="4" fill="#3d414a" stroke="#39FF14" stroke-width="1.5"/>
+        <circle class="hose-node" cx="290" cy="188" r="4" fill="#3d414a" stroke="#39FF14" stroke-width="1.5"/>
+        <circle class="hose-node" cx="600" cy="175" r="4" fill="#3d414a" stroke="#39FF14" stroke-width="1.5"/>
+        <circle class="hose-node" cx="870" cy="188" r="4" fill="#3d414a" stroke="#39FF14" stroke-width="1.5"/>
+        <circle class="hose-node" cx="1048" cy="212" r="4" fill="#3d414a" stroke="#39FF14" stroke-width="1.5"/>
+      </g>
+
+      <!-- ===== COMPONENT 13: Fasteners / Bolts Set ===== -->
+      <g id="fasteners-bolts">
+        <!-- Front coupler bolts (4) -->
+        <g class="bolt-front">
+          <polygon points="142,206 144.5,201.67 139.5,201.67" fill="#888e9a" stroke="#555b66" stroke-width="0.5" transform="translate(0,-6)"/>
+          <polygon points="162,206 164.5,201.67 159.5,201.67" fill="#888e9a" stroke="#555b66" stroke-width="0.5" transform="translate(0,-6)"/>
+          <polygon points="142,294 144.5,298.33 139.5,298.33" fill="#888e9a" stroke="#555b66" stroke-width="0.5" transform="translate(0,6)"/>
+          <polygon points="162,294 164.5,298.33 159.5,298.33" fill="#888e9a" stroke="#555b66" stroke-width="0.5" transform="translate(0,6)"/>
+        </g>
+        <!-- Rear coupler bolts (4) -->
+        <g class="bolt-rear">
+          <polygon points="1038,206 1040.5,201.67 1035.5,201.67" fill="#888e9a" stroke="#555b66" stroke-width="0.5" transform="translate(0,-6)"/>
+          <polygon points="1058,206 1060.5,201.67 1055.5,201.67" fill="#888e9a" stroke="#555b66" stroke-width="0.5" transform="translate(0,-6)"/>
+          <polygon points="1038,294 1040.5,298.33 1035.5,298.33" fill="#888e9a" stroke="#555b66" stroke-width="0.5" transform="translate(0,6)"/>
+          <polygon points="1058,294 1060.5,298.33 1055.5,298.33" fill="#888e9a" stroke="#555b66" stroke-width="0.5" transform="translate(0,6)"/>
+        </g>
+      </g>
+
+      <!-- ===== COMPONENT 14: Label / Markings Plate ===== -->
+      <g id="label-plate">
+        <!-- Plate background -->
+        <rect x="520" y="282" width="160" height="26" rx="2" ry="2"
+              fill="#1a1d24" stroke="#39FF14" stroke-width="0.5" opacity="0.8"/>
+        <!-- Text content (clipped for print-on animation) -->
+        <g clip-path="url(#labelTextClip)">
+          <text x="530" y="295" font-family="Inter, sans-serif" font-size="7"
+                letter-spacing="2" fill="#c0c4cc" font-weight="600">
+            FLX LARGE BORE MISSILE
+          </text>
+          <text x="530" y="304" font-family="Inter, sans-serif" font-size="5.5"
+                letter-spacing="1" fill="#6b7080">
+            P/N: LBM-2024  |  API 6A  |  DC-15
+          </text>
+        </g>
+      </g>
+
+      <!-- ===== COMPONENT 17: Green Glow Points ===== -->
+      <g id="glow-points">
+        <!-- Body joint A-B -->
+        <circle class="glow-dot" cx="450" cy="250" r="3" fill="#39FF14"/>
+        <!-- Body joint B-C -->
+        <circle class="glow-dot" cx="750" cy="250" r="3" fill="#39FF14"/>
+        <!-- Front coupler center -->
+        <circle class="glow-dot" cx="152" cy="250" r="3" fill="#39FF14"/>
+        <!-- Rear coupler center -->
+        <circle class="glow-dot" cx="1048" cy="250" r="3" fill="#39FF14"/>
+        <!-- Port fitting 1 -->
+        <circle class="glow-dot" cx="290" cy="192" r="3" fill="#39FF14"/>
+        <!-- Port fitting 2 -->
+        <circle class="glow-dot" cx="870" cy="192" r="3" fill="#39FF14"/>
+        <!-- Hose tether ring -->
+        <circle class="glow-dot" cx="600" cy="180" r="3" fill="#39FF14"/>
+        <!-- Nozzle seal -->
+        <circle class="glow-dot" cx="1072" cy="250" r="3" fill="#39FF14"/>
+      </g>
+
+    </svg>
+
+    <!-- Stage progress indicator -->
+    <div id="stage-indicator" class="stage-indicator" aria-live="polite"></div>
+
+    <!-- Scroll progress bar -->
+    <div class="progress-track" id="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+      <span class="progress-label" id="progress-label">0%</span>
+    </div>
+
+  </section>
+
+  <!-- ===== CTA SECTION ===== -->
+  <section id="cta-section" class="cta-section">
+    <p class="cta-eyebrow">BUILT FOR THE FIELD</p>
+    <h2>Engineered for <span class="text-accent">Performance</span></h2>
+    <p>The FLX Large Bore Missile System eliminates conventional hammer unions with API 6A-compliant flanged connections. Swift 4-hour rig ups, 15,000 PSI treating pressure, and 135+ BPM flow rates — maximizing pump time and minimizing NPT.</p>
+    <div class="cta-buttons">
+      <a href="https://www.flxenergyservices.com/contact.html" class="cta-button cta-primary">Request a Quote</a>
+      <a href="https://flx-portal.aquilats.com" class="cta-button cta-secondary" target="_blank" rel="noopener">Customer Portal</a>
+    </div>
+  </section>
+
+  <!-- ===== SPECS COUNTER SECTION ===== -->
+  <section id="specs-section" class="specs-section">
+    <p class="section-eyebrow">PERFORMANCE METRICS</p>
+    <h2 class="section-title">By The Numbers</h2>
+    <div class="specs-grid">
+      <div class="spec-card" data-target="15000" data-suffix=" PSI">
+        <div class="spec-icon">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="16" stroke="#39FF14" stroke-width="1.5" opacity="0.3"/>
+            <path d="M20 8 L20 20 L28 26" stroke="#39FF14" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="spec-number" data-count="15000">0</span>
+        <span class="spec-suffix">PSI</span>
+        <span class="spec-label">Max Treating Pressure</span>
+      </div>
+      <div class="spec-card" data-target="135" data-suffix="+">
+        <div class="spec-icon">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="24" width="6" height="10" rx="1" fill="#39FF14" opacity="0.3"/>
+            <rect x="17" y="16" width="6" height="18" rx="1" fill="#39FF14" opacity="0.5"/>
+            <rect x="26" y="8" width="6" height="26" rx="1" fill="#39FF14" opacity="0.8"/>
+          </svg>
+        </div>
+        <span class="spec-number" data-count="135">0</span>
+        <span class="spec-suffix">+ BPM</span>
+        <span class="spec-label">Pumping Rate</span>
+      </div>
+      <div class="spec-card" data-target="4" data-suffix=" HR">
+        <div class="spec-icon">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="14" stroke="#39FF14" stroke-width="1.5" opacity="0.3"/>
+            <circle cx="20" cy="20" r="2" fill="#39FF14"/>
+            <path d="M20 10 L20 20" stroke="#39FF14" stroke-width="2" stroke-linecap="round"/>
+            <path d="M20 20 L26 24" stroke="#39FF14" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="spec-number" data-count="4">0</span>
+        <span class="spec-suffix"> HR</span>
+        <span class="spec-label">Rig Up / Rig Down</span>
+      </div>
+      <div class="spec-card" data-target="56" data-suffix="">
+        <div class="spec-icon">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="12" width="20" height="16" rx="2" stroke="#39FF14" stroke-width="1.5" opacity="0.4"/>
+            <circle cx="16" cy="20" r="3" stroke="#39FF14" stroke-width="1"/>
+            <circle cx="24" cy="20" r="3" stroke="#39FF14" stroke-width="1"/>
+            <path d="M12 30 L28 30" stroke="#39FF14" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="spec-number" data-count="56">0</span>
+        <span class="spec-suffix"> ACTUATORS</span>
+        <span class="spec-label">Electric Butterfly Valves</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ADVANTAGES SECTION ===== -->
+  <section id="advantages-section" class="advantages-section">
+    <p class="section-eyebrow">WHY FLX</p>
+    <h2 class="section-title">Superior By Design</h2>
+    <div class="advantages-grid">
+      <div class="advantage-column advantage-old">
+        <h3 class="advantage-heading">Conventional Systems</h3>
+        <ul class="advantage-list">
+          <li class="advantage-item advantage-negative">
+            <span class="advantage-icon">&#10005;</span>
+            <span>Hammer union connections prone to failure</span>
+          </li>
+          <li class="advantage-item advantage-negative">
+            <span class="advantage-icon">&#10005;</span>
+            <span>Multiple pressure leak points</span>
+          </li>
+          <li class="advantage-item advantage-negative">
+            <span class="advantage-icon">&#10005;</span>
+            <span>Extended rig up/down times</span>
+          </li>
+          <li class="advantage-item advantage-negative">
+            <span class="advantage-icon">&#10005;</span>
+            <span>Higher non-productive time (NPT)</span>
+          </li>
+          <li class="advantage-item advantage-negative">
+            <span class="advantage-icon">&#10005;</span>
+            <span>Manual valve operation</span>
+          </li>
+        </ul>
+      </div>
+      <div class="advantage-divider">
+        <span class="vs-badge">VS</span>
+      </div>
+      <div class="advantage-column advantage-new">
+        <h3 class="advantage-heading advantage-heading-accent">FLX Large Bore System</h3>
+        <ul class="advantage-list">
+          <li class="advantage-item advantage-positive">
+            <span class="advantage-icon">&#10003;</span>
+            <span>API 6A flanged DC-15 connections</span>
+          </li>
+          <li class="advantage-item advantage-positive">
+            <span class="advantage-icon">&#10003;</span>
+            <span>Single 7" high-pressure delivery line</span>
+          </li>
+          <li class="advantage-item advantage-positive">
+            <span class="advantage-icon">&#10003;</span>
+            <span>4-hour assembly &amp; disassembly</span>
+          </li>
+          <li class="advantage-item advantage-positive">
+            <span class="advantage-icon">&#10003;</span>
+            <span>Maximized pump time &amp; uptime</span>
+          </li>
+          <li class="advantage-item advantage-positive">
+            <span class="advantage-icon">&#10003;</span>
+            <span>56 electric butterfly valve actuators</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3 class="footer-logo">FLX <span class="text-accent">ENERGY</span> SERVICES</h3>
+        <p class="footer-tagline">Large Bore Missile Systems &bull; Fabrication &bull; Recertification &bull; Iron Rentals</p>
+      </div>
+      <div class="footer-contact">
+        <div class="footer-contact-item">
+          <span class="footer-contact-label">CONTACT</span>
+          <span class="footer-contact-value">Darren Gilbert</span>
+          <span class="footer-contact-value">(832) 998-2074</span>
+        </div>
+        <div class="footer-contact-item">
+          <span class="footer-contact-label">LOCATIONS</span>
+          <span class="footer-contact-value">Odessa / Midland, West Texas</span>
+          <span class="footer-contact-value">Floresville, South Texas</span>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="https://www.flxenergyservices.com" target="_blank" rel="noopener">flxenergyservices.com</a>
+        <a href="https://flx-portal.aquilats.com" target="_blank" rel="noopener">Customer Portal</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2024 FLX Energy Services. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/animation.js"></script>
+
+</body>
+</html>
