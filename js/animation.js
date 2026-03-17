@@ -8,15 +8,21 @@ gsap.registerPlugin(ScrollTrigger);
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ===== iOS Safari viewport fix =====
+  // ===== iOS Safari viewport fix (debounced) =====
   function setVH() {
     document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
   }
   setVH();
-  window.addEventListener('resize', setVH);
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(setVH, 150);
+  }, { passive: true });
 
   // ===== CONFIG =====
   const isMobile = window.innerWidth < 768;
+  const isSmallMobile = window.innerWidth < 400;
   const TOTAL_SCROLL = isMobile ? '250vh' : '400vh';
   const SCRUB_SMOOTHING = isMobile ? 0.5 : 0.8;
 
@@ -30,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas.getContext('2d');
     let particles = [];
     let animationId;
-    const PARTICLE_COUNT = isMobile ? 40 : 80;
+    const PARTICLE_COUNT = isSmallMobile ? 20 : isMobile ? 40 : 80;
 
     function resize() {
       canvas.width = canvas.offsetWidth * (window.devicePixelRatio || 1);
@@ -115,9 +121,11 @@ document.addEventListener('DOMContentLoaded', () => {
     init();
     draw();
 
+    let particleResizeTimer;
     window.addEventListener('resize', () => {
-      resize();
-    });
+      clearTimeout(particleResizeTimer);
+      particleResizeTimer = setTimeout(resize, 200);
+    }, { passive: true });
 
     // Pause particles when hero is out of view
     ScrollTrigger.create({
@@ -163,9 +171,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ============================================================
-  //  GPU ACCELERATION
+  //  GPU ACCELERATION (limit on mobile to save VRAM)
   // ============================================================
-  gsap.set('#missile-svg g[id]', {
+  const gpuSelector = isMobile
+    ? '#body-section-a, #body-section-b, #body-section-c, #coupler-front, #coupler-rear, #nozzle-endcap, #skid-frame'
+    : '#missile-svg g[id]';
+  gsap.set(gpuSelector, {
     willChange: 'transform, opacity',
     force3D: true,
   });
@@ -639,10 +650,10 @@ document.addEventListener('DOMContentLoaded', () => {
     start: 'top top',
     end: '+=' + TOTAL_SCROLL,
     onLeave: function() {
-      gsap.set('#missile-svg g[id]', { willChange: 'auto' });
+      gsap.set(gpuSelector, { willChange: 'auto' });
     },
     onEnterBack: function() {
-      gsap.set('#missile-svg g[id]', { willChange: 'transform, opacity' });
+      gsap.set(gpuSelector, { willChange: 'transform, opacity' });
     }
   });
 

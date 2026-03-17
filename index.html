@@ -2,12 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monobore Frac Missile System - Assembly</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>FLX Energy Services — Large Bore Missile System | Interactive Assembly</title>
+  <meta name="description" content="Explore the FLX Large Bore Missile System through an interactive scroll-driven assembly animation. 15,000 PSI, 135+ BPM, API 6A certified hydraulic fracturing equipment.">
+  <meta name="theme-color" content="#0a0c10">
+  <meta name="color-scheme" content="dark">
+
+  <!-- Preconnect to font CDN early -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Preconnect to GSAP CDN -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+  <!-- Critical CSS inlined for LCP -->
+  <style>
+    body{margin:0;background:#0a0c10;color:#c0c4cc;font-family:'Inter',system-ui,sans-serif;overflow-x:hidden}
+    .hero-section{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:linear-gradient(180deg,#0a0c10 0%,#111620 50%,#0a0c10 100%);position:relative;overflow:hidden}
+    .hero-section h1{font-size:clamp(2.2rem,6.5vw,4.5rem);font-weight:800;text-transform:uppercase;color:#e8eaef;line-height:1.05}
+  </style>
+
+  <!-- Main stylesheet — non-blocking via media trick -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Fonts with display=swap for no FOIT -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Preload GSAP (render-blocking script) -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" as="script" crossorigin>
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" as="script" crossorigin>
+
+  <!-- Open Graph for social sharing -->
+  <meta property="og:title" content="FLX Energy Services — Large Bore Missile System">
+  <meta property="og:description" content="Interactive scroll-driven assembly animation. 15,000 PSI, 135+ BPM, API 6A certified.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gsap-missile.vercel.app">
 </head>
 <body>
 
@@ -643,10 +671,22 @@
     </div>
   </footer>
 
-  <!-- ===== SCRIPTS ===== -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/animation.js"></script>
+  <!-- ===== SCRIPTS (defer for faster FCP/LCP) ===== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="js/animation.js" defer></script>
+
+  <!-- Structured data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "FLX Large Bore Missile System",
+    "description": "API 6A certified hydraulic fracturing missile system with 15,000 PSI max treating pressure and 135+ BPM flow rate.",
+    "brand": { "@type": "Brand", "name": "FLX Energy Services" },
+    "manufacturer": { "@type": "Organization", "name": "FLX Energy Services", "url": "https://www.flxenergyservices.com" }
+  }
+  </script>
 
 </body>
 </html>
