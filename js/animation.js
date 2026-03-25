@@ -48,11 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
       return {
         x: Math.random() * canvas.offsetWidth,
         y: Math.random() * canvas.offsetHeight,
-        size: Math.random() * 1.8 + 0.3,
-        speedX: (Math.random() - 0.5) * 0.3,
-        speedY: (Math.random() - 0.5) * 0.15 - 0.1,
-        opacity: Math.random() * 0.5 + 0.1,
+        size: Math.random() * 2.2 + 0.2,
+        speedX: (Math.random() - 0.5) * 0.35,
+        speedY: (Math.random() - 0.5) * 0.18 - 0.12,
+        opacity: Math.random() * 0.6 + 0.08,
         pulse: Math.random() * Math.PI * 2,
+        // Futuristic: some particles are brighter "energy sparks"
+        isSpark: Math.random() > 0.85,
       };
     }
 
@@ -87,28 +89,42 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = `rgba(57, 255, 20, ${alpha})`;
         ctx.fill();
 
-        // Subtle glow
-        if (p.size > 1.2) {
+        // Enhanced glow for all visible particles
+        if (p.size > 0.8) {
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(57, 255, 20, ${alpha * 0.08})`;
+          ctx.arc(p.x, p.y, p.size * 3.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(57, 255, 20, ${alpha * 0.06})`;
+          ctx.fill();
+        }
+
+        // Extra bright energy sparks with larger glow halo
+        if (p.isSpark) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * 6, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(57, 255, 20, ${alpha * 0.04})`;
+          ctx.fill();
+          // White-hot center
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * 0.4, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(200, 255, 200, ${alpha * 0.5})`;
           ctx.fill();
         }
       });
 
-      // Draw subtle connection lines between close particles
+      // Draw connection lines between close particles (enhanced network effect)
       if (!isMobile) {
         for (let i = 0; i < particles.length; i++) {
           for (let j = i + 1; j < particles.length; j++) {
             const dx = particles[i].x - particles[j].x;
             const dy = particles[i].y - particles[j].y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 120) {
+            if (dist < 140) {
+              const lineAlpha = 0.05 * (1 - dist / 140);
               ctx.beginPath();
               ctx.moveTo(particles[i].x, particles[i].y);
               ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.strokeStyle = `rgba(57, 255, 20, ${0.04 * (1 - dist / 120)})`;
-              ctx.lineWidth = 0.5;
+              ctx.strokeStyle = `rgba(57, 255, 20, ${lineAlpha})`;
+              ctx.lineWidth = 0.6;
               ctx.stroke();
             }
           }
@@ -746,15 +762,62 @@ document.addEventListener('DOMContentLoaded', () => {
     start: 'top 80%',
     once: true,
     onEnter: function() {
-      // Subtle pulsing on glow dots
+      // Subtle pulsing on glow dots (enhanced multi-layer)
       gsap.to('.glow-dot', {
-        scale: 1.3,
-        opacity: 0.8,
-        duration: 1.5,
-        stagger: { each: 0.2, repeat: -1, yoyo: true },
+        scale: 1.4,
+        opacity: 0.9,
+        duration: 1.8,
+        stagger: { each: 0.15, repeat: -1, yoyo: true },
+        ease: 'sine.inOut',
+      });
+
+      // Ambient energy pulse on green LED status lights
+      gsap.to('#skid-frame circle[fill="#39FF14"]', {
+        opacity: 0.9,
+        duration: 1.2,
+        stagger: { each: 0.3, repeat: -1, yoyo: true },
         ease: 'sine.inOut',
       });
     }
   });
+
+
+  // ============================================================
+  //  AMBIENT LIGHT SWEEP ON MISSILE (subtle shimmer effect)
+  // ============================================================
+  if (!isMobile) {
+    ScrollTrigger.create({
+      trigger: '#assembly-viewport',
+      start: 'top top',
+      end: '+=' + TOTAL_SCROLL,
+      onEnter: function() {
+        // Subtle continuous ambient shimmer on body sections
+        gsap.to('#energy-scanline', {
+          y: -20,
+          duration: 4,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        });
+
+        gsap.to('#energy-scanline', {
+          opacity: 0.1,
+          duration: 3,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        });
+      },
+      onLeave: function() {
+        gsap.killTweensOf('#energy-scanline');
+      },
+      onEnterBack: function() {
+        gsap.to('#energy-scanline', {
+          y: -20, duration: 4,
+          repeat: -1, yoyo: true, ease: 'sine.inOut',
+        });
+      }
+    });
+  }
 
 });
