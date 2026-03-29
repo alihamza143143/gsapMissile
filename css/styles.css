@@ -315,11 +315,9 @@ body {
   justify-content: center;
   align-items: center;
   background:
-    radial-gradient(ellipse at 50% 40%, rgba(57, 255, 20, 0.04) 0%, transparent 40%),
-    radial-gradient(ellipse at 50% 70%, rgba(57, 255, 20, 0.02) 0%, transparent 35%),
-    radial-gradient(ellipse at 30% 30%, rgba(100, 120, 180, 0.02) 0%, transparent 30%),
-    radial-gradient(ellipse at 70% 30%, rgba(100, 120, 180, 0.015) 0%, transparent 30%),
-    radial-gradient(ellipse at center, #161e2c 0%, #0f1420 35%, #0b0d14 60%, var(--bg-primary) 80%);
+    radial-gradient(ellipse 45% 50% at 50% 35%, rgba(180, 200, 240, 0.05) 0%, transparent 70%),
+    radial-gradient(ellipse at 50% 55%, rgba(57, 255, 20, 0.025) 0%, transparent 40%),
+    radial-gradient(ellipse at center, #161e2c 0%, #0f1420 30%, #0b0d14 55%, var(--bg-primary) 80%);
   position: relative;
   overflow: hidden;
 }
@@ -416,11 +414,15 @@ body {
   max-height: 80vh;
   position: relative;
   z-index: 5;
-  filter:
-    drop-shadow(0 4px 12px rgba(0,0,0,0.4))
-    drop-shadow(0 12px 36px rgba(0,0,0,0.25))
-    drop-shadow(0 0 60px rgba(57, 255, 20, 0.03));
 }
+
+/* CSS glow for green energy elements (replaces heavy SVG filter) */
+.svg-glow {
+  filter: drop-shadow(0 0 2px #39FF14) drop-shadow(0 0 5px rgba(57, 255, 20, 0.4));
+}
+
+/* Tech overlay elements */
+.tech-overlay { pointer-events: none; }
 
 /* ===== HUD CALLOUTS ===== */
 .hud-callouts {
@@ -1106,6 +1108,10 @@ body {
 
   /* Disable glow border animation on mobile (saves GPU) */
   .viewport-glow-border { animation: none; opacity: 0.08; }
+
+  /* Hide tech overlays + disable CSS glow on mobile */
+  .tech-overlay { display: none; }
+  .svg-glow { filter: none; }
 }
 
 /* Mobile portrait */

@@ -349,6 +349,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   tl.to({}, { duration: 5 }, 'exploded');
 
+  // Tech overlays fade in during exploded view (desktop only)
+  if (!isMobile) {
+    tl.to('#holo-wireframe', { opacity: 1, duration: 4, ease: 'power1.inOut' }, 'exploded+=1');
+    tl.to('#dimension-lines', { opacity: 1, duration: 3, ease: 'power1.inOut' }, 'exploded+=2');
+    tl.to('#data-readouts', { opacity: 1, duration: 3, ease: 'power1.inOut' }, 'exploded+=3');
+  }
+
 
   // ============================================================
   //  STAGE 1 — PIPE FORMATION (5–15 units)
@@ -462,6 +469,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // HUD Callout — Stage 4
   tl.to('#callout-stage4', { opacity: 1, y: 0, duration: 2, ease: 'power2.out' }, 'stage4+=2');
   tl.to('#callout-stage4', { opacity: 0, y: 10, duration: 1.5, ease: 'power1.in' }, 'stage4+=7');
+
+  // Fade out tech overlays as assembly completes
+  if (!isMobile) {
+    tl.to('#holo-wireframe', { opacity: 0, duration: 6, ease: 'power1.inOut' }, 'stage4');
+    tl.to('#dimension-lines', { opacity: 0, duration: 5, ease: 'power1.inOut' }, 'stage4+=2');
+    tl.to('#data-readouts', { opacity: 0, duration: 5, ease: 'power1.inOut' }, 'stage4+=3');
+  }
 
 
   // ============================================================
