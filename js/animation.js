@@ -279,11 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // HUD callouts start hidden
   gsap.set('.hud-callout', { opacity: 0, y: 15 });
 
-  // Tech overlays start hidden
-  gsap.set('#holo-wireframe', { opacity: 0 });
-  gsap.set('#dimension-lines', { opacity: 0 });
-  gsap.set('#data-readouts', { opacity: 0 });
-
 
   // ============================================================
   //  STAGE NAMES & PROGRESS TRACKING
@@ -353,13 +348,6 @@ document.addEventListener('DOMContentLoaded', () => {
   );
 
   tl.to({}, { duration: 5 }, 'exploded');
-
-  // Tech overlays fade in during exploded view
-  if (!isMobile) {
-    tl.to('#holo-wireframe', { opacity: 1, duration: 4, ease: 'power1.inOut' }, 'exploded+=1');
-    tl.to('#dimension-lines', { opacity: 1, duration: 3, ease: 'power1.inOut' }, 'exploded+=2');
-    tl.to('#data-readouts', { opacity: 1, duration: 3, ease: 'power1.inOut' }, 'exploded+=3');
-  }
 
 
   // ============================================================
@@ -474,13 +462,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // HUD Callout — Stage 4
   tl.to('#callout-stage4', { opacity: 1, y: 0, duration: 2, ease: 'power2.out' }, 'stage4+=2');
   tl.to('#callout-stage4', { opacity: 0, y: 10, duration: 1.5, ease: 'power1.in' }, 'stage4+=7');
-
-  // Fade out tech overlays as assembly comes together
-  if (!isMobile) {
-    tl.to('#holo-wireframe', { opacity: 0, duration: 6, ease: 'power1.inOut' }, 'stage4');
-    tl.to('#dimension-lines', { opacity: 0, duration: 5, ease: 'power1.inOut' }, 'stage4+=2');
-    tl.to('#data-readouts', { opacity: 0, duration: 5, ease: 'power1.inOut' }, 'stage4+=3');
-  }
 
 
   // ============================================================
@@ -790,12 +771,19 @@ document.addEventListener('DOMContentLoaded', () => {
         ease: 'sine.inOut',
       });
 
+      // Ambient energy pulse on green LED status lights
+      gsap.to('#skid-frame circle[fill="#39FF14"]', {
+        opacity: 0.9,
+        duration: 1.2,
+        stagger: { each: 0.3, repeat: -1, yoyo: true },
+        ease: 'sine.inOut',
+      });
     }
   });
 
 
   // ============================================================
-  //  AMBIENT STATUS LED PULSE
+  //  AMBIENT LIGHT SWEEP ON MISSILE (subtle shimmer effect)
   // ============================================================
   if (!isMobile) {
     ScrollTrigger.create({
@@ -803,13 +791,32 @@ document.addEventListener('DOMContentLoaded', () => {
       start: 'top top',
       end: '+=' + TOTAL_SCROLL,
       onEnter: function() {
-        gsap.to('#skid-frame .svg-energy-glow', {
-          opacity: 0.9,
-          duration: 1.5,
-          stagger: { each: 0.3, repeat: -1, yoyo: true },
+        // Subtle continuous ambient shimmer on body sections
+        gsap.to('#energy-scanline', {
+          y: -20,
+          duration: 4,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        });
+
+        gsap.to('#energy-scanline', {
+          opacity: 0.1,
+          duration: 3,
+          repeat: -1,
+          yoyo: true,
           ease: 'sine.inOut',
         });
       },
+      onLeave: function() {
+        gsap.killTweensOf('#energy-scanline');
+      },
+      onEnterBack: function() {
+        gsap.to('#energy-scanline', {
+          y: -20, duration: 4,
+          repeat: -1, yoyo: true, ease: 'sine.inOut',
+        });
+      }
     });
   }
 

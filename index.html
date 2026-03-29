@@ -145,173 +145,241 @@
       </div>
     </div>
 
+    <svg id="missile-svg"
+         xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 1200 500"
+         preserveAspectRatio="xMidYMid meet"
+         role="img"
+         aria-label="Monobore Frac Missile System Assembly Diagram">
 
+      <!-- ===== DEFS: Advanced Gradients, Patterns, Filters ===== -->
       <defs>
-        <!-- ============ COMPOSITE CYLINDER GRADIENT (bakes in specular + rim + AO) ============ -->
+        <!-- === METALLIC BODY GRADIENTS === -->
+        <!-- Steel gradient A — advanced cylindrical with rim light + ambient occlusion -->
         <linearGradient id="steelGradientA" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#b8c0d0" stop-opacity="0.6"/><!-- top rim light -->
-          <stop offset="2%" stop-color="#e0e8f8"/><!-- bright top edge -->
-          <stop offset="5%" stop-color="#a0a8b8"/>
-          <stop offset="22%" stop-color="#ccd4e4"/><!-- specular band -->
-          <stop offset="30%" stop-color="#d8e0f0"/><!-- specular peak -->
-          <stop offset="35%" stop-color="#b8c0d0"/>
-          <stop offset="50%" stop-color="#7a8294"/><!-- midtone -->
-          <stop offset="68%" stop-color="#4a5060"/><!-- shadow zone -->
-          <stop offset="82%" stop-color="#353a44"/>
-          <stop offset="93%" stop-color="#2a2e38"/><!-- dark underside -->
-          <stop offset="97%" stop-color="#555d6d"/><!-- bottom rim bounce -->
-          <stop offset="100%" stop-color="#39FF14" stop-opacity="0.08"/><!-- green ground bounce -->
-        </linearGradient>
-
-        <linearGradient id="steelGradientB" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#b5bdcc" stop-opacity="0.6"/>
-          <stop offset="2%" stop-color="#dce4f4"/>
-          <stop offset="5%" stop-color="#9da5b5"/>
-          <stop offset="22%" stop-color="#c8d0e0"/>
-          <stop offset="30%" stop-color="#d4dcea"/>
-          <stop offset="35%" stop-color="#b5bdc8"/>
-          <stop offset="50%" stop-color="#778090"/>
-          <stop offset="68%" stop-color="#475060"/>
-          <stop offset="82%" stop-color="#323842"/>
-          <stop offset="93%" stop-color="#282c36"/>
-          <stop offset="97%" stop-color="#525a6a"/>
-          <stop offset="100%" stop-color="#39FF14" stop-opacity="0.08"/>
-        </linearGradient>
-
-        <!-- Cylinder end cap gradient (darker face showing depth) -->
-        <linearGradient id="endCapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stop-color="#8a95a8"/>
-          <stop offset="30%" stop-color="#6a7280"/>
-          <stop offset="60%" stop-color="#4a5060"/>
-          <stop offset="100%" stop-color="#353a44"/>
+          <stop offset="3%" stop-color="#c8d0e0"/>
+          <stop offset="8%" stop-color="#a8b0c0"/>
+          <stop offset="18%" stop-color="#c0c8d8"/>
+          <stop offset="30%" stop-color="#d4dae8"/>
+          <stop offset="38%" stop-color="#b0b8c8"/>
+          <stop offset="48%" stop-color="#8890a0"/>
+          <stop offset="62%" stop-color="#606878"/>
+          <stop offset="78%" stop-color="#454a55"/>
+          <stop offset="90%" stop-color="#353840"/>
+          <stop offset="96%" stop-color="#b0b8c8"/>
+          <stop offset="100%" stop-color="#8a90a0"/>
         </linearGradient>
 
-        <!-- Coupler gradient (heavy machined block) -->
+        <!-- Steel gradient B (center body — slightly different alloy tone) -->
+        <linearGradient id="steelGradientB" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#8892a5"/>
+          <stop offset="3%" stop-color="#c5cddd"/>
+          <stop offset="8%" stop-color="#a5adbe"/>
+          <stop offset="18%" stop-color="#bec6d6"/>
+          <stop offset="30%" stop-color="#d0d8e6"/>
+          <stop offset="38%" stop-color="#adb5c5"/>
+          <stop offset="48%" stop-color="#858d9e"/>
+          <stop offset="62%" stop-color="#5d6575"/>
+          <stop offset="78%" stop-color="#424750"/>
+          <stop offset="90%" stop-color="#32363e"/>
+          <stop offset="96%" stop-color="#adb5c5"/>
+          <stop offset="100%" stop-color="#8790a0"/>
+        </linearGradient>
+
+        <!-- Specular highlight strip — sharp focused reflection band -->
+        <linearGradient id="specularHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="white" stop-opacity="0"/>
+          <stop offset="15%" stop-color="white" stop-opacity="0.04"/>
+          <stop offset="22%" stop-color="white" stop-opacity="0.15"/>
+          <stop offset="28%" stop-color="white" stop-opacity="0.45"/>
+          <stop offset="33%" stop-color="white" stop-opacity="0.18"/>
+          <stop offset="40%" stop-color="white" stop-opacity="0.06"/>
+          <stop offset="55%" stop-color="white" stop-opacity="0"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0"/>
+        </linearGradient>
+
+        <!-- Environment reflection — simulates overhead light source on cylinder -->
+        <linearGradient id="envReflection" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="white" stop-opacity="0.03"/>
+          <stop offset="15%" stop-color="white" stop-opacity="0.08"/>
+          <stop offset="30%" stop-color="white" stop-opacity="0.02"/>
+          <stop offset="50%" stop-color="#39FF14" stop-opacity="0.02"/>
+          <stop offset="70%" stop-color="white" stop-opacity="0.01"/>
+          <stop offset="85%" stop-color="white" stop-opacity="0.06"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0.02"/>
+        </linearGradient>
+
+        <!-- Rim light top (bright edge for 3D pop) -->
+        <linearGradient id="rimLightTop" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#e0e8ff" stop-opacity="0.5"/>
+          <stop offset="4%" stop-color="#c0c8e0" stop-opacity="0.25"/>
+          <stop offset="10%" stop-color="white" stop-opacity="0"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0"/>
+        </linearGradient>
+
+        <!-- Rim light bottom (subtle ground bounce) -->
+        <linearGradient id="rimLightBottom" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="white" stop-opacity="0"/>
+          <stop offset="88%" stop-color="white" stop-opacity="0"/>
+          <stop offset="95%" stop-color="#39FF14" stop-opacity="0.08"/>
+          <stop offset="100%" stop-color="#39FF14" stop-opacity="0.15"/>
+        </linearGradient>
+
+        <!-- Brushed metal texture gradient (subtle horizontal streaks) -->
+        <linearGradient id="brushedMetal" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="white" stop-opacity="0.01"/>
+          <stop offset="10%" stop-color="white" stop-opacity="0.04"/>
+          <stop offset="20%" stop-color="white" stop-opacity="0.01"/>
+          <stop offset="35%" stop-color="white" stop-opacity="0.05"/>
+          <stop offset="50%" stop-color="white" stop-opacity="0.02"/>
+          <stop offset="65%" stop-color="white" stop-opacity="0.04"/>
+          <stop offset="80%" stop-color="white" stop-opacity="0.01"/>
+          <stop offset="90%" stop-color="white" stop-opacity="0.03"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0.01"/>
+        </linearGradient>
+
+        <!-- === COUPLER & FITTING GRADIENTS === -->
+        <!-- Dark steel gradient (couplers) — heavy machined block with edge bevel -->
         <linearGradient id="darkSteelGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#9098a8"/>
-          <stop offset="3%" stop-color="#7a8290"/>
-          <stop offset="15%" stop-color="#555b66"/>
+          <stop offset="0%" stop-color="#8a90a0"/>
+          <stop offset="3%" stop-color="#7a8090"/>
+          <stop offset="10%" stop-color="#555b66"/>
+          <stop offset="25%" stop-color="#484d58"/>
           <stop offset="50%" stop-color="#3a3f48"/>
-          <stop offset="85%" stop-color="#555b66"/>
-          <stop offset="97%" stop-color="#7a8290"/>
-          <stop offset="100%" stop-color="#9098a8"/>
+          <stop offset="75%" stop-color="#484d58"/>
+          <stop offset="90%" stop-color="#555b66"/>
+          <stop offset="97%" stop-color="#7a8090"/>
+          <stop offset="100%" stop-color="#8a90a0"/>
         </linearGradient>
 
+        <!-- Coupler face gradient (horizontal depth) -->
         <linearGradient id="couplerFaceGrad" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stop-color="#2a2e36"/>
-          <stop offset="20%" stop-color="#4a5060"/>
-          <stop offset="50%" stop-color="#555b68"/>
-          <stop offset="80%" stop-color="#4a5060"/>
+          <stop offset="15%" stop-color="#4a5060"/>
+          <stop offset="40%" stop-color="#555b68"/>
+          <stop offset="60%" stop-color="#555b68"/>
+          <stop offset="85%" stop-color="#4a5060"/>
           <stop offset="100%" stop-color="#2a2e36"/>
         </linearGradient>
 
-        <!-- Nozzle gradient -->
+        <!-- Coupler specular highlight -->
+        <linearGradient id="couplerSpecular" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="white" stop-opacity="0.2"/>
+          <stop offset="5%" stop-color="white" stop-opacity="0.05"/>
+          <stop offset="95%" stop-color="white" stop-opacity="0.05"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0.12"/>
+        </linearGradient>
+
+        <!-- Nozzle gradient (3D tapered cone with better metallic feel) -->
         <linearGradient id="nozzleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#c0c8d8"/>
-          <stop offset="5%" stop-color="#a0a8b8"/>
-          <stop offset="25%" stop-color="#8a919c"/>
-          <stop offset="50%" stop-color="#5d6370"/>
-          <stop offset="80%" stop-color="#3d424c"/>
-          <stop offset="95%" stop-color="#555d6d"/>
+          <stop offset="0%" stop-color="#8a95a5"/>
+          <stop offset="5%" stop-color="#c0c8d8"/>
+          <stop offset="18%" stop-color="#a0a8b8"/>
+          <stop offset="35%" stop-color="#7a8290"/>
+          <stop offset="55%" stop-color="#5a6070"/>
+          <stop offset="75%" stop-color="#3d424c"/>
+          <stop offset="92%" stop-color="#555d6d"/>
           <stop offset="100%" stop-color="#7a8290"/>
         </linearGradient>
 
+        <!-- Nozzle axial gradient (depth along taper) -->
         <linearGradient id="nozzleAxialGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="white" stop-opacity="0.1"/>
-          <stop offset="30%" stop-color="white" stop-opacity="0.02"/>
+          <stop offset="0%" stop-color="white" stop-opacity="0.12"/>
+          <stop offset="20%" stop-color="white" stop-opacity="0.03"/>
+          <stop offset="60%" stop-color="black" stop-opacity="0.05"/>
           <stop offset="100%" stop-color="black" stop-opacity="0.2"/>
         </linearGradient>
 
-        <!-- Skid frame -->
-        <linearGradient id="skidFrameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#6a7080"/>
-          <stop offset="15%" stop-color="#555b66"/>
-          <stop offset="50%" stop-color="#3d414a"/>
-          <stop offset="100%" stop-color="#2a2d35"/>
+        <!-- Green accent gradient (futuristic energy) -->
+        <linearGradient id="greenAccentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#00FF66"/>
+          <stop offset="50%" stop-color="#39FF14"/>
+          <stop offset="100%" stop-color="#00CC44"/>
         </linearGradient>
 
-        <!-- Bore inner (deep hole) -->
-        <radialGradient id="boreInnerGrad" cx="50%" cy="42%" r="55%">
-          <stop offset="0%" stop-color="#020304"/>
-          <stop offset="40%" stop-color="#060810"/>
-          <stop offset="70%" stop-color="#0e1018"/>
-          <stop offset="100%" stop-color="#1a1e28"/>
-        </radialGradient>
+        <!-- Skid frame gradient (structural steel with better depth) -->
+        <linearGradient id="skidFrameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#6a7080"/>
+          <stop offset="10%" stop-color="#555b66"/>
+          <stop offset="45%" stop-color="#3d414a"/>
+          <stop offset="90%" stop-color="#2a2d35"/>
+          <stop offset="100%" stop-color="#353840"/>
+        </linearGradient>
 
-        <!-- Bolt chrome -->
-        <linearGradient id="boltGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#d0d8e8"/>
-          <stop offset="30%" stop-color="#a0a8b8"/>
-          <stop offset="60%" stop-color="#808898"/>
+        <!-- Hose gradient (braided rubber with sheen) -->
+        <linearGradient id="hoseGradient" x1="0%" y1="0%" x2="0%" y2="100%" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#606878"/>
+          <stop offset="30%" stop-color="#3a3f48"/>
+          <stop offset="70%" stop-color="#3a3f48"/>
           <stop offset="100%" stop-color="#606878"/>
         </linearGradient>
 
-        <!-- Green accent -->
-        <linearGradient id="greenAccentGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#00FF66"/>
-          <stop offset="100%" stop-color="#39FF14"/>
-        </linearGradient>
-
-        <!-- Cyan tech accent -->
-        <linearGradient id="cyanAccent" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#00ccff" stop-opacity="0"/>
-          <stop offset="50%" stop-color="#00ccff" stop-opacity="0.4"/>
-          <stop offset="100%" stop-color="#00ccff" stop-opacity="0"/>
-        </linearGradient>
-
-        <!-- Vignette gradient -->
-        <radialGradient id="vignetteGrad" cx="50%" cy="50%" r="55%">
-          <stop offset="0%" stop-color="black" stop-opacity="0"/>
-          <stop offset="70%" stop-color="black" stop-opacity="0"/>
-          <stop offset="100%" stop-color="black" stop-opacity="0.4"/>
+        <!-- Bore inner gradient (deeper 3D hole illusion) -->
+        <radialGradient id="boreInnerGrad" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stop-color="#020304"/>
+          <stop offset="30%" stop-color="#050608"/>
+          <stop offset="55%" stop-color="#0a0c10"/>
+          <stop offset="80%" stop-color="#151820"/>
+          <stop offset="100%" stop-color="#1e222c"/>
         </radialGradient>
 
-        <!-- Floor reflection -->
-        <radialGradient id="floorGrad" cx="50%" cy="30%" r="55%">
+        <!-- Bore rim gradient (metallic ring around bore) -->
+        <radialGradient id="boreRimGrad" cx="50%" cy="45%" r="50%">
+          <stop offset="70%" stop-color="transparent"/>
+          <stop offset="85%" stop-color="#3a4050"/>
+          <stop offset="92%" stop-color="#5a6270"/>
+          <stop offset="96%" stop-color="#8090a0"/>
+          <stop offset="100%" stop-color="#5a6270"/>
+        </radialGradient>
+
+        <!-- Bolt metallic gradient (chrome-like) -->
+        <linearGradient id="boltGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#c8d0e0"/>
+          <stop offset="20%" stop-color="#a0a8b8"/>
+          <stop offset="50%" stop-color="#808898"/>
+          <stop offset="80%" stop-color="#a0a8b8"/>
+          <stop offset="100%" stop-color="#606878"/>
+        </linearGradient>
+
+        <!-- === REFLECTIVE FLOOR === -->
+        <linearGradient id="floorReflection" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stop-color="#39FF14" stop-opacity="0.06"/>
-          <stop offset="40%" stop-color="#39FF14" stop-opacity="0.03"/>
-          <stop offset="70%" stop-color="#00ccff" stop-opacity="0.01"/>
-          <stop offset="100%" stop-color="black" stop-opacity="0"/>
-        </radialGradient>
+          <stop offset="30%" stop-color="#39FF14" stop-opacity="0.03"/>
+          <stop offset="100%" stop-color="#39FF14" stop-opacity="0"/>
+        </linearGradient>
 
-        <!-- Holographic grid -->
+        <!-- Floor fade mask -->
+        <linearGradient id="floorFadeMask" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="white" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0"/>
+        </linearGradient>
+
+        <!-- === PATTERNS === -->
+        <!-- Holographic data grid — more detailed -->
         <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
           <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#39FF14" stroke-width="0.3" opacity="0.2"/>
-          <circle cx="0" cy="0" r="1" fill="#39FF14" opacity="0.15"/>
-          <circle cx="40" cy="0" r="1" fill="#39FF14" opacity="0.15"/>
-          <circle cx="0" cy="40" r="1" fill="#39FF14" opacity="0.15"/>
-          <circle cx="40" cy="40" r="1" fill="#39FF14" opacity="0.15"/>
+          <path d="M 20 0 L 20 40" fill="none" stroke="#39FF14" stroke-width="0.15" opacity="0.06"/>
+          <path d="M 0 20 L 40 20" fill="none" stroke="#39FF14" stroke-width="0.15" opacity="0.06"/>
+          <circle cx="0" cy="0" r="1.2" fill="#39FF14" opacity="0.18"/>
+          <circle cx="40" cy="0" r="1.2" fill="#39FF14" opacity="0.18"/>
+          <circle cx="0" cy="40" r="1.2" fill="#39FF14" opacity="0.18"/>
+          <circle cx="40" cy="40" r="1.2" fill="#39FF14" opacity="0.18"/>
+          <circle cx="20" cy="20" r="0.5" fill="#39FF14" opacity="0.08"/>
         </pattern>
 
-        <!-- === FILTERS (consolidated — only 3 filters total) === -->
-        <!-- Single shadow for ALL components (applied to parent group) -->
-        <filter id="shadowFilter" x="-10%" y="-10%" width="120%" height="140%">
-          <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="shadow"/>
-          <feOffset in="shadow" dx="0" dy="5" result="offsetShadow"/>
-          <feFlood flood-color="#000" flood-opacity="0.35" result="color"/>
-          <feComposite in="color" in2="offsetShadow" operator="in" result="finalShadow"/>
-          <feMerge>
-            <feMergeNode in="finalShadow"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
+        <!-- Machining texture pattern (CNC finish) -->
+        <pattern id="machinePattern" width="200" height="6" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="1" x2="200" y2="1" stroke="#8090a0" stroke-width="0.3" opacity="0.15"/>
+          <line x1="0" y1="3" x2="200" y2="3" stroke="#555b66" stroke-width="0.4" opacity="0.2"/>
+          <line x1="0" y1="5" x2="200" y2="5" stroke="#8090a0" stroke-width="0.2" opacity="0.1"/>
+        </pattern>
 
-        <!-- Green glow (used only in stage 6 final lock via GSAP) -->
-        <filter id="greenGlow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
-          <feFlood flood-color="#39FF14" flood-opacity="0.7" result="color"/>
-          <feComposite in="color" in2="blur" operator="in" result="glow"/>
-          <feMerge>
-            <feMergeNode in="glow"/>
-            <feMergeNode in="glow"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
-        </filter>
-
-        <!-- Pressure glow (used on couplers) -->
+        <!-- === FILTERS === -->
+        <!-- Pressure glow filter (enhanced) -->
         <filter id="pressureGlow" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
-          <feFlood flood-color="#39FF14" flood-opacity="0.5" result="color"/>
+          <feFlood flood-color="#39FF14" flood-opacity="0.6" result="color"/>
           <feComposite in="color" in2="blur" operator="in" result="glow"/>
           <feMerge>
             <feMergeNode in="glow"/>
@@ -319,353 +387,651 @@
           </feMerge>
         </filter>
 
-        <!-- Label text clip -->
+        <!-- Green glow filter (final lock stage — multi-layer bloom) -->
+        <filter id="greenGlow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur1"/>
+          <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur2"/>
+          <feFlood flood-color="#39FF14" flood-opacity="0.8" result="color1"/>
+          <feFlood flood-color="#39FF14" flood-opacity="0.4" result="color2"/>
+          <feComposite in="color1" in2="blur1" operator="in" result="glow1"/>
+          <feComposite in="color2" in2="blur2" operator="in" result="glow2"/>
+          <feMerge>
+            <feMergeNode in="glow2"/>
+            <feMergeNode in="glow1"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <!-- Metallic sheen filter — directional studio light -->
+        <filter id="metallicSheen" x="-5%" y="-5%" width="110%" height="110%">
+          <feSpecularLighting in="SourceAlpha" surfaceScale="4" specularConstant="0.8" specularExponent="35" lighting-color="#d0d8f0" result="specular">
+            <fePointLight x="600" y="80" z="300"/>
+          </feSpecularLighting>
+          <feComposite in="specular" in2="SourceAlpha" operator="in" result="specOut"/>
+          <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="0.25" k4="0"/>
+        </filter>
+
+        <!-- Drop shadow filter (enhanced depth — 3-layer for realism) -->
+        <filter id="shadowFilter" x="-15%" y="-10%" width="130%" height="150%">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.35"/>
+          <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.25"/>
+          <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000" flood-opacity="0.12"/>
+        </filter>
+
+        <!-- Lightweight shadow for smaller components -->
+        <filter id="shadowFilterLight" x="-10%" y="-10%" width="120%" height="130%">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+          <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#000" flood-opacity="0.15"/>
+        </filter>
+
+        <!-- Ambient glow under missile (enhanced ground reflection) -->
+        <filter id="ambientGlow" x="-30%" y="-20%" width="160%" height="160%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur"/>
+          <feFlood flood-color="#39FF14" flood-opacity="0.12" result="color"/>
+          <feComposite in="color" in2="blur" operator="in"/>
+        </filter>
+
+        <!-- Energy pulse glow (for animated elements) -->
+        <filter id="energyPulse" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur1"/>
+          <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur2"/>
+          <feFlood flood-color="#39FF14" flood-opacity="1" result="c1"/>
+          <feFlood flood-color="#39FF14" flood-opacity="0.5" result="c2"/>
+          <feComposite in="c1" in2="blur1" operator="in" result="g1"/>
+          <feComposite in="c2" in2="blur2" operator="in" result="g2"/>
+          <feMerge>
+            <feMergeNode in="g2"/>
+            <feMergeNode in="g1"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <!-- Atmospheric haze (soft bloom on entire assembly) -->
+        <filter id="atmosphericHaze" x="-5%" y="-5%" width="110%" height="110%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="haze"/>
+          <feComposite in="SourceGraphic" in2="haze" operator="over"/>
+        </filter>
+
+        <!-- Label text clip mask -->
         <clipPath id="labelTextClip">
           <rect id="label-text-mask" x="520" y="282" width="0" height="24"/>
         </clipPath>
       </defs>
 
-      <!-- ===== BACKGROUND GRID ===== -->
+      <!-- ===== COMPONENT 1: Background Grid ===== -->
       <g id="bg-grid">
         <rect width="1200" height="500" fill="url(#gridPattern)" opacity="0.15"/>
-        <line x1="600" y1="250" x2="0" y2="0" stroke="#39FF14" stroke-width="0.3" opacity="0.04"/>
-        <line x1="600" y1="250" x2="1200" y2="0" stroke="#39FF14" stroke-width="0.3" opacity="0.04"/>
-        <line x1="600" y1="250" x2="0" y2="500" stroke="#39FF14" stroke-width="0.3" opacity="0.04"/>
-        <line x1="600" y1="250" x2="1200" y2="500" stroke="#39FF14" stroke-width="0.3" opacity="0.04"/>
+        <!-- Perspective convergence lines for depth (more lines, softer) -->
+        <line x1="600" y1="250" x2="0" y2="0" stroke="#39FF14" stroke-width="0.3" opacity="0.05"/>
+        <line x1="600" y1="250" x2="1200" y2="0" stroke="#39FF14" stroke-width="0.3" opacity="0.05"/>
+        <line x1="600" y1="250" x2="0" y2="500" stroke="#39FF14" stroke-width="0.3" opacity="0.05"/>
+        <line x1="600" y1="250" x2="1200" y2="500" stroke="#39FF14" stroke-width="0.3" opacity="0.05"/>
+        <!-- Extra diagonal perspective lines -->
+        <line x1="600" y1="250" x2="300" y2="0" stroke="#39FF14" stroke-width="0.15" opacity="0.03"/>
+        <line x1="600" y1="250" x2="900" y2="0" stroke="#39FF14" stroke-width="0.15" opacity="0.03"/>
+        <line x1="600" y1="250" x2="300" y2="500" stroke="#39FF14" stroke-width="0.15" opacity="0.03"/>
+        <line x1="600" y1="250" x2="900" y2="500" stroke="#39FF14" stroke-width="0.15" opacity="0.03"/>
+        <!-- Horizon line -->
+        <line x1="0" y1="250" x2="1200" y2="250" stroke="#39FF14" stroke-width="0.2" opacity="0.025"/>
       </g>
 
-      <!-- ===== VOLUMETRIC LIGHT RAYS ===== -->
-      <g id="volumetric-light" opacity="0.6">
-        <polygon points="600,-30 420,500 440,500" fill="white" opacity="0.012"/>
-        <polygon points="600,-30 700,500 730,500" fill="white" opacity="0.015"/>
-        <polygon points="600,-30 550,500 570,500" fill="white" opacity="0.01"/>
-        <polygon points="600,-30 830,500 850,500" fill="white" opacity="0.008"/>
+      <!-- ===== Atmospheric environment effects ===== -->
+      <!-- Main ground reflection plane (reflective floor) -->
+      <ellipse cx="600" cy="368" rx="480" ry="28" fill="url(#floorReflection)" filter="url(#ambientGlow)"/>
+      <!-- Secondary ambient glow (wider, softer) -->
+      <ellipse cx="600" cy="360" rx="350" ry="12" fill="#39FF14" opacity="0.04" filter="url(#ambientGlow)"/>
+      <!-- Overhead light cone (subtle top-down illumination) -->
+      <ellipse cx="600" cy="220" rx="200" ry="80" fill="white" opacity="0.008"/>
+      <!-- Side atmospheric haze -->
+      <rect x="0" y="180" width="1200" height="140" fill="white" opacity="0.005"/>
+
+      <!-- ===== Energy scan line (animated via CSS) ===== -->
+      <g id="energy-scanline" opacity="0.06">
+        <line x1="130" y1="250" x2="1070" y2="250" stroke="#39FF14" stroke-width="0.5"/>
       </g>
 
-      <!-- ===== FLOOR REFLECTION PLANE ===== -->
-      <ellipse cx="600" cy="370" rx="480" ry="35" fill="url(#floorGrad)"/>
+      <!-- ===== COMPONENT 15: Skid Frame / Base ===== -->
+      <g id="skid-frame" filter="url(#shadowFilter)">
+        <!-- Main rail top -->
+        <rect x="130" y="298" width="940" height="8" rx="2" ry="2"
+              fill="url(#skidFrameGrad)" stroke="#1a1d24" stroke-width="1"/>
+        <!-- Top rail specular highlight -->
+        <rect x="130" y="298" width="940" height="2.5" rx="1" ry="1" fill="white" opacity="0.1"/>
+        <rect x="130" y="305" width="940" height="1" fill="black" opacity="0.15"/>
+        <!-- Main rail bottom -->
+        <rect x="130" y="322" width="940" height="8" rx="2" ry="2"
+              fill="url(#skidFrameGrad)" stroke="#1a1d24" stroke-width="1"/>
+        <rect x="130" y="322" width="940" height="2.5" rx="1" ry="1" fill="white" opacity="0.1"/>
+        <rect x="130" y="329" width="940" height="1" fill="black" opacity="0.15"/>
+        <!-- Cross members (enhanced with highlight + shadow) -->
+        <rect x="190" y="298" width="7" height="32" fill="#555b66" stroke="#1a1d24" stroke-width="0.5"/>
+        <rect x="190" y="298" width="2.5" height="32" fill="white" opacity="0.06"/>
+        <rect x="350" y="298" width="7" height="32" fill="#555b66" stroke="#1a1d24" stroke-width="0.5"/>
+        <rect x="350" y="298" width="2.5" height="32" fill="white" opacity="0.06"/>
+        <rect x="510" y="298" width="7" height="32" fill="#555b66" stroke="#1a1d24" stroke-width="0.5"/>
+        <rect x="510" y="298" width="2.5" height="32" fill="white" opacity="0.06"/>
+        <rect x="670" y="298" width="7" height="32" fill="#555b66" stroke="#1a1d24" stroke-width="0.5"/>
+        <rect x="670" y="298" width="2.5" height="32" fill="white" opacity="0.06"/>
+        <rect x="830" y="298" width="7" height="32" fill="#555b66" stroke="#1a1d24" stroke-width="0.5"/>
+        <rect x="830" y="298" width="2.5" height="32" fill="white" opacity="0.06"/>
+        <rect x="990" y="298" width="7" height="32" fill="#555b66" stroke="#1a1d24" stroke-width="0.5"/>
+        <rect x="990" y="298" width="2.5" height="32" fill="white" opacity="0.06"/>
+        <!-- Support feet (enhanced 3D) -->
+        <rect x="170" y="330" width="30" height="13" rx="2" ry="2"
+              fill="#4a5060" stroke="#1a1d24" stroke-width="1"/>
+        <rect x="170" y="330" width="30" height="4" rx="2" ry="2" fill="white" opacity="0.06"/>
+        <rect x="500" y="330" width="30" height="13" rx="2" ry="2"
+              fill="#4a5060" stroke="#1a1d24" stroke-width="1"/>
+        <rect x="500" y="330" width="30" height="4" rx="2" ry="2" fill="white" opacity="0.06"/>
+        <rect x="830" y="330" width="30" height="13" rx="2" ry="2"
+              fill="#4a5060" stroke="#1a1d24" stroke-width="1"/>
+        <rect x="830" y="330" width="30" height="4" rx="2" ry="2" fill="white" opacity="0.06"/>
+        <!-- Mounting bolts on feet (chrome look) -->
+        <circle cx="178" cy="337" r="2.8" fill="url(#boltGrad)" stroke="#5a6270" stroke-width="0.5"/>
+        <circle cx="178" cy="336.5" r="2" fill="none" stroke="white" stroke-width="0.3" opacity="0.15"/>
+        <circle cx="192" cy="337" r="2.8" fill="url(#boltGrad)" stroke="#5a6270" stroke-width="0.5"/>
+        <circle cx="192" cy="336.5" r="2" fill="none" stroke="white" stroke-width="0.3" opacity="0.15"/>
+        <circle cx="508" cy="337" r="2.8" fill="url(#boltGrad)" stroke="#5a6270" stroke-width="0.5"/>
+        <circle cx="508" cy="336.5" r="2" fill="none" stroke="white" stroke-width="0.3" opacity="0.15"/>
+        <circle cx="522" cy="337" r="2.8" fill="url(#boltGrad)" stroke="#5a6270" stroke-width="0.5"/>
+        <circle cx="522" cy="336.5" r="2" fill="none" stroke="white" stroke-width="0.3" opacity="0.15"/>
+        <circle cx="838" cy="337" r="2.8" fill="url(#boltGrad)" stroke="#5a6270" stroke-width="0.5"/>
+        <circle cx="838" cy="336.5" r="2" fill="none" stroke="white" stroke-width="0.3" opacity="0.15"/>
+        <circle cx="852" cy="337" r="2.8" fill="url(#boltGrad)" stroke="#5a6270" stroke-width="0.5"/>
+        <circle cx="852" cy="336.5" r="2" fill="none" stroke="white" stroke-width="0.3" opacity="0.15"/>
+        <!-- Green status LEDs on frame (with glow halos) -->
+        <circle cx="260" cy="314" r="2" fill="#39FF14" opacity="0.6"/>
+        <circle cx="260" cy="314" r="4" fill="#39FF14" opacity="0.08"/>
+        <circle cx="600" cy="314" r="2" fill="#39FF14" opacity="0.6"/>
+        <circle cx="600" cy="314" r="4" fill="#39FF14" opacity="0.08"/>
+        <circle cx="940" cy="314" r="2" fill="#39FF14" opacity="0.6"/>
+        <circle cx="940" cy="314" r="4" fill="#39FF14" opacity="0.08"/>
+      </g>
 
-      <!-- ===== SPOTLIGHT (overhead cone) ===== -->
-      <ellipse cx="600" cy="230" rx="280" ry="100" fill="white" opacity="0.012"/>
+      <!-- ===== COMPONENT 2: Body Section A (left) ===== -->
+      <g id="body-section-a" filter="url(#shadowFilter)">
+        <!-- Main body -->
+        <rect x="170" y="220" width="280" height="60" rx="6" ry="6"
+              fill="url(#steelGradientA)" stroke="#2a2d35" stroke-width="1.5"/>
+        <!-- Specular highlight band (sharp focused reflection) -->
+        <rect x="170" y="220" width="280" height="60" rx="6" ry="6"
+              fill="url(#specularHighlight)" opacity="0.9"/>
+        <!-- Environment reflection overlay (horizontal variation) -->
+        <rect x="170" y="220" width="280" height="60" rx="6" ry="6"
+              fill="url(#envReflection)"/>
+        <!-- Rim light top (bright edge) -->
+        <rect x="170" y="220" width="280" height="60" rx="6" ry="6"
+              fill="url(#rimLightTop)"/>
+        <!-- Rim light bottom (green ground bounce) -->
+        <rect x="170" y="220" width="280" height="60" rx="6" ry="6"
+              fill="url(#rimLightBottom)"/>
+        <!-- Brushed metal texture -->
+        <rect x="170" y="220" width="280" height="60" rx="6" ry="6"
+              fill="url(#brushedMetal)"/>
+        <!-- Top edge highlight (crisp) -->
+        <line x1="176" y1="220.5" x2="444" y2="220.5" stroke="#d0d8e8" stroke-width="0.6" opacity="0.2"/>
+        <!-- CNC machining marks (fine detail) -->
+        <rect x="178" y="225" width="264" height="50" fill="url(#machinePattern)" opacity="0.5"/>
+        <!-- Center line (lathe mark) -->
+        <line x1="178" y1="250" x2="442" y2="250" stroke="#555b66" stroke-width="0.6" opacity="0.25" stroke-dasharray="8,3"/>
+        <!-- Bottom shadow edge (ambient occlusion) -->
+        <line x1="176" y1="279.5" x2="444" y2="279.5" stroke="#0a0c10" stroke-width="1.2" opacity="0.4"/>
+        <!-- Joint line right (beveled with highlight) -->
+        <line x1="450" y1="222" x2="450" y2="278" stroke="#0d0f14" stroke-width="2" opacity="0.6"/>
+        <line x1="449" y1="222" x2="449" y2="278" stroke="#8090a0" stroke-width="0.4" opacity="0.15"/>
+        <line x1="451" y1="222" x2="451" y2="278" stroke="white" stroke-width="0.3" opacity="0.06"/>
+        <!-- Weld seam indicator (glowing) -->
+        <rect x="200" y="248" width="4" height="4" rx="1" fill="#39FF14" opacity="0.35"/>
+        <rect x="200" y="248" width="4" height="4" rx="1" fill="#39FF14" opacity="0.1" filter="url(#energyPulse)"/>
+        <!-- Panel section mark -->
+        <line x1="310" y1="222" x2="310" y2="278" stroke="#3a3f48" stroke-width="0.5" opacity="0.3"/>
+      </g>
 
-      <!-- ============================================================ -->
-      <!-- MISSILE ASSEMBLY GROUP — single shadow filter on parent      -->
-      <!-- ============================================================ -->
-      <g id="missile-assembly" filter="url(#shadowFilter)">
+      <!-- ===== COMPONENT 3: Body Section B (center) ===== -->
+      <g id="body-section-b" filter="url(#shadowFilter)">
+        <rect x="450" y="220" width="300" height="60"
+              fill="url(#steelGradientB)" stroke="#2a2d35" stroke-width="1.5"/>
+        <!-- Specular highlight band -->
+        <rect x="450" y="220" width="300" height="60"
+              fill="url(#specularHighlight)" opacity="0.9"/>
+        <!-- Environment reflection overlay -->
+        <rect x="450" y="220" width="300" height="60"
+              fill="url(#envReflection)"/>
+        <!-- Rim lights -->
+        <rect x="450" y="220" width="300" height="60"
+              fill="url(#rimLightTop)"/>
+        <rect x="450" y="220" width="300" height="60"
+              fill="url(#rimLightBottom)"/>
+        <!-- Brushed metal texture -->
+        <rect x="450" y="220" width="300" height="60"
+              fill="url(#brushedMetal)"/>
+        <!-- Top edge highlight -->
+        <line x1="452" y1="220.5" x2="748" y2="220.5" stroke="#d0d8e8" stroke-width="0.6" opacity="0.2"/>
+        <!-- CNC machining marks -->
+        <rect x="455" y="225" width="290" height="50" fill="url(#machinePattern)" opacity="0.5"/>
+        <!-- Center line -->
+        <line x1="455" y1="250" x2="745" y2="250" stroke="#555b66" stroke-width="0.6" opacity="0.25" stroke-dasharray="8,3"/>
+        <!-- Bottom shadow edge -->
+        <line x1="452" y1="279.5" x2="748" y2="279.5" stroke="#0a0c10" stroke-width="1.2" opacity="0.4"/>
+        <!-- Joint lines (beveled with highlight) -->
+        <line x1="450" y1="222" x2="450" y2="278" stroke="#0d0f14" stroke-width="2" opacity="0.6"/>
+        <line x1="451" y1="222" x2="451" y2="278" stroke="#8090a0" stroke-width="0.4" opacity="0.15"/>
+        <line x1="750" y1="222" x2="750" y2="278" stroke="#0d0f14" stroke-width="2" opacity="0.6"/>
+        <line x1="749" y1="222" x2="749" y2="278" stroke="#8090a0" stroke-width="0.4" opacity="0.15"/>
+        <!-- Center bore passage indicator (glowing) -->
+        <rect x="594" y="247" width="12" height="6" rx="1" fill="#39FF14" opacity="0.3"/>
+        <rect x="594" y="247" width="12" height="6" rx="1" fill="#39FF14" opacity="0.08" filter="url(#energyPulse)"/>
+        <!-- Panel section marks -->
+        <line x1="550" y1="222" x2="550" y2="278" stroke="#3a3f48" stroke-width="0.5" opacity="0.3"/>
+        <line x1="650" y1="222" x2="650" y2="278" stroke="#3a3f48" stroke-width="0.5" opacity="0.3"/>
+      </g>
 
-        <!-- ===== SKID FRAME / BASE ===== -->
-        <g id="skid-frame">
-          <rect x="130" y="298" width="940" height="8" rx="2" fill="url(#skidFrameGrad)" stroke="#1a1d24" stroke-width="1"/>
-          <rect x="130" y="298" width="940" height="2" rx="1" fill="white" opacity="0.1"/>
-          <rect x="130" y="322" width="940" height="8" rx="2" fill="url(#skidFrameGrad)" stroke="#1a1d24" stroke-width="1"/>
-          <rect x="130" y="322" width="940" height="2" rx="1" fill="white" opacity="0.1"/>
-          <!-- Cross members -->
-          <rect x="190" y="298" width="6" height="32" fill="#555b66" stroke="#1a1d24" stroke-width="0.5"/>
-          <rect x="350" y="298" width="6" height="32" fill="#555b66" stroke="#1a1d24" stroke-width="0.5"/>
-          <rect x="510" y="298" width="6" height="32" fill="#555b66" stroke="#1a1d24" stroke-width="0.5"/>
-          <rect x="670" y="298" width="6" height="32" fill="#555b66" stroke="#1a1d24" stroke-width="0.5"/>
-          <rect x="830" y="298" width="6" height="32" fill="#555b66" stroke="#1a1d24" stroke-width="0.5"/>
-          <rect x="990" y="298" width="6" height="32" fill="#555b66" stroke="#1a1d24" stroke-width="0.5"/>
-          <!-- Feet -->
-          <rect x="170" y="330" width="30" height="12" rx="2" fill="#4a5060" stroke="#1a1d24" stroke-width="1"/>
-          <rect x="500" y="330" width="30" height="12" rx="2" fill="#4a5060" stroke="#1a1d24" stroke-width="1"/>
-          <rect x="830" y="330" width="30" height="12" rx="2" fill="#4a5060" stroke="#1a1d24" stroke-width="1"/>
-          <!-- Bolts -->
-          <circle cx="178" cy="336" r="2.5" fill="url(#boltGrad)" stroke="#5a6270" stroke-width="0.5"/>
-          <circle cx="192" cy="336" r="2.5" fill="url(#boltGrad)" stroke="#5a6270" stroke-width="0.5"/>
-          <circle cx="508" cy="336" r="2.5" fill="url(#boltGrad)" stroke="#5a6270" stroke-width="0.5"/>
-          <circle cx="522" cy="336" r="2.5" fill="url(#boltGrad)" stroke="#5a6270" stroke-width="0.5"/>
-          <circle cx="838" cy="336" r="2.5" fill="url(#boltGrad)" stroke="#5a6270" stroke-width="0.5"/>
-          <circle cx="852" cy="336" r="2.5" fill="url(#boltGrad)" stroke="#5a6270" stroke-width="0.5"/>
-          <!-- Green LEDs -->
-          <circle class="svg-energy-glow" cx="260" cy="314" r="2" fill="#39FF14" opacity="0.6"/>
-          <circle class="svg-energy-glow" cx="600" cy="314" r="2" fill="#39FF14" opacity="0.6"/>
-          <circle class="svg-energy-glow" cx="940" cy="314" r="2" fill="#39FF14" opacity="0.6"/>
+      <!-- ===== COMPONENT 4: Body Section C (right) ===== -->
+      <g id="body-section-c" filter="url(#shadowFilter)">
+        <rect x="750" y="220" width="280" height="60" rx="6" ry="6"
+              fill="url(#steelGradientA)" stroke="#2a2d35" stroke-width="1.5"/>
+        <!-- Specular highlight band -->
+        <rect x="750" y="220" width="280" height="60" rx="6" ry="6"
+              fill="url(#specularHighlight)" opacity="0.9"/>
+        <!-- Environment reflection overlay -->
+        <rect x="750" y="220" width="280" height="60" rx="6" ry="6"
+              fill="url(#envReflection)"/>
+        <!-- Rim lights -->
+        <rect x="750" y="220" width="280" height="60" rx="6" ry="6"
+              fill="url(#rimLightTop)"/>
+        <rect x="750" y="220" width="280" height="60" rx="6" ry="6"
+              fill="url(#rimLightBottom)"/>
+        <!-- Brushed metal texture -->
+        <rect x="750" y="220" width="280" height="60" rx="6" ry="6"
+              fill="url(#brushedMetal)"/>
+        <!-- Top edge highlight -->
+        <line x1="756" y1="220.5" x2="1024" y2="220.5" stroke="#d0d8e8" stroke-width="0.6" opacity="0.2"/>
+        <!-- CNC machining marks -->
+        <rect x="758" y="225" width="264" height="50" fill="url(#machinePattern)" opacity="0.5"/>
+        <!-- Center line -->
+        <line x1="758" y1="250" x2="1022" y2="250" stroke="#555b66" stroke-width="0.6" opacity="0.25" stroke-dasharray="8,3"/>
+        <!-- Bottom shadow edge -->
+        <line x1="756" y1="279.5" x2="1024" y2="279.5" stroke="#0a0c10" stroke-width="1.2" opacity="0.4"/>
+        <!-- Joint line left (beveled with highlight) -->
+        <line x1="750" y1="222" x2="750" y2="278" stroke="#0d0f14" stroke-width="2" opacity="0.6"/>
+        <line x1="751" y1="222" x2="751" y2="278" stroke="#8090a0" stroke-width="0.4" opacity="0.15"/>
+        <!-- Weld seam indicator (glowing) -->
+        <rect x="980" y="248" width="4" height="4" rx="1" fill="#39FF14" opacity="0.35"/>
+        <rect x="980" y="248" width="4" height="4" rx="1" fill="#39FF14" opacity="0.1" filter="url(#energyPulse)"/>
+        <!-- Panel section mark -->
+        <line x1="890" y1="222" x2="890" y2="278" stroke="#3a3f48" stroke-width="0.5" opacity="0.3"/>
+      </g>
+
+      <!-- ===== COMPONENT 5: Coupler / Union — Front ===== -->
+      <g id=”coupler-front” filter=”url(#shadowFilter)”>
+        <!-- Main body -->
+        <rect x=”130” y=”212” width=”44” height=”76” rx=”3” ry=”3”
+              fill=”url(#darkSteelGradient)” stroke=”#1a1d24” stroke-width=”2”/>
+        <!-- Face gradient overlay -->
+        <rect x=”130” y=”212” width=”44” height=”76” rx=”3” ry=”3”
+              fill=”url(#couplerFaceGrad)” opacity=”0.5”/>
+        <!-- Specular highlights on coupler -->
+        <rect x=”130” y=”212” width=”44” height=”76” rx=”3” ry=”3”
+              fill=”url(#couplerSpecular)”/>
+        <!-- Top/bottom rim light -->
+        <line x1=”133” y1=”212.5” x2=”171” y2=”212.5” stroke=”#c0c8d8” stroke-width=”0.8” opacity=”0.25”/>
+        <line x1=”133” y1=”287.5” x2=”171” y2=”287.5” stroke=”#8090a0” stroke-width=”0.5” opacity=”0.12”/>
+        <!-- Threading notches (precision machined) -->
+        <line x1=”131” y1=”218” x2=”173” y2=”218” stroke=”#8a95a5” stroke-width=”0.8” opacity=”0.5”/>
+        <line x1=”131” y1=”220.5” x2=”173” y2=”220.5” stroke=”#555d6d” stroke-width=”0.4” opacity=”0.4”/>
+        <line x1=”131” y1=”223” x2=”173” y2=”223” stroke=”#8a95a5” stroke-width=”0.8” opacity=”0.45”/>
+        <line x1=”131” y1=”225.5” x2=”173” y2=”225.5” stroke=”#555d6d” stroke-width=”0.4” opacity=”0.3”/>
+        <line x1=”131” y1=”228” x2=”173” y2=”228” stroke=”#8a95a5” stroke-width=”0.6” opacity=”0.35”/>
+        <line x1=”131” y1=”272” x2=”173” y2=”272” stroke=”#8a95a5” stroke-width=”0.6” opacity=”0.35”/>
+        <line x1=”131” y1=”274.5” x2=”173” y2=”274.5” stroke=”#555d6d” stroke-width=”0.4” opacity=”0.3”/>
+        <line x1=”131” y1=”277” x2=”173” y2=”277” stroke=”#8a95a5” stroke-width=”0.8” opacity=”0.45”/>
+        <line x1=”131” y1=”279.5” x2=”173” y2=”279.5” stroke=”#555d6d” stroke-width=”0.4” opacity=”0.4”/>
+        <line x1=”131” y1=”282” x2=”173” y2=”282” stroke=”#8a95a5” stroke-width=”0.8” opacity=”0.5”/>
+        <!-- Center bore (deep 3D illusion with concentric rings) -->
+        <circle cx=”152” cy=”250” r=”19” fill=”url(#boreRimGrad)”/>
+        <circle cx=”152” cy=”250” r=”18” fill=”url(#boreInnerGrad)” stroke=”#0d0f14” stroke-width=”1.5”/>
+        <circle cx=”152” cy=”250” r=”16” fill=”none” stroke=”#2a3040” stroke-width=”0.8” opacity=”0.7”/>
+        <circle cx=”152” cy=”250” r=”13” fill=”none” stroke=”#1a2030” stroke-width=”0.5” opacity=”0.5”/>
+        <circle cx=”152” cy=”250” r=”9” fill=”none” stroke=”#151820” stroke-width=”0.3” opacity=”0.4”/>
+        <!-- Bore specular highlight arc -->
+        <circle cx=”152” cy=”247” r=”17.5” fill=”none” stroke=”white” stroke-width=”0.5” opacity=”0.1”
+                stroke-dasharray=”12,44”/>
+        <!-- Green energy ring inside bore -->
+        <circle cx=”152” cy=”250” r=”15” fill=”none” stroke=”#39FF14” stroke-width=”0.3” opacity=”0.12”/>
+        <!-- Pressure rating stamp (glowing) -->
+        <text x=”152” y=”240” font-family=”monospace” font-size=”3.5” fill=”#39FF14” opacity=”0.4” text-anchor=”middle”>15K</text>
+      </g>
+
+      <!-- ===== COMPONENT 6: Coupler / Union — Rear ===== -->
+      <g id=”coupler-rear” filter=”url(#shadowFilter)”>
+        <rect x=”1026” y=”212” width=”44” height=”76” rx=”3” ry=”3”
+              fill=”url(#darkSteelGradient)” stroke=”#1a1d24” stroke-width=”2”/>
+        <rect x=”1026” y=”212” width=”44” height=”76” rx=”3” ry=”3”
+              fill=”url(#couplerFaceGrad)” opacity=”0.5”/>
+        <rect x=”1026” y=”212” width=”44” height=”76” rx=”3” ry=”3”
+              fill=”url(#couplerSpecular)”/>
+        <line x1=”1029” y1=”212.5” x2=”1067” y2=”212.5” stroke=”#c0c8d8” stroke-width=”0.8” opacity=”0.25”/>
+        <line x1=”1029” y1=”287.5” x2=”1067” y2=”287.5” stroke=”#8090a0” stroke-width=”0.5” opacity=”0.12”/>
+        <!-- Threading notches -->
+        <line x1=”1027” y1=”218” x2=”1069” y2=”218” stroke=”#8a95a5” stroke-width=”0.8” opacity=”0.5”/>
+        <line x1=”1027” y1=”220.5” x2=”1069” y2=”220.5” stroke=”#555d6d” stroke-width=”0.4” opacity=”0.4”/>
+        <line x1=”1027” y1=”223” x2=”1069” y2=”223” stroke=”#8a95a5” stroke-width=”0.8” opacity=”0.45”/>
+        <line x1=”1027” y1=”225.5” x2=”1069” y2=”225.5” stroke=”#555d6d” stroke-width=”0.4” opacity=”0.3”/>
+        <line x1=”1027” y1=”228” x2=”1069” y2=”228” stroke=”#8a95a5” stroke-width=”0.6” opacity=”0.35”/>
+        <line x1=”1027” y1=”272” x2=”1069” y2=”272” stroke=”#8a95a5” stroke-width=”0.6” opacity=”0.35”/>
+        <line x1=”1027” y1=”274.5” x2=”1069” y2=”274.5” stroke=”#555d6d” stroke-width=”0.4” opacity=”0.3”/>
+        <line x1=”1027” y1=”277” x2=”1069” y2=”277” stroke=”#8a95a5” stroke-width=”0.8” opacity=”0.45”/>
+        <line x1=”1027” y1=”279.5” x2=”1069” y2=”279.5” stroke=”#555d6d” stroke-width=”0.4” opacity=”0.4”/>
+        <line x1=”1027” y1=”282” x2=”1069” y2=”282” stroke=”#8a95a5” stroke-width=”0.8” opacity=”0.5”/>
+        <!-- Center bore (deep 3D) -->
+        <circle cx=”1048” cy=”250” r=”19” fill=”url(#boreRimGrad)”/>
+        <circle cx=”1048” cy=”250” r=”18” fill=”url(#boreInnerGrad)” stroke=”#0d0f14” stroke-width=”1.5”/>
+        <circle cx=”1048” cy=”250” r=”16” fill=”none” stroke=”#2a3040” stroke-width=”0.8” opacity=”0.7”/>
+        <circle cx=”1048” cy=”250” r=”13” fill=”none” stroke=”#1a2030” stroke-width=”0.5” opacity=”0.5”/>
+        <circle cx=”1048” cy=”250” r=”9” fill=”none” stroke=”#151820” stroke-width=”0.3” opacity=”0.4”/>
+        <circle cx=”1048” cy=”247” r=”17.5” fill=”none” stroke=”white” stroke-width=”0.5” opacity=”0.1”
+                stroke-dasharray=”12,44”/>
+        <circle cx=”1048” cy=”250” r=”15” fill=”none” stroke=”#39FF14” stroke-width=”0.3” opacity=”0.12”/>
+        <text x=”1048” y=”240” font-family=”monospace” font-size=”3.5” fill=”#39FF14” opacity=”0.4” text-anchor=”middle”>15K</text>
+      </g>
+
+      <!-- ===== COMPONENT 7: Clamp / Collar — Front ===== -->
+      <g id=”clamp-front” filter=”url(#shadowFilterLight)”>
+        <!-- Top half -->
+        <rect x=”135” y=”200” width=”34” height=”12” rx=”2” ry=”2”
+              fill=”#3a4055” stroke=”#39FF14” stroke-width=”1” opacity=”0.9”/>
+        <rect x=”135” y=”200” width=”34” height=”4” rx=”2” ry=”2” fill=”white” opacity=”0.08”/>
+        <!-- Top half inner highlight -->
+        <rect x=”136” y=”201” width=”32” height=”1” fill=”#39FF14” opacity=”0.1”/>
+        <!-- Bottom half -->
+        <rect x=”135” y=”288” width=”34” height=”12” rx=”2” ry=”2”
+              fill=”#3a4055” stroke=”#39FF14” stroke-width=”1” opacity=”0.9”/>
+        <rect x=”135” y=”288” width=”34” height=”4” rx=”2” ry=”2” fill=”white” opacity=”0.08”/>
+        <rect x=”136” y=”289” width=”32” height=”1” fill=”#39FF14” opacity=”0.1”/>
+        <!-- Bolt holes top (recessed with rim) -->
+        <circle cx=”142” cy=”206” r=”4” fill=”url(#boreInnerGrad)” stroke=”#5a6270” stroke-width=”0.8”/>
+        <circle cx=”142” cy=”205.5” r=”3.3” fill=”none” stroke=”white” stroke-width=”0.3” opacity=”0.12”/>
+        <circle cx=”162” cy=”206” r=”4” fill=”url(#boreInnerGrad)” stroke=”#5a6270” stroke-width=”0.8”/>
+        <circle cx=”162” cy=”205.5” r=”3.3” fill=”none” stroke=”white” stroke-width=”0.3” opacity=”0.12”/>
+        <!-- Bolt holes bottom -->
+        <circle cx=”142” cy=”294” r=”4” fill=”url(#boreInnerGrad)” stroke=”#5a6270” stroke-width=”0.8”/>
+        <circle cx=”142” cy=”293.5” r=”3.3” fill=”none” stroke=”white” stroke-width=”0.3” opacity=”0.08”/>
+        <circle cx=”162” cy=”294” r=”4” fill=”url(#boreInnerGrad)” stroke=”#5a6270” stroke-width=”0.8”/>
+        <circle cx=”162” cy=”293.5” r=”3.3” fill=”none” stroke=”white” stroke-width=”0.3” opacity=”0.08”/>
+        <!-- Green energy edge glow (brighter) -->
+        <rect x=”135” y=”211” width=”34” height=”1.5” fill=”#39FF14” opacity=”0.2”/>
+        <rect x=”135” y=”211” width=”34” height=”1.5” fill=”#39FF14” opacity=”0.05” filter=”url(#energyPulse)”/>
+        <rect x=”135” y=”287.5” width=”34” height=”1.5” fill=”#39FF14” opacity=”0.2”/>
+        <rect x=”135” y=”287.5” width=”34” height=”1.5” fill=”#39FF14” opacity=”0.05” filter=”url(#energyPulse)”/>
+      </g>
+
+      <!-- ===== COMPONENT 8: Clamp / Collar — Rear ===== -->
+      <g id=”clamp-rear” filter=”url(#shadowFilterLight)”>
+        <rect x=”1031” y=”200” width=”34” height=”12” rx=”2” ry=”2”
+              fill=”#3a4055” stroke=”#39FF14” stroke-width=”1” opacity=”0.9”/>
+        <rect x=”1031” y=”200” width=”34” height=”4” rx=”2” ry=”2” fill=”white” opacity=”0.08”/>
+        <rect x=”1032” y=”201” width=”32” height=”1” fill=”#39FF14” opacity=”0.1”/>
+        <rect x=”1031” y=”288” width=”34” height=”12” rx=”2” ry=”2”
+              fill=”#3a4055” stroke=”#39FF14” stroke-width=”1” opacity=”0.9”/>
+        <rect x=”1031” y=”288” width=”34” height=”4” rx=”2” ry=”2” fill=”white” opacity=”0.08”/>
+        <rect x=”1032” y=”289” width=”32” height=”1” fill=”#39FF14” opacity=”0.1”/>
+        <circle cx=”1038” cy=”206” r=”4” fill=”url(#boreInnerGrad)” stroke=”#5a6270” stroke-width=”0.8”/>
+        <circle cx=”1038” cy=”205.5” r=”3.3” fill=”none” stroke=”white” stroke-width=”0.3” opacity=”0.12”/>
+        <circle cx=”1058” cy=”206” r=”4” fill=”url(#boreInnerGrad)” stroke=”#5a6270” stroke-width=”0.8”/>
+        <circle cx=”1058” cy=”205.5” r=”3.3” fill=”none” stroke=”white” stroke-width=”0.3” opacity=”0.12”/>
+        <circle cx=”1038” cy=”294” r=”4” fill=”url(#boreInnerGrad)” stroke=”#5a6270” stroke-width=”0.8”/>
+        <circle cx=”1038” cy=”293.5” r=”3.3” fill=”none” stroke=”white” stroke-width=”0.3” opacity=”0.08”/>
+        <circle cx=”1058” cy=”294” r=”4” fill=”url(#boreInnerGrad)” stroke=”#5a6270” stroke-width=”0.8”/>
+        <circle cx=”1058” cy=”293.5” r=”3.3” fill=”none” stroke=”white” stroke-width=”0.3” opacity=”0.08”/>
+        <rect x=”1031” y=”211” width=”34” height=”1.5” fill=”#39FF14” opacity=”0.2”/>
+        <rect x=”1031” y=”211” width=”34” height=”1.5” fill=”#39FF14” opacity=”0.05” filter=”url(#energyPulse)”/>
+        <rect x=”1031” y=”287.5” width=”34” height=”1.5” fill=”#39FF14” opacity=”0.2”/>
+        <rect x=”1031” y=”287.5” width=”34” height=”1.5” fill=”#39FF14” opacity=”0.05” filter=”url(#energyPulse)”/>
+      </g>
+
+      <!-- ===== COMPONENT 9: Hose Restraint / Tether Point ===== -->
+      <g id="hose-restraint" filter="url(#shadowFilterLight)">
+        <!-- U-bracket (metallic with 3D shading) -->
+        <path d="M 585,220 L 585,195 Q 600,175 615,195 L 615,220"
+              fill="none" stroke="#4a5060" stroke-width="6" stroke-linecap="round"/>
+        <path d="M 585,220 L 585,195 Q 600,175 615,195 L 615,220"
+              fill="none" stroke="#6a7280" stroke-width="4" stroke-linecap="round"/>
+        <!-- U-bracket specular highlight -->
+        <path d="M 586,220 L 586,196 Q 600,177 614,196 L 614,220"
+              fill="none" stroke="white" stroke-width="0.8" stroke-linecap="round" opacity="0.15"/>
+        <!-- Base plate (enhanced) -->
+        <rect x="579" y="216" width="42" height="7" rx="1" ry="1"
+              fill="url(#skidFrameGrad)" stroke="#1a1d24" stroke-width="1"/>
+        <rect x="579" y="216" width="42" height="2.5" rx="1" fill="white" opacity="0.08"/>
+        <!-- Tether ring (energy glow) -->
+        <circle cx="600" cy="180" r="10" fill="none" stroke="#39FF14" stroke-width="0.4" opacity="0.1"/>
+        <circle cx="600" cy="180" r="8.5" fill="none" stroke="#39FF14" stroke-width="2.5"/>
+        <circle cx="600" cy="180" r="8.5" fill="none" stroke="#39FF14" stroke-width="5" opacity="0.08"/>
+        <!-- Inner ring detail -->
+        <circle cx="600" cy="180" r="4.5" fill="none" stroke="#39FF14" stroke-width="1.2" opacity="0.45"/>
+        <!-- Ring specular highlight -->
+        <circle cx="598" cy="176" r="7.5" fill="none" stroke="white" stroke-width="0.6" opacity="0.2"
+                stroke-dasharray="5,18"/>
+        <!-- Mounting bolts on base plate -->
+        <circle cx="585" cy="219.5" r="1.5" fill="url(#boltGrad)" stroke="#3a3f48" stroke-width="0.3"/>
+        <circle cx="615" cy="219.5" r="1.5" fill="url(#boltGrad)" stroke="#3a3f48" stroke-width="0.3"/>
+      </g>
+
+      <!-- ===== COMPONENT 10: Nozzle / End Cap ===== -->
+      <g id="nozzle-endcap" filter="url(#shadowFilter)">
+        <!-- Tapered body (main shape) -->
+        <polygon points="1070,220 1130,232 1130,268 1070,280"
+                 fill="url(#nozzleGradient)" stroke="#1a1d24" stroke-width="1.5"/>
+        <!-- Axial depth shading -->
+        <polygon points="1070,220 1130,232 1130,268 1070,280"
+                 fill="url(#nozzleAxialGrad)"/>
+        <!-- Specular highlight on top edge -->
+        <line x1="1071" y1="220.5" x2="1129" y2="232.5" stroke="#d0d8e8" stroke-width="0.7" opacity="0.25"/>
+        <!-- Rim light on top taper -->
+        <polygon points="1070,220 1130,232 1130,235 1070,223"
+                 fill="white" opacity="0.06"/>
+        <!-- Surface machining rings (lathe-turned look) -->
+        <line x1="1078" y1="222.5" x2="1078" y2="277.5" stroke="#7a8290" stroke-width="0.4" opacity="0.3"/>
+        <line x1="1085" y1="224" x2="1085" y2="276" stroke="#6a7280" stroke-width="0.3" opacity="0.25"/>
+        <line x1="1092" y1="225.5" x2="1092" y2="274.5" stroke="#7a8290" stroke-width="0.4" opacity="0.2"/>
+        <line x1="1099" y1="227" x2="1099" y2="273" stroke="#6a7280" stroke-width="0.3" opacity="0.2"/>
+        <line x1="1106" y1="228.5" x2="1106" y2="271.5" stroke="#7a8290" stroke-width="0.3" opacity="0.18"/>
+        <line x1="1113" y1="229.5" x2="1113" y2="270.5" stroke="#6a7280" stroke-width="0.3" opacity="0.15"/>
+        <line x1="1120" y1="231" x2="1120" y2="269" stroke="#7a8290" stroke-width="0.25" opacity="0.12"/>
+        <!-- Bore opening (deep 3D with multiple rings) -->
+        <circle cx="1130" cy="250" r="16" fill="url(#boreRimGrad)"/>
+        <circle cx="1130" cy="250" r="14" fill="url(#boreInnerGrad)" stroke="#0d0f14" stroke-width="1.5"/>
+        <circle cx="1130" cy="250" r="12" fill="none" stroke="#2a3040" stroke-width="0.8" opacity="0.6"/>
+        <circle cx="1130" cy="250" r="9" fill="none" stroke="#1a2030" stroke-width="0.5" opacity="0.5"/>
+        <circle cx="1130" cy="250" r="6" fill="#030406" stroke="#151820" stroke-width="0.4"/>
+        <!-- Bore specular arc -->
+        <circle cx="1130" cy="247" r="13.5" fill="none" stroke="white" stroke-width="0.5" opacity="0.12"
+                stroke-dasharray="8,36"/>
+        <!-- Green energy ring in bore -->
+        <circle cx="1130" cy="250" r="11" fill="none" stroke="#39FF14" stroke-width="0.4" opacity="0.15"/>
+        <!-- Sealing ring (energy glow) -->
+        <line x1="1072" y1="221" x2="1072" y2="279" stroke="#39FF14" stroke-width="2.5" opacity="0.55"/>
+        <line x1="1072" y1="221" x2="1072" y2="279" stroke="#39FF14" stroke-width="7" opacity="0.06"/>
+        <!-- Bottom edge shadow -->
+        <line x1="1072" y1="279.5" x2="1129" y2="267.5" stroke="#0a0c10" stroke-width="0.8" opacity="0.3"/>
+      </g>
+
+      <!-- ===== COMPONENT 11: Port / Fitting 1 ===== -->
+      <g id="port-fitting-1" filter="url(#shadowFilterLight)">
+        <!-- Port stem (vertical, metallic with shading) -->
+        <rect x="283" y="192" width="14" height="30" rx="2" ry="2"
+              fill="url(#darkSteelGradient)" stroke="#1a1d24" stroke-width="1"/>
+        <!-- Stem left highlight -->
+        <rect x="283" y="192" width="5" height="30" rx="1" fill="white" opacity="0.06"/>
+        <!-- Stem right shadow -->
+        <rect x="292" y="192" width="5" height="30" rx="1" fill="black" opacity="0.08"/>
+        <!-- Fitting flange (horizontal — thicker, more detailed) -->
+        <rect x="276" y="187" width="28" height="10" rx="1.5" ry="1.5"
+              fill="#4a5060" stroke="#39FF14" stroke-width="1"/>
+        <rect x="276" y="187" width="28" height="4" rx="1.5" fill="white" opacity="0.08"/>
+        <!-- Flange machining line -->
+        <line x1="277" y1="192" x2="303" y2="192" stroke="#5a6270" stroke-width="0.4" opacity="0.4"/>
+        <!-- Port opening (deep with rim) -->
+        <circle cx="290" cy="191" r="4.5" fill="url(#boreInnerGrad)" stroke="#2a3040" stroke-width="0.8"/>
+        <circle cx="290" cy="190.5" r="3.8" fill="none" stroke="white" stroke-width="0.3" opacity="0.1"/>
+        <!-- Flange energy glow -->
+        <rect x="276" y="196" width="28" height="1.5" fill="#39FF14" opacity="0.15"/>
+        <rect x="276" y="196" width="28" height="1.5" fill="#39FF14" opacity="0.04" filter="url(#energyPulse)"/>
+      </g>
+
+      <!-- ===== COMPONENT 12: Port / Fitting 2 ===== -->
+      <g id="port-fitting-2" filter="url(#shadowFilterLight)">
+        <rect x="863" y="192" width="14" height="30" rx="2" ry="2"
+              fill="url(#darkSteelGradient)" stroke="#1a1d24" stroke-width="1"/>
+        <rect x="863" y="192" width="5" height="30" rx="1" fill="white" opacity="0.06"/>
+        <rect x="872" y="192" width="5" height="30" rx="1" fill="black" opacity="0.08"/>
+        <rect x="856" y="187" width="28" height="10" rx="1.5" ry="1.5"
+              fill="#4a5060" stroke="#39FF14" stroke-width="1"/>
+        <rect x="856" y="187" width="28" height="4" rx="1.5" fill="white" opacity="0.08"/>
+        <line x1="857" y1="192" x2="883" y2="192" stroke="#5a6270" stroke-width="0.4" opacity="0.4"/>
+        <circle cx="870" cy="191" r="4.5" fill="url(#boreInnerGrad)" stroke="#2a3040" stroke-width="0.8"/>
+        <circle cx="870" cy="190.5" r="3.8" fill="none" stroke="white" stroke-width="0.3" opacity="0.1"/>
+        <rect x="856" y="196" width="28" height="1.5" fill="#39FF14" opacity="0.15"/>
+        <rect x="856" y="196" width="28" height="1.5" fill="#39FF14" opacity="0.04" filter="url(#energyPulse)"/>
+      </g>
+
+      <!-- ===== COMPONENT 16: Hose Connections ===== -->
+      <g id="hose-connections">
+        <!-- Hose 1: Left coupler to port fitting 1 -->
+        <path id="hose-1" d="M 152,212 C 152,175 200,158 240,158 L 278,158 C 286,158 290,168 290,188"
+              fill="none" stroke="#3a3f48" stroke-width="7" stroke-linecap="round"/>
+        <path d="M 152,212 C 152,175 200,158 240,158 L 278,158 C 286,158 290,168 290,188"
+              fill="none" stroke="#5a6270" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+        <path d="M 152,212 C 152,175 200,158 240,158 L 278,158 C 286,158 290,168 290,188"
+              fill="none" stroke="white" stroke-width="1" stroke-linecap="round" opacity="0.06"/>
+        <!-- Hose 2: Port fitting 1 to center tether -->
+        <path id="hose-2" d="M 290,188 C 290,152 340,140 400,140 L 555,140 C 578,140 600,155 600,175"
+              fill="none" stroke="#3a3f48" stroke-width="7" stroke-linecap="round"/>
+        <path d="M 290,188 C 290,152 340,140 400,140 L 555,140 C 578,140 600,155 600,175"
+              fill="none" stroke="#5a6270" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+        <path d="M 290,188 C 290,152 340,140 400,140 L 555,140 C 578,140 600,155 600,175"
+              fill="none" stroke="white" stroke-width="1" stroke-linecap="round" opacity="0.06"/>
+        <!-- Hose 3: Center tether to port fitting 2 -->
+        <path id="hose-3" d="M 600,175 C 600,155 622,140 660,140 L 830,140 C 855,140 870,152 870,188"
+              fill="none" stroke="#3a3f48" stroke-width="7" stroke-linecap="round"/>
+        <path d="M 600,175 C 600,155 622,140 660,140 L 830,140 C 855,140 870,152 870,188"
+              fill="none" stroke="#5a6270" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+        <path d="M 600,175 C 600,155 622,140 660,140 L 830,140 C 855,140 870,152 870,188"
+              fill="none" stroke="white" stroke-width="1" stroke-linecap="round" opacity="0.06"/>
+        <!-- Hose 4: Port fitting 2 to right end / nozzle -->
+        <path id="hose-4" d="M 870,188 C 870,168 878,158 910,158 L 1000,158 C 1030,158 1048,175 1048,212"
+              fill="none" stroke="#3a3f48" stroke-width="7" stroke-linecap="round"/>
+        <path d="M 870,188 C 870,168 878,158 910,158 L 1000,158 C 1030,158 1048,175 1048,212"
+              fill="none" stroke="#5a6270" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+        <path d="M 870,188 C 870,168 878,158 910,158 L 1000,158 C 1030,158 1048,175 1048,212"
+              fill="none" stroke="white" stroke-width="1" stroke-linecap="round" opacity="0.06"/>
+        <!-- Connection fittings (glowing nodes with depth) -->
+        <circle class="hose-node" cx="152" cy="212" r="5" fill="url(#boreInnerGrad)" stroke="#39FF14" stroke-width="1.5"/>
+        <circle class="hose-node" cx="290" cy="188" r="5" fill="url(#boreInnerGrad)" stroke="#39FF14" stroke-width="1.5"/>
+        <circle class="hose-node" cx="600" cy="175" r="5" fill="url(#boreInnerGrad)" stroke="#39FF14" stroke-width="1.5"/>
+        <circle class="hose-node" cx="870" cy="188" r="5" fill="url(#boreInnerGrad)" stroke="#39FF14" stroke-width="1.5"/>
+        <circle class="hose-node" cx="1048" cy="212" r="5" fill="url(#boreInnerGrad)" stroke="#39FF14" stroke-width="1.5"/>
+      </g>
+
+      <!-- ===== COMPONENT 13: Fasteners / Bolts Set ===== -->
+      <g id="fasteners-bolts">
+        <!-- Front coupler bolts (hex head style) -->
+        <g class="bolt-front">
+          <polygon points="142,206 145,201 139,201" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,-6)"/>
+          <circle cx="142" cy="199" r="1" fill="white" opacity="0.12"/>
+          <polygon points="162,206 165,201 159,201" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,-6)"/>
+          <circle cx="162" cy="199" r="1" fill="white" opacity="0.12"/>
+          <polygon points="142,294 145,299 139,299" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,6)"/>
+          <polygon points="162,294 165,299 159,299" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,6)"/>
         </g>
-
-        <!-- ===== BODY SECTION A (left) — 3D cylinder ===== -->
-        <g id="body-section-a">
-          <!-- Cylinder body (single gradient — no stacking) -->
-          <rect x="170" y="220" width="280" height="60" rx="6" ry="6"
-                fill="url(#steelGradientA)" stroke="#1a1d24" stroke-width="1.5"/>
-          <!-- LEFT END CAP (ellipse — makes it look cylindrical) -->
-          <ellipse cx="170" cy="250" rx="8" ry="30" fill="url(#endCapGrad)" stroke="#1a1d24" stroke-width="1"/>
-          <ellipse cx="170" cy="250" rx="6" ry="24" fill="url(#boreInnerGrad)" stroke="#1a1d24" stroke-width="0.5"/>
-          <ellipse cx="170" cy="248" rx="5" ry="20" fill="none" stroke="white" stroke-width="0.3" opacity="0.08"/>
-          <!-- Top edge highlight (crisp single line) -->
-          <line x1="178" y1="220.5" x2="444" y2="220.5" stroke="white" stroke-width="0.8" opacity="0.2"/>
-          <!-- Machining marks (minimal, performance-friendly) -->
-          <line x1="180" y1="238" x2="442" y2="238" stroke="#9098a8" stroke-width="0.3" opacity="0.15"/>
-          <line x1="180" y1="250" x2="442" y2="250" stroke="#555b66" stroke-width="0.5" opacity="0.2" stroke-dasharray="8,4"/>
-          <line x1="180" y1="262" x2="442" y2="262" stroke="#9098a8" stroke-width="0.3" opacity="0.15"/>
-          <!-- Joint bevel right -->
-          <line x1="450" y1="222" x2="450" y2="278" stroke="#0d0f14" stroke-width="2" opacity="0.5"/>
-          <line x1="449" y1="222" x2="449" y2="278" stroke="white" stroke-width="0.4" opacity="0.1"/>
-          <!-- Weld seam -->
-          <rect class="svg-energy-glow" x="200" y="248" width="4" height="4" rx="1" fill="#39FF14" opacity="0.35"/>
+        <!-- Rear coupler bolts -->
+        <g class="bolt-rear">
+          <polygon points="1038,206 1041,201 1035,201" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,-6)"/>
+          <circle cx="1038" cy="199" r="1" fill="white" opacity="0.12"/>
+          <polygon points="1058,206 1061,201 1055,201" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,-6)"/>
+          <circle cx="1058" cy="199" r="1" fill="white" opacity="0.12"/>
+          <polygon points="1038,294 1041,299 1035,299" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,6)"/>
+          <polygon points="1058,294 1061,299 1055,299" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,6)"/>
         </g>
+      </g>
 
-        <!-- ===== BODY SECTION B (center) — 3D cylinder ===== -->
-        <g id="body-section-b">
-          <rect x="450" y="220" width="300" height="60"
-                fill="url(#steelGradientB)" stroke="#1a1d24" stroke-width="1.5"/>
-          <line x1="452" y1="220.5" x2="748" y2="220.5" stroke="white" stroke-width="0.8" opacity="0.2"/>
-          <line x1="455" y1="238" x2="745" y2="238" stroke="#9098a8" stroke-width="0.3" opacity="0.15"/>
-          <line x1="455" y1="250" x2="745" y2="250" stroke="#555b66" stroke-width="0.5" opacity="0.2" stroke-dasharray="8,4"/>
-          <line x1="455" y1="262" x2="745" y2="262" stroke="#9098a8" stroke-width="0.3" opacity="0.15"/>
-          <!-- Joint bevels -->
-          <line x1="450" y1="222" x2="450" y2="278" stroke="#0d0f14" stroke-width="2" opacity="0.5"/>
-          <line x1="451" y1="222" x2="451" y2="278" stroke="white" stroke-width="0.4" opacity="0.1"/>
-          <line x1="750" y1="222" x2="750" y2="278" stroke="#0d0f14" stroke-width="2" opacity="0.5"/>
-          <line x1="749" y1="222" x2="749" y2="278" stroke="white" stroke-width="0.4" opacity="0.1"/>
-          <!-- Bore passage indicator -->
-          <rect class="svg-energy-glow" x="594" y="248" width="12" height="4" rx="1" fill="#39FF14" opacity="0.3"/>
+      <!-- ===== COMPONENT 14: Label / Markings Plate ===== -->
+      <g id="label-plate" filter="url(#shadowFilterLight)">
+        <!-- Plate background (glass-like panel) -->
+        <rect x="519" y="281" width="162" height="28" rx="2" ry="2"
+              fill="#080a0e" stroke="#39FF14" stroke-width="0.6" opacity="0.95"/>
+        <!-- Inner subtle gradient -->
+        <rect x="520" y="282" width="160" height="26" rx="1.5" ry="1.5"
+              fill="rgba(57,255,20,0.02)"/>
+        <!-- Inner border -->
+        <rect x="522" y="284" width="156" height="22" rx="1" ry="1"
+              fill="none" stroke="#39FF14" stroke-width="0.3" opacity="0.25"/>
+        <!-- Corner accents (brighter, longer) -->
+        <line x1="519" y1="285" x2="527" y2="285" stroke="#39FF14" stroke-width="1" opacity="0.6"/>
+        <line x1="519" y1="285" x2="519" y2="293" stroke="#39FF14" stroke-width="1" opacity="0.6"/>
+        <line x1="681" y1="285" x2="673" y2="285" stroke="#39FF14" stroke-width="1" opacity="0.6"/>
+        <line x1="681" y1="285" x2="681" y2="293" stroke="#39FF14" stroke-width="1" opacity="0.6"/>
+        <!-- Bottom corner accents -->
+        <line x1="519" y1="305" x2="527" y2="305" stroke="#39FF14" stroke-width="0.6" opacity="0.3"/>
+        <line x1="519" y1="305" x2="519" y2="298" stroke="#39FF14" stroke-width="0.6" opacity="0.3"/>
+        <line x1="681" y1="305" x2="673" y2="305" stroke="#39FF14" stroke-width="0.6" opacity="0.3"/>
+        <line x1="681" y1="305" x2="681" y2="298" stroke="#39FF14" stroke-width="0.6" opacity="0.3"/>
+        <!-- Text content (clipped for print-on animation) -->
+        <g clip-path="url(#labelTextClip)">
+          <text x="530" y="295" font-family="Inter, sans-serif" font-size="7"
+                letter-spacing="2" fill="#e8ecf4" font-weight="700">
+            FLX LARGE BORE MISSILE
+          </text>
+          <text x="530" y="304" font-family="'JetBrains Mono', monospace" font-size="5"
+                letter-spacing="1.2" fill="#39FF14" opacity="0.7">
+            P/N: LBM-2024  |  API 6A  |  DC-15
+          </text>
         </g>
+      </g>
 
-        <!-- ===== BODY SECTION C (right) — 3D cylinder ===== -->
-        <g id="body-section-c">
-          <rect x="750" y="220" width="280" height="60" rx="6" ry="6"
-                fill="url(#steelGradientA)" stroke="#1a1d24" stroke-width="1.5"/>
-          <!-- RIGHT END CAP -->
-          <ellipse cx="1030" cy="250" rx="8" ry="30" fill="url(#endCapGrad)" stroke="#1a1d24" stroke-width="1"/>
-          <ellipse cx="1030" cy="250" rx="6" ry="24" fill="url(#boreInnerGrad)" stroke="#1a1d24" stroke-width="0.5"/>
-          <ellipse cx="1030" cy="248" rx="5" ry="20" fill="none" stroke="white" stroke-width="0.3" opacity="0.08"/>
-          <line x1="756" y1="220.5" x2="1024" y2="220.5" stroke="white" stroke-width="0.8" opacity="0.2"/>
-          <line x1="758" y1="238" x2="1022" y2="238" stroke="#9098a8" stroke-width="0.3" opacity="0.15"/>
-          <line x1="758" y1="250" x2="1022" y2="250" stroke="#555b66" stroke-width="0.5" opacity="0.2" stroke-dasharray="8,4"/>
-          <line x1="758" y1="262" x2="1022" y2="262" stroke="#9098a8" stroke-width="0.3" opacity="0.15"/>
-          <line x1="750" y1="222" x2="750" y2="278" stroke="#0d0f14" stroke-width="2" opacity="0.5"/>
-          <line x1="751" y1="222" x2="751" y2="278" stroke="white" stroke-width="0.4" opacity="0.1"/>
-          <rect class="svg-energy-glow" x="980" y="248" width="4" height="4" rx="1" fill="#39FF14" opacity="0.35"/>
-        </g>
-
-        <!-- ===== COUPLER FRONT ===== -->
-        <g id="coupler-front">
-          <rect x="130" y="212" width="44" height="76" rx="3" fill="url(#darkSteelGradient)" stroke="#1a1d24" stroke-width="2"/>
-          <rect x="130" y="212" width="44" height="76" rx="3" fill="url(#couplerFaceGrad)" opacity="0.4"/>
-          <line x1="133" y1="212.5" x2="171" y2="212.5" stroke="white" stroke-width="0.8" opacity="0.2"/>
-          <!-- Threading -->
-          <line x1="132" y1="218" x2="172" y2="218" stroke="#8a95a5" stroke-width="0.8" opacity="0.4"/>
-          <line x1="132" y1="222" x2="172" y2="222" stroke="#8a95a5" stroke-width="0.6" opacity="0.3"/>
-          <line x1="132" y1="226" x2="172" y2="226" stroke="#8a95a5" stroke-width="0.8" opacity="0.35"/>
-          <line x1="132" y1="274" x2="172" y2="274" stroke="#8a95a5" stroke-width="0.8" opacity="0.35"/>
-          <line x1="132" y1="278" x2="172" y2="278" stroke="#8a95a5" stroke-width="0.6" opacity="0.3"/>
-          <line x1="132" y1="282" x2="172" y2="282" stroke="#8a95a5" stroke-width="0.8" opacity="0.4"/>
-          <!-- Deep bore with concentric rings -->
-          <circle cx="152" cy="250" r="18" fill="url(#boreInnerGrad)" stroke="#0d0f14" stroke-width="1.5"/>
-          <circle cx="152" cy="250" r="15" fill="none" stroke="#2a3040" stroke-width="0.7" opacity="0.6"/>
-          <circle cx="152" cy="250" r="11" fill="none" stroke="#1a2030" stroke-width="0.4" opacity="0.4"/>
-          <circle cx="152" cy="250" r="7" fill="none" stroke="#151820" stroke-width="0.3" opacity="0.3"/>
-          <circle cx="152" cy="247" r="17" fill="none" stroke="white" stroke-width="0.5" opacity="0.1" stroke-dasharray="10,46"/>
-          <text x="152" y="240" font-family="monospace" font-size="3.5" fill="#39FF14" opacity="0.4" text-anchor="middle">15K</text>
-        </g>
-
-        <!-- ===== COUPLER REAR ===== -->
-        <g id="coupler-rear">
-          <rect x="1026" y="212" width="44" height="76" rx="3" fill="url(#darkSteelGradient)" stroke="#1a1d24" stroke-width="2"/>
-          <rect x="1026" y="212" width="44" height="76" rx="3" fill="url(#couplerFaceGrad)" opacity="0.4"/>
-          <line x1="1029" y1="212.5" x2="1067" y2="212.5" stroke="white" stroke-width="0.8" opacity="0.2"/>
-          <line x1="1028" y1="218" x2="1068" y2="218" stroke="#8a95a5" stroke-width="0.8" opacity="0.4"/>
-          <line x1="1028" y1="222" x2="1068" y2="222" stroke="#8a95a5" stroke-width="0.6" opacity="0.3"/>
-          <line x1="1028" y1="226" x2="1068" y2="226" stroke="#8a95a5" stroke-width="0.8" opacity="0.35"/>
-          <line x1="1028" y1="274" x2="1068" y2="274" stroke="#8a95a5" stroke-width="0.8" opacity="0.35"/>
-          <line x1="1028" y1="278" x2="1068" y2="278" stroke="#8a95a5" stroke-width="0.6" opacity="0.3"/>
-          <line x1="1028" y1="282" x2="1068" y2="282" stroke="#8a95a5" stroke-width="0.8" opacity="0.4"/>
-          <circle cx="1048" cy="250" r="18" fill="url(#boreInnerGrad)" stroke="#0d0f14" stroke-width="1.5"/>
-          <circle cx="1048" cy="250" r="15" fill="none" stroke="#2a3040" stroke-width="0.7" opacity="0.6"/>
-          <circle cx="1048" cy="250" r="11" fill="none" stroke="#1a2030" stroke-width="0.4" opacity="0.4"/>
-          <circle cx="1048" cy="250" r="7" fill="none" stroke="#151820" stroke-width="0.3" opacity="0.3"/>
-          <circle cx="1048" cy="247" r="17" fill="none" stroke="white" stroke-width="0.5" opacity="0.1" stroke-dasharray="10,46"/>
-          <text x="1048" y="240" font-family="monospace" font-size="3.5" fill="#39FF14" opacity="0.4" text-anchor="middle">15K</text>
-        </g>
-
-        <!-- ===== CLAMP FRONT ===== -->
-        <g id="clamp-front">
-          <rect x="135" y="200" width="34" height="12" rx="2" fill="#3a4055" stroke="#39FF14" stroke-width="1" opacity="0.9"/>
-          <rect x="135" y="288" width="34" height="12" rx="2" fill="#3a4055" stroke="#39FF14" stroke-width="1" opacity="0.9"/>
-          <circle cx="142" cy="206" r="3.5" fill="url(#boreInnerGrad)" stroke="#5a6270" stroke-width="0.5"/>
-          <circle cx="162" cy="206" r="3.5" fill="url(#boreInnerGrad)" stroke="#5a6270" stroke-width="0.5"/>
-          <circle cx="142" cy="294" r="3.5" fill="url(#boreInnerGrad)" stroke="#5a6270" stroke-width="0.5"/>
-          <circle cx="162" cy="294" r="3.5" fill="url(#boreInnerGrad)" stroke="#5a6270" stroke-width="0.5"/>
-          <rect class="svg-energy-glow" x="135" y="211" width="34" height="1" fill="#39FF14" opacity="0.2"/>
-          <rect class="svg-energy-glow" x="135" y="288" width="34" height="1" fill="#39FF14" opacity="0.2"/>
-        </g>
-
-        <!-- ===== CLAMP REAR ===== -->
-        <g id="clamp-rear">
-          <rect x="1031" y="200" width="34" height="12" rx="2" fill="#3a4055" stroke="#39FF14" stroke-width="1" opacity="0.9"/>
-          <rect x="1031" y="288" width="34" height="12" rx="2" fill="#3a4055" stroke="#39FF14" stroke-width="1" opacity="0.9"/>
-          <circle cx="1038" cy="206" r="3.5" fill="url(#boreInnerGrad)" stroke="#5a6270" stroke-width="0.5"/>
-          <circle cx="1058" cy="206" r="3.5" fill="url(#boreInnerGrad)" stroke="#5a6270" stroke-width="0.5"/>
-          <circle cx="1038" cy="294" r="3.5" fill="url(#boreInnerGrad)" stroke="#5a6270" stroke-width="0.5"/>
-          <circle cx="1058" cy="294" r="3.5" fill="url(#boreInnerGrad)" stroke="#5a6270" stroke-width="0.5"/>
-          <rect class="svg-energy-glow" x="1031" y="211" width="34" height="1" fill="#39FF14" opacity="0.2"/>
-          <rect class="svg-energy-glow" x="1031" y="288" width="34" height="1" fill="#39FF14" opacity="0.2"/>
-        </g>
-
-        <!-- ===== HOSE RESTRAINT ===== -->
-        <g id="hose-restraint">
-          <path d="M 585,220 L 585,195 Q 600,175 615,195 L 615,220" fill="none" stroke="#4a5060" stroke-width="6" stroke-linecap="round"/>
-          <path d="M 585,220 L 585,195 Q 600,175 615,195 L 615,220" fill="none" stroke="#6a7280" stroke-width="3.5" stroke-linecap="round"/>
-          <path d="M 586,220 L 586,196 Q 600,177 614,196 L 614,220" fill="none" stroke="white" stroke-width="0.6" stroke-linecap="round" opacity="0.12"/>
-          <rect x="580" y="216" width="40" height="6" rx="1" fill="url(#skidFrameGrad)" stroke="#1a1d24" stroke-width="1"/>
-          <circle cx="600" cy="180" r="8" fill="none" stroke="#39FF14" stroke-width="2.5"/>
-          <circle cx="600" cy="180" r="4" fill="none" stroke="#39FF14" stroke-width="1" opacity="0.4"/>
-          <circle cx="598" cy="176" r="7" fill="none" stroke="white" stroke-width="0.5" opacity="0.15" stroke-dasharray="4,18"/>
-        </g>
-
-        <!-- ===== NOZZLE / END CAP ===== -->
-        <g id="nozzle-endcap">
-          <polygon points="1070,220 1130,232 1130,268 1070,280" fill="url(#nozzleGradient)" stroke="#1a1d24" stroke-width="1.5"/>
-          <polygon points="1070,220 1130,232 1130,268 1070,280" fill="url(#nozzleAxialGrad)"/>
-          <line x1="1072" y1="221" x2="1128" y2="233" stroke="white" stroke-width="0.6" opacity="0.18"/>
-          <!-- Machining rings -->
-          <line x1="1082" y1="224" x2="1082" y2="276" stroke="#7a8290" stroke-width="0.3" opacity="0.25"/>
-          <line x1="1092" y1="226" x2="1092" y2="274" stroke="#7a8290" stroke-width="0.3" opacity="0.2"/>
-          <line x1="1102" y1="228" x2="1102" y2="272" stroke="#7a8290" stroke-width="0.3" opacity="0.15"/>
-          <line x1="1112" y1="230" x2="1112" y2="270" stroke="#7a8290" stroke-width="0.25" opacity="0.12"/>
-          <!-- Bore opening (deep 3D) -->
-          <circle cx="1130" cy="250" r="14" fill="url(#boreInnerGrad)" stroke="#0d0f14" stroke-width="1.5"/>
-          <circle cx="1130" cy="250" r="11" fill="none" stroke="#2a3040" stroke-width="0.6" opacity="0.5"/>
-          <circle cx="1130" cy="250" r="7" fill="#030406" stroke="#151820" stroke-width="0.4"/>
-          <circle cx="1130" cy="247" r="13" fill="none" stroke="white" stroke-width="0.4" opacity="0.1" stroke-dasharray="8,32"/>
-          <!-- Sealing ring -->
-          <line x1="1072" y1="221" x2="1072" y2="279" stroke="#39FF14" stroke-width="2.5" opacity="0.5"/>
-          <line x1="1072" y1="221" x2="1072" y2="279" stroke="#39FF14" stroke-width="6" opacity="0.06"/>
-        </g>
-
-        <!-- ===== PORT FITTING 1 ===== -->
-        <g id="port-fitting-1">
-          <rect x="284" y="192" width="12" height="30" rx="2" fill="url(#darkSteelGradient)" stroke="#1a1d24" stroke-width="1"/>
-          <rect x="278" y="188" width="24" height="8" rx="1" fill="#4a5060" stroke="#39FF14" stroke-width="1"/>
-          <rect x="278" y="188" width="24" height="3" rx="1" fill="white" opacity="0.06"/>
-          <circle cx="290" cy="192" r="3.5" fill="url(#boreInnerGrad)" stroke="#2a3040" stroke-width="0.5"/>
-          <rect class="svg-energy-glow" x="278" y="195" width="24" height="1" fill="#39FF14" opacity="0.15"/>
-        </g>
-
-        <!-- ===== PORT FITTING 2 ===== -->
-        <g id="port-fitting-2">
-          <rect x="864" y="192" width="12" height="30" rx="2" fill="url(#darkSteelGradient)" stroke="#1a1d24" stroke-width="1"/>
-          <rect x="858" y="188" width="24" height="8" rx="1" fill="#4a5060" stroke="#39FF14" stroke-width="1"/>
-          <rect x="858" y="188" width="24" height="3" rx="1" fill="white" opacity="0.06"/>
-          <circle cx="870" cy="192" r="3.5" fill="url(#boreInnerGrad)" stroke="#2a3040" stroke-width="0.5"/>
-          <rect class="svg-energy-glow" x="858" y="195" width="24" height="1" fill="#39FF14" opacity="0.15"/>
-        </g>
-
-        <!-- ===== HOSE CONNECTIONS ===== -->
-        <g id="hose-connections">
-          <path id="hose-1" d="M 152,212 C 152,175 200,158 240,158 L 278,158 C 286,158 290,168 290,188" fill="none" stroke="#3a3f48" stroke-width="7" stroke-linecap="round"/>
-          <path d="M 152,212 C 152,175 200,158 240,158 L 278,158 C 286,158 290,168 290,188" fill="none" stroke="#5a6270" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
-          <path d="M 152,212 C 152,175 200,158 240,158 L 278,158 C 286,158 290,168 290,188" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" opacity="0.06"/>
-          <path id="hose-2" d="M 290,188 C 290,152 340,140 400,140 L 555,140 C 578,140 600,155 600,175" fill="none" stroke="#3a3f48" stroke-width="7" stroke-linecap="round"/>
-          <path d="M 290,188 C 290,152 340,140 400,140 L 555,140 C 578,140 600,155 600,175" fill="none" stroke="#5a6270" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
-          <path d="M 290,188 C 290,152 340,140 400,140 L 555,140 C 578,140 600,155 600,175" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" opacity="0.06"/>
-          <path id="hose-3" d="M 600,175 C 600,155 622,140 660,140 L 830,140 C 855,140 870,152 870,188" fill="none" stroke="#3a3f48" stroke-width="7" stroke-linecap="round"/>
-          <path d="M 600,175 C 600,155 622,140 660,140 L 830,140 C 855,140 870,152 870,188" fill="none" stroke="#5a6270" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
-          <path d="M 600,175 C 600,155 622,140 660,140 L 830,140 C 855,140 870,152 870,188" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" opacity="0.06"/>
-          <path id="hose-4" d="M 870,188 C 870,168 878,158 910,158 L 1000,158 C 1030,158 1048,175 1048,212" fill="none" stroke="#3a3f48" stroke-width="7" stroke-linecap="round"/>
-          <path d="M 870,188 C 870,168 878,158 910,158 L 1000,158 C 1030,158 1048,175 1048,212" fill="none" stroke="#5a6270" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
-          <path d="M 870,188 C 870,168 878,158 910,158 L 1000,158 C 1030,158 1048,175 1048,212" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" opacity="0.06"/>
-          <!-- Connection nodes -->
-          <circle class="hose-node" cx="152" cy="212" r="5" fill="url(#boreInnerGrad)" stroke="#39FF14" stroke-width="1.5"/>
-          <circle class="hose-node" cx="290" cy="188" r="5" fill="url(#boreInnerGrad)" stroke="#39FF14" stroke-width="1.5"/>
-          <circle class="hose-node" cx="600" cy="175" r="5" fill="url(#boreInnerGrad)" stroke="#39FF14" stroke-width="1.5"/>
-          <circle class="hose-node" cx="870" cy="188" r="5" fill="url(#boreInnerGrad)" stroke="#39FF14" stroke-width="1.5"/>
-          <circle class="hose-node" cx="1048" cy="212" r="5" fill="url(#boreInnerGrad)" stroke="#39FF14" stroke-width="1.5"/>
-        </g>
-
-        <!-- ===== FASTENERS / BOLTS ===== -->
-        <g id="fasteners-bolts">
-          <g class="bolt-front">
-            <polygon points="142,206 145,201 139,201" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,-6)"/>
-            <circle cx="142" cy="199" r="1" fill="white" opacity="0.15"/>
-            <polygon points="162,206 165,201 159,201" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,-6)"/>
-            <circle cx="162" cy="199" r="1" fill="white" opacity="0.15"/>
-            <polygon points="142,294 145,299 139,299" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,6)"/>
-            <polygon points="162,294 165,299 139,299" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,6)"/>
-          </g>
-          <g class="bolt-rear">
-            <polygon points="1038,206 1041,201 1035,201" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,-6)"/>
-            <circle cx="1038" cy="199" r="1" fill="white" opacity="0.15"/>
-            <polygon points="1058,206 1061,201 1055,201" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,-6)"/>
-            <circle cx="1058" cy="199" r="1" fill="white" opacity="0.15"/>
-            <polygon points="1038,294 1041,299 1035,299" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,6)"/>
-            <polygon points="1058,294 1061,299 1055,299" fill="url(#boltGrad)" stroke="#555b66" stroke-width="0.5" transform="translate(0,6)"/>
-          </g>
-        </g>
-
-        <!-- ===== LABEL PLATE ===== -->
-        <g id="label-plate">
-          <rect x="520" y="282" width="160" height="26" rx="2" fill="#080a0e" stroke="#39FF14" stroke-width="0.5" opacity="0.9"/>
-          <rect x="522" y="284" width="156" height="22" rx="1" fill="none" stroke="#39FF14" stroke-width="0.3" opacity="0.2"/>
-          <line x1="520" y1="286" x2="526" y2="286" stroke="#39FF14" stroke-width="0.8" opacity="0.5"/>
-          <line x1="520" y1="286" x2="520" y2="292" stroke="#39FF14" stroke-width="0.8" opacity="0.5"/>
-          <line x1="680" y1="286" x2="674" y2="286" stroke="#39FF14" stroke-width="0.8" opacity="0.5"/>
-          <line x1="680" y1="286" x2="680" y2="292" stroke="#39FF14" stroke-width="0.8" opacity="0.5"/>
-          <g clip-path="url(#labelTextClip)">
-            <text x="530" y="295" font-family="Inter, sans-serif" font-size="7" letter-spacing="2" fill="#e8ecf4" font-weight="700">FLX LARGE BORE MISSILE</text>
-            <text x="530" y="304" font-family="'JetBrains Mono', monospace" font-size="5" letter-spacing="1.2" fill="#39FF14" opacity="0.65">P/N: LBM-2024  |  API 6A  |  DC-15</text>
-          </g>
-        </g>
-
-      </g><!-- end missile-assembly -->
-
-      <!-- ===== GLOW POINTS (outside shadow group for clean glow) ===== -->
+      <!-- ===== COMPONENT 17: Green Glow Points (multi-layer energy nodes) ===== -->
       <g id="glow-points">
-        <circle class="glow-dot svg-energy-glow" cx="450" cy="250" r="3" fill="#39FF14"/>
-        <circle class="glow-dot svg-energy-glow" cx="750" cy="250" r="3" fill="#39FF14"/>
-        <circle class="glow-dot svg-energy-glow" cx="152" cy="250" r="3" fill="#39FF14"/>
-        <circle class="glow-dot svg-energy-glow" cx="1048" cy="250" r="3" fill="#39FF14"/>
-        <circle class="glow-dot svg-energy-glow" cx="290" cy="192" r="3" fill="#39FF14"/>
-        <circle class="glow-dot svg-energy-glow" cx="870" cy="192" r="3" fill="#39FF14"/>
-        <circle class="glow-dot svg-energy-glow" cx="600" cy="180" r="3" fill="#39FF14"/>
-        <circle class="glow-dot svg-energy-glow" cx="1072" cy="250" r="3" fill="#39FF14"/>
+        <!-- Body joint A-B -->
+        <circle class="glow-dot" cx="450" cy="250" r="3" fill="#39FF14"/>
+        <circle cx="450" cy="250" r="3" fill="#39FF14" opacity="0.3" filter="url(#energyPulse)"/>
+        <circle cx="450" cy="250" r="6" fill="none" stroke="#39FF14" stroke-width="0.6" opacity="0.25"/>
+        <circle cx="450" cy="250" r="9" fill="none" stroke="#39FF14" stroke-width="0.3" opacity="0.08"/>
+        <!-- Body joint B-C -->
+        <circle class="glow-dot" cx="750" cy="250" r="3" fill="#39FF14"/>
+        <circle cx="750" cy="250" r="3" fill="#39FF14" opacity="0.3" filter="url(#energyPulse)"/>
+        <circle cx="750" cy="250" r="6" fill="none" stroke="#39FF14" stroke-width="0.6" opacity="0.25"/>
+        <circle cx="750" cy="250" r="9" fill="none" stroke="#39FF14" stroke-width="0.3" opacity="0.08"/>
+        <!-- Front coupler center -->
+        <circle class="glow-dot" cx="152" cy="250" r="3" fill="#39FF14"/>
+        <circle cx="152" cy="250" r="3" fill="#39FF14" opacity="0.3" filter="url(#energyPulse)"/>
+        <circle cx="152" cy="250" r="6" fill="none" stroke="#39FF14" stroke-width="0.6" opacity="0.25"/>
+        <circle cx="152" cy="250" r="9" fill="none" stroke="#39FF14" stroke-width="0.3" opacity="0.08"/>
+        <!-- Rear coupler center -->
+        <circle class="glow-dot" cx="1048" cy="250" r="3" fill="#39FF14"/>
+        <circle cx="1048" cy="250" r="3" fill="#39FF14" opacity="0.3" filter="url(#energyPulse)"/>
+        <circle cx="1048" cy="250" r="6" fill="none" stroke="#39FF14" stroke-width="0.6" opacity="0.25"/>
+        <circle cx="1048" cy="250" r="9" fill="none" stroke="#39FF14" stroke-width="0.3" opacity="0.08"/>
+        <!-- Port fitting 1 -->
+        <circle class="glow-dot" cx="290" cy="192" r="3" fill="#39FF14"/>
+        <circle cx="290" cy="192" r="3" fill="#39FF14" opacity="0.3" filter="url(#energyPulse)"/>
+        <circle cx="290" cy="192" r="6" fill="none" stroke="#39FF14" stroke-width="0.6" opacity="0.25"/>
+        <!-- Port fitting 2 -->
+        <circle class="glow-dot" cx="870" cy="192" r="3" fill="#39FF14"/>
+        <circle cx="870" cy="192" r="3" fill="#39FF14" opacity="0.3" filter="url(#energyPulse)"/>
+        <circle cx="870" cy="192" r="6" fill="none" stroke="#39FF14" stroke-width="0.6" opacity="0.25"/>
+        <!-- Hose tether ring -->
+        <circle class="glow-dot" cx="600" cy="180" r="3" fill="#39FF14"/>
+        <circle cx="600" cy="180" r="3" fill="#39FF14" opacity="0.3" filter="url(#energyPulse)"/>
+        <circle cx="600" cy="180" r="6" fill="none" stroke="#39FF14" stroke-width="0.6" opacity="0.25"/>
+        <!-- Nozzle seal -->
+        <circle class="glow-dot" cx="1072" cy="250" r="3" fill="#39FF14"/>
+        <circle cx="1072" cy="250" r="3" fill="#39FF14" opacity="0.3" filter="url(#energyPulse)"/>
+        <circle cx="1072" cy="250" r="6" fill="none" stroke="#39FF14" stroke-width="0.6" opacity="0.25"/>
+        <circle cx="1072" cy="250" r="9" fill="none" stroke="#39FF14" stroke-width="0.3" opacity="0.08"/>
       </g>
 
-      <!-- ===== HOLOGRAPHIC WIREFRAME OVERLAY (cyan tech lines) ===== -->
-      <g id="holo-wireframe" class="tech-overlay">
-        <!-- Cross-section rings (suggest cylindrical form) -->
-        <ellipse cx="250" cy="250" rx="4" ry="32" fill="none" stroke="#00ccff" stroke-width="0.6" opacity="0.2" stroke-dasharray="4,6"/>
-        <ellipse cx="400" cy="250" rx="4" ry="32" fill="none" stroke="#00ccff" stroke-width="0.6" opacity="0.15" stroke-dasharray="4,6"/>
-        <ellipse cx="600" cy="250" rx="4" ry="32" fill="none" stroke="#00ccff" stroke-width="0.6" opacity="0.2" stroke-dasharray="4,6"/>
-        <ellipse cx="800" cy="250" rx="4" ry="32" fill="none" stroke="#00ccff" stroke-width="0.6" opacity="0.15" stroke-dasharray="4,6"/>
-        <ellipse cx="950" cy="250" rx="4" ry="32" fill="none" stroke="#00ccff" stroke-width="0.6" opacity="0.2" stroke-dasharray="4,6"/>
-        <!-- Top/bottom wireframe outline -->
-        <line x1="170" y1="218" x2="1070" y2="218" stroke="#00ccff" stroke-width="0.4" opacity="0.1"/>
-        <line x1="170" y1="282" x2="1070" y2="282" stroke="#00ccff" stroke-width="0.4" opacity="0.08"/>
-        <!-- Diagonal construction lines -->
-        <line x1="170" y1="218" x2="130" y2="200" stroke="#00ccff" stroke-width="0.3" opacity="0.08"/>
-        <line x1="1070" y1="218" x2="1130" y2="232" stroke="#00ccff" stroke-width="0.3" opacity="0.08"/>
-      </g>
-
-      <!-- ===== DIMENSION LINES (technical measurement callouts) ===== -->
-      <g id="dimension-lines" class="tech-overlay">
-        <!-- Overall length -->
-        <line x1="130" y1="360" x2="1130" y2="360" stroke="#00ccff" stroke-width="0.5" opacity="0.25"/>
-        <line x1="130" y1="355" x2="130" y2="365" stroke="#00ccff" stroke-width="0.5" opacity="0.25"/>
-        <line x1="1130" y1="355" x2="1130" y2="365" stroke="#00ccff" stroke-width="0.5" opacity="0.25"/>
-        <text x="600" y="374" font-family="'JetBrains Mono', monospace" font-size="6" fill="#00ccff" opacity="0.35" text-anchor="middle" letter-spacing="1">12.5 FT</text>
-        <!-- Bore diameter -->
-        <line x1="118" y1="232" x2="118" y2="268" stroke="#00ccff" stroke-width="0.5" opacity="0.25"/>
-        <line x1="114" y1="232" x2="122" y2="232" stroke="#00ccff" stroke-width="0.5" opacity="0.25"/>
-        <line x1="114" y1="268" x2="122" y2="268" stroke="#00ccff" stroke-width="0.5" opacity="0.25"/>
-        <text x="108" y="254" font-family="'JetBrains Mono', monospace" font-size="5" fill="#00ccff" opacity="0.3" text-anchor="end" letter-spacing="0.5">7"</text>
-      </g>
-
-      <!-- ===== DATA READOUTS (futuristic live data) ===== -->
-      <g id="data-readouts" class="tech-overlay">
-        <text x="300" y="168" font-family="'JetBrains Mono', monospace" font-size="5" fill="#00ccff" opacity="0.35" letter-spacing="0.8">BORE: 7.000"</text>
-        <text x="560" y="128" font-family="'JetBrains Mono', monospace" font-size="5" fill="#00ccff" opacity="0.35" letter-spacing="0.8">PRESS: 15,000 PSI</text>
-        <text x="900" y="168" font-family="'JetBrains Mono', monospace" font-size="5" fill="#00ccff" opacity="0.35" letter-spacing="0.8">FLOW: 135+ BPM</text>
-        <!-- Small leader lines from data to component -->
-        <line x1="330" y1="170" x2="330" y2="188" stroke="#00ccff" stroke-width="0.3" opacity="0.2"/>
-        <line x1="610" y1="130" x2="610" y2="175" stroke="#00ccff" stroke-width="0.3" opacity="0.2"/>
-        <line x1="930" y1="170" x2="930" y2="188" stroke="#00ccff" stroke-width="0.3" opacity="0.2"/>
-      </g>
-
-      <!-- ===== VIGNETTE (darken edges, focus center) ===== -->
-      <rect width="1200" height="500" fill="url(#vignetteGrad)" pointer-events="none"/>
     </svg>
+
     <!-- Stage progress indicator -->
     <div id="stage-indicator" class="stage-indicator" aria-live="polite"></div>
 
