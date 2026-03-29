@@ -16,6 +16,8 @@
   --accent-dim: #1a7a0a;
   --accent-glow: rgba(57, 255, 20, 0.15);
   --accent-glow-strong: rgba(57, 255, 20, 0.4);
+  --accent-cyan: #00ccff;
+  --accent-cyan-glow: rgba(0, 204, 255, 0.15);
   --steel-light: #6b7080;
   --steel-dark: #2a2d35;
   --border-subtle: rgba(57, 255, 20, 0.08);
@@ -315,16 +317,14 @@ body {
   justify-content: center;
   align-items: center;
   background:
-    radial-gradient(ellipse at 50% 40%, rgba(57, 255, 20, 0.04) 0%, transparent 40%),
-    radial-gradient(ellipse at 50% 70%, rgba(57, 255, 20, 0.02) 0%, transparent 35%),
-    radial-gradient(ellipse at 30% 30%, rgba(100, 120, 180, 0.02) 0%, transparent 30%),
-    radial-gradient(ellipse at 70% 30%, rgba(100, 120, 180, 0.015) 0%, transparent 30%),
-    radial-gradient(ellipse at center, #161e2c 0%, #0f1420 35%, #0b0d14 60%, var(--bg-primary) 80%);
+    radial-gradient(ellipse 50% 55% at 50% 35%, rgba(200, 215, 255, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse at 50% 55%, rgba(57, 255, 20, 0.03) 0%, transparent 40%),
+    radial-gradient(ellipse at center, #161e2c 0%, #0f1420 30%, #0b0d14 55%, var(--bg-primary) 80%);
   position: relative;
   overflow: hidden;
 }
 
-/* Scanline overlay (finer, more cinematic) */
+/* Scanline overlay */
 .scanline-overlay {
   position: absolute;
   top: 0;
@@ -334,30 +334,12 @@ body {
   background: repeating-linear-gradient(
     0deg,
     transparent,
-    transparent 1.5px,
-    rgba(57, 255, 20, 0.006) 1.5px,
-    rgba(57, 255, 20, 0.006) 3px
+    transparent 2px,
+    rgba(57, 255, 20, 0.005) 2px,
+    rgba(57, 255, 20, 0.005) 4px
   );
   pointer-events: none;
   z-index: 10;
-}
-
-/* Ambient light sweep animation (subtle moving highlight) */
-.assembly-section .viewport-glow-border::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(57, 255, 20, 0.02), transparent);
-  animation: lightSweep 12s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes lightSweep {
-  0%, 100% { left: -60%; }
-  50% { left: 100%; }
 }
 
 /* Vignette overlay for cinematic depth */
@@ -416,10 +398,16 @@ body {
   max-height: 80vh;
   position: relative;
   z-index: 5;
-  filter:
-    drop-shadow(0 4px 12px rgba(0,0,0,0.4))
-    drop-shadow(0 12px 36px rgba(0,0,0,0.25))
-    drop-shadow(0 0 60px rgba(57, 255, 20, 0.03));
+}
+
+/* CSS-based energy glow (replaces expensive SVG energyPulse filter) */
+.svg-energy-glow {
+  filter: drop-shadow(0 0 2px #39FF14) drop-shadow(0 0 6px rgba(57, 255, 20, 0.4));
+}
+
+/* Tech overlay elements (wireframe, dimension, data) */
+.tech-overlay {
+  pointer-events: none;
 }
 
 /* ===== HUD CALLOUTS ===== */
@@ -1106,6 +1094,11 @@ body {
 
   /* Disable glow border animation on mobile (saves GPU) */
   .viewport-glow-border { animation: none; opacity: 0.08; }
+
+  /* Hide tech overlays on mobile (performance) */
+  .tech-overlay { display: none; }
+  #volumetric-light { display: none; }
+  .svg-energy-glow { filter: none; }
 }
 
 /* Mobile portrait */
