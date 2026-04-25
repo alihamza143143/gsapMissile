@@ -93,23 +93,6 @@ body {
   z-index: 0;
 }
 
-/* Grid overlay on hero */
-.hero-grid-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image:
-    linear-gradient(rgba(57, 255, 20, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(57, 255, 20, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-  z-index: 1;
-  mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, transparent 70%);
-  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.6) 0%, transparent 70%);
-}
-
 .hero-content {
   position: relative;
   z-index: 2;
@@ -322,43 +305,7 @@ body {
   overflow: hidden;
 }
 
-/* Scanline overlay (finer, more cinematic) */
-.scanline-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 1.5px,
-    rgba(57, 255, 20, 0.006) 1.5px,
-    rgba(57, 255, 20, 0.006) 3px
-  );
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* Ambient light sweep animation (subtle moving highlight) */
-.assembly-section .viewport-glow-border::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(57, 255, 20, 0.02), transparent);
-  animation: lightSweep 12s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes lightSweep {
-  0%, 100% { left: -60%; }
-  50% { left: 100%; }
-}
-
-/* Vignette overlay for cinematic depth */
+/* Vignette overlay for cinematic depth (kept — provides depth without being a frame) */
 .assembly-section::before {
   content: '';
   position: absolute;
@@ -366,45 +313,6 @@ body {
   background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%);
   pointer-events: none;
   z-index: 4;
-}
-
-/* Subtle corner brackets for HUD framing */
-.assembly-section::after {
-  content: '';
-  position: absolute;
-  inset: 20px;
-  border: 1px solid rgba(57, 255, 20, 0.05);
-  pointer-events: none;
-  z-index: 4;
-}
-
-/* Animated gradient border */
-.viewport-glow-border {
-  position: absolute;
-  inset: 0;
-  border: 1px solid transparent;
-  border-image: linear-gradient(
-    var(--glow-angle, 0deg),
-    transparent 0%,
-    var(--accent) 25%,
-    transparent 50%,
-    var(--accent) 75%,
-    transparent 100%
-  ) 1;
-  opacity: 0.15;
-  pointer-events: none;
-  z-index: 11;
-  animation: rotateBorderAngle 8s linear infinite;
-}
-
-@property --glow-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes rotateBorderAngle {
-  to { --glow-angle: 360deg; }
 }
 
 #missile-svg {
@@ -1193,12 +1101,6 @@ body {
   .cta-section h2 { font-size: clamp(1.4rem, 4vw, 2rem); }
   .cta-section p { font-size: 0.85rem; }
 
-  /* Scanline less intense on mobile */
-  .scanline-overlay { opacity: 0.5; }
-
-  /* Disable glow border animation on mobile (saves GPU) */
-  .viewport-glow-border { animation: none; opacity: 0.08; }
-
   /* Hide tech overlays + disable CSS glow on mobile */
   .tech-overlay { display: none; }
   .svg-glow { filter: none; }
@@ -1393,20 +1295,11 @@ body {
     display: none;
   }
 
-  .scanline-overlay,
-  .viewport-glow-border,
-  .hero-grid-overlay {
-    display: none;
-  }
-
   #particle-canvas { display: none; }
 }
 
 /* ===== PRINT STYLES ===== */
 @media print {
-  .scanline-overlay,
-  .viewport-glow-border,
-  .hero-grid-overlay,
   #particle-canvas,
   .scroll-indicator,
   .progress-track,

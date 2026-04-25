@@ -40,9 +40,6 @@
     <!-- Particle canvas background -->
     <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
-    <!-- Grid overlay -->
-    <div class="hero-grid-overlay" aria-hidden="true"></div>
-
     <div class="hero-content">
       <p class="hero-brand">FLX ENERGY SERVICES</p>
       <p class="hero-eyebrow">Precision Engineered</p>
@@ -81,12 +78,6 @@
 
   <!-- ===== ASSEMBLY VIEWPORT (pinned during scroll) ===== -->
   <section id="assembly-viewport" class="assembly-section">
-
-    <!-- Scanline overlay -->
-    <div class="scanline-overlay" aria-hidden="true"></div>
-
-    <!-- Animated gradient border -->
-    <div class="viewport-glow-border" aria-hidden="true"></div>
 
     <!-- HUD Callout overlays — positioned via CSS, animated via GSAP -->
     <div id="hud-callouts" class="hud-callouts">
@@ -472,23 +463,6 @@
           <rect id="label-text-mask" x="520" y="282" width="0" height="24"/>
         </clipPath>
       </defs>
-
-      <!-- ===== COMPONENT 1: Background Grid ===== -->
-      <g id="bg-grid">
-        <rect width="1200" height="500" fill="url(#gridPattern)" opacity="0.15"/>
-        <!-- Perspective convergence lines for depth (more lines, softer) -->
-        <line x1="600" y1="250" x2="0" y2="0" stroke="#39FF14" stroke-width="0.3" opacity="0.05"/>
-        <line x1="600" y1="250" x2="1200" y2="0" stroke="#39FF14" stroke-width="0.3" opacity="0.05"/>
-        <line x1="600" y1="250" x2="0" y2="500" stroke="#39FF14" stroke-width="0.3" opacity="0.05"/>
-        <line x1="600" y1="250" x2="1200" y2="500" stroke="#39FF14" stroke-width="0.3" opacity="0.05"/>
-        <!-- Extra diagonal perspective lines -->
-        <line x1="600" y1="250" x2="300" y2="0" stroke="#39FF14" stroke-width="0.15" opacity="0.03"/>
-        <line x1="600" y1="250" x2="900" y2="0" stroke="#39FF14" stroke-width="0.15" opacity="0.03"/>
-        <line x1="600" y1="250" x2="300" y2="500" stroke="#39FF14" stroke-width="0.15" opacity="0.03"/>
-        <line x1="600" y1="250" x2="900" y2="500" stroke="#39FF14" stroke-width="0.15" opacity="0.03"/>
-        <!-- Horizon line -->
-        <line x1="0" y1="250" x2="1200" y2="250" stroke="#39FF14" stroke-width="0.2" opacity="0.025"/>
-      </g>
 
       <!-- ===== Atmospheric environment effects ===== -->
       <!-- Main ground reflection plane (reflective floor) -->
