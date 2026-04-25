@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== CONFIG =====
   const isMobile = window.innerWidth < 768;
   const isSmallMobile = window.innerWidth < 400;
-  const TOTAL_SCROLL = isMobile ? '250vh' : '400vh';
+  const TOTAL_SCROLL = isMobile ? '250vh' : '750vh';
   const SCRUB_SMOOTHING = isMobile ? 0.5 : 0.8;
 
 
