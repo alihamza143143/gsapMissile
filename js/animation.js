@@ -221,7 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
   //  ELEMENT SELECTORS
   // ============================================================
   const el = {
-    bgGrid:        '#bg-grid',
     bodyA:         '#body-section-a',
     bodyB:         '#body-section-b',
     bodyC:         '#body-section-c',
@@ -341,12 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============================================================
   tl.addLabel('exploded');
 
-  tl.fromTo(el.bgGrid,
-    { opacity: 0.05 },
-    { opacity: 0.15, duration: 5, ease: 'power1.inOut' },
-    'exploded'
-  );
-
+  // Hold the exploded view for 5 timeline units (no animation, just dwell time)
   tl.to({}, { duration: 5 }, 'exploded');
 
   // Tech overlays fade in during exploded view (desktop only)
@@ -461,11 +455,6 @@ document.addEventListener('DOMContentLoaded', () => {
   tl.to(el.skidFrame, { y: -3, duration: 0.3, ease: 'power3.out' }, 'stage4+=5');
   tl.to(el.skidFrame, { y: 0, duration: 1.5, ease: 'elastic.out(1, 0.5)' }, 'stage4+=5.3');
 
-  tl.to(el.bgGrid, {
-    opacity: 0.08,
-    duration: 8, ease: 'power1.inOut',
-  }, 'stage4');
-
   // HUD Callout — Stage 4
   tl.to('#callout-stage4', { opacity: 1, y: 0, duration: 2, ease: 'power2.out' }, 'stage4+=2');
   tl.to('#callout-stage4', { opacity: 0, y: 10, duration: 1.5, ease: 'power1.in' }, 'stage4+=7');
@@ -552,11 +541,6 @@ document.addEventListener('DOMContentLoaded', () => {
     opacity: 1, scale: 1, duration: 1, ease: 'back.out(2)',
   }, 'stage5+=39');
 
-  tl.to(el.bgGrid, {
-    opacity: 0.03,
-    duration: 30, ease: 'power1.out',
-  }, 'stage5+=10');
-
   // HUD Callout — Stage 5 (stays longer since this is the big stage)
   tl.to('#callout-stage5', { opacity: 1, y: 0, duration: 3, ease: 'power2.out' }, 'stage5+=5');
   tl.to('#callout-stage5', { opacity: 0, y: -10, duration: 3, ease: 'power1.in' }, 'stage5+=35');
@@ -624,11 +608,6 @@ document.addEventListener('DOMContentLoaded', () => {
       duration: 3,
     }, 'stage6+=13');
   }
-
-  tl.to(el.bgGrid, {
-    opacity: 0,
-    duration: 8, ease: 'power1.out',
-  }, 'stage6+=2');
 
   tl.to('.glow-dot', {
     scale: 1,
