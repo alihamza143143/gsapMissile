@@ -1191,66 +1191,6 @@
     </div>
   </footer>
 
-  <!-- ===== CODE PROTECTION ===== -->
-  <script>
-  (function(){
-    // Block right-click context menu
-    document.addEventListener('contextmenu',function(e){e.preventDefault();return false;});
-
-    // Block keyboard shortcuts (DevTools, View Source, Copy, Save, Select All, Print)
-    document.addEventListener('keydown',function(e){
-      // F12
-      if(e.key==='F12'){e.preventDefault();return false;}
-      // Ctrl+Shift+I (DevTools), Ctrl+Shift+J (Console), Ctrl+Shift+C (Inspector)
-      if(e.ctrlKey&&e.shiftKey&&['I','J','C','K','M'].includes(e.key.toUpperCase())){e.preventDefault();return false;}
-      // Ctrl+U (View Source)
-      if(e.ctrlKey&&e.key.toUpperCase()==='U'){e.preventDefault();return false;}
-      // Ctrl+S (Save Page)
-      if(e.ctrlKey&&e.key.toUpperCase()==='S'){e.preventDefault();return false;}
-      // Ctrl+A (Select All)
-      if(e.ctrlKey&&e.key.toUpperCase()==='A'){e.preventDefault();return false;}
-      // Ctrl+C (Copy)
-      if(e.ctrlKey&&e.key.toUpperCase()==='C'){e.preventDefault();return false;}
-      // Ctrl+X (Cut)
-      if(e.ctrlKey&&e.key.toUpperCase()==='X'){e.preventDefault();return false;}
-      // Ctrl+P (Print)
-      if(e.ctrlKey&&e.key.toUpperCase()==='P'){e.preventDefault();return false;}
-      // Ctrl+Shift+U (Firefox View Source)
-      if(e.ctrlKey&&e.shiftKey&&e.key.toUpperCase()==='U'){e.preventDefault();return false;}
-    });
-
-    // Block text selection via CSS + JS
-    document.addEventListener('selectstart',function(e){e.preventDefault();return false;});
-
-    // Block drag (prevents dragging images/elements)
-    document.addEventListener('dragstart',function(e){e.preventDefault();return false;});
-
-    // Block copy/cut/paste events
-    document.addEventListener('copy',function(e){e.preventDefault();return false;});
-    document.addEventListener('cut',function(e){e.preventDefault();return false;});
-
-    // DevTools detection — clear page if opened
-    var _dc=0;
-    setInterval(function(){
-      var t0=performance.now();
-      debugger;
-      if(performance.now()-t0>100){
-        _dc++;
-        if(_dc>2){document.body.innerHTML='';document.title='';window.location.href='about:blank';}
-      }
-    },1000);
-
-    // Console log detection (some extensions read via console)
-    var _el=document.createElement('div');
-    Object.defineProperty(_el,'id',{get:function(){
-      document.body.innerHTML='';window.location.href='about:blank';
-    }});
-
-    // Block iframe embedding (clickjacking protection)
-    if(window.top!==window.self){window.top.location=window.self.location;}
-  })();
-  </script>
-
   <!-- ===== SCRIPTS (defer for faster FCP/LCP) ===== -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
