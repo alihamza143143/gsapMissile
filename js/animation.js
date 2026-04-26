@@ -24,11 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const isMobile = window.innerWidth < 768;
   const isSmallMobile = window.innerWidth < 400;
   // ScrollTrigger's "+=Nvh" string is parsed as pixels (the 'vh' suffix is
-  // dropped) — so compute pin extent in actual pixels here. Multipliers are
-  // viewport heights of total scroll across the 240-unit timeline:
-  // desktop 28.8vh·unit · 240u = 28.8·vh of scroll per stage at the matched
-  // Stage 5 cadence the client wanted. Mobile keeps roughly the prior cadence.
-  const SCROLL_VH_MULT = isMobile ? 2.5 : 28.8;
+  // dropped) — so compute pin extent in actual pixels here. Multiplier is
+  // viewport heights of total scroll across the 240-unit timeline.
+  const SCROLL_VH_MULT = isMobile ? 2.5 : 14.4;
   const TOTAL_SCROLL_PX = Math.round(window.innerHeight * SCROLL_VH_MULT);
   const SCRUB_SMOOTHING = isMobile ? 0.5 : 0.8;
 
