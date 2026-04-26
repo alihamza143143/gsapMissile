@@ -23,7 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== CONFIG =====
   const isMobile = window.innerWidth < 768;
   const isSmallMobile = window.innerWidth < 400;
-  const TOTAL_SCROLL = isMobile ? '250vh' : '1200vh';
+  // ScrollTrigger's "+=Nvh" string is parsed as pixels (the 'vh' suffix is
+  // dropped) — so compute pin extent in actual pixels here. Multipliers are
+  // viewport heights of total scroll across the 240-unit timeline:
+  // desktop 28.8vh·unit · 240u = 28.8·vh of scroll per stage at the matched
+  // Stage 5 cadence the client wanted. Mobile keeps roughly the prior cadence.
+  const SCROLL_VH_MULT = isMobile ? 2.5 : 28.8;
+  const TOTAL_SCROLL_PX = Math.round(window.innerHeight * SCROLL_VH_MULT);
   const SCRUB_SMOOTHING = isMobile ? 0.5 : 0.8;
 
 
@@ -296,16 +302,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const progressFill = document.getElementById('progress-fill');
   const progressLabel = document.getElementById('progress-label');
 
+  // Timeline layout (240 units total) — every stage now gets ~32–42 units
+  // of scroll, giving each stage multiple wheel-scrolls of dwell time
+  // (matching Stage 5 hoses-connect cadence the client liked).
   function updateProgress(progress) {
     var stageIndex;
-    if (progress < 0.05)      stageIndex = 0;
-    else if (progress < 0.15) stageIndex = 1;
-    else if (progress < 0.22) stageIndex = 2;
-    else if (progress < 0.30) stageIndex = 3;
-    else if (progress < 0.38) stageIndex = 4;
-    else if (progress < 0.80) stageIndex = 5;
-    else if (progress < 0.95) stageIndex = 6;
-    else                      stageIndex = 7;
+    if (progress < 0.034)      stageIndex = 0; //   0 –   8
+    else if (progress < 0.180) stageIndex = 1; //   8 –  43
+    else if (progress < 0.325) stageIndex = 2; //  43 –  78
+    else if (progress < 0.471) stageIndex = 3; //  78 – 113
+    else if (progress < 0.617) stageIndex = 4; // 113 – 148
+    else if (progress < 0.792) stageIndex = 5; // 148 – 190
+    else if (progress < 0.938) stageIndex = 6; // 190 – 225
+    else                       stageIndex = 7; // 225 – 240
 
     if (stageIndicator) {
       stageIndicator.textContent = 'Stage ' + stageIndex + ' \u2014 ' + stageNames[stageIndex];
@@ -327,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
       trigger: '#assembly-viewport',
       pin: true,
       start: 'top top',
-      end: '+=' + TOTAL_SCROLL,
+      end: '+=' + TOTAL_SCROLL_PX,
       scrub: SCRUB_SMOOTHING,
       anticipatePin: 1,
       onUpdate: function(self) { updateProgress(self.progress); },
@@ -340,8 +349,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============================================================
   tl.addLabel('exploded');
 
-  // Hold the exploded view for 5 timeline units (no animation, just dwell time)
-  tl.to({}, { duration: 5 }, 'exploded');
+  // Hold the exploded view for 8 timeline units (no animation, just dwell time)
+  tl.to({}, { duration: 8 }, 'exploded');
 
   // Tech overlays fade in during exploded view (desktop only)
   if (!isMobile) {
@@ -352,9 +361,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ============================================================
-  //  STAGE 1 — PIPE FORMATION (5–15 units)
+  //  STAGE 1 — PIPE FORMATION (8–43 units, 35-unit span)
   // ============================================================
-  tl.addLabel('stage1', 5);
+  tl.addLabel('stage1', 8);
 
   tl.to(el.bodyB, {
     x: 0, y: 0, opacity: 1,
@@ -377,15 +386,15 @@ document.addEventListener('DOMContentLoaded', () => {
   tl.to(el.bodyC, { x: -4, duration: 0.3, ease: 'power3.out' }, 'stage1+=8');
   tl.to(el.bodyC, { x: 0, duration: 1, ease: 'elastic.out(1, 0.5)' }, 'stage1+=8.3');
 
-  // HUD Callout — Stage 1
+  // HUD Callout — Stage 1 (extended hold so user can read it)
   tl.to('#callout-stage1-svg', { opacity: 1, y: 0, duration: 2, ease: 'power2.out' }, 'stage1+=6');
-  tl.to('#callout-stage1-svg', { opacity: 0, y: -10, duration: 2, ease: 'power1.in' }, 'stage1+=12');
+  tl.to('#callout-stage1-svg', { opacity: 0, y: -10, duration: 2, ease: 'power1.in' }, 'stage1+=30');
 
 
   // ============================================================
-  //  STAGE 2 — PUMP PORTS INSTALL (15–22 units)
+  //  STAGE 2 — PUMP PORTS INSTALL (43–78 units, 35-unit span)
   // ============================================================
-  tl.addLabel('stage2', 15);
+  tl.addLabel('stage2', 43);
 
   tl.to(el.portFitting1, {
     x: 0, y: 0, rotation: 0, opacity: 1,
@@ -403,15 +412,15 @@ document.addEventListener('DOMContentLoaded', () => {
   tl.to(el.portFitting2, { rotation: -5, duration: 0.5, ease: 'power1.inOut' }, 'stage2+=5.5');
   tl.to(el.portFitting2, { rotation: 0, duration: 1, ease: 'elastic.out(1, 0.3)' }, 'stage2+=6');
 
-  // HUD Callout — Stage 2
+  // HUD Callout — Stage 2 (extended hold so user can read it)
   tl.to('#callout-stage2-svg', { opacity: 1, y: 0, duration: 2, ease: 'power2.out' }, 'stage2+=2');
-  tl.to('#callout-stage2-svg', { opacity: 0, y: -10, duration: 1.5, ease: 'power1.in' }, 'stage2+=6');
+  tl.to('#callout-stage2-svg', { opacity: 0, y: -10, duration: 2, ease: 'power1.in' }, 'stage2+=28');
 
 
   // ============================================================
-  //  STAGE 3 — VALVES ATTACH (22–30 units)
+  //  STAGE 3 — VALVES ATTACH (78–113 units, 35-unit span)
   // ============================================================
-  tl.addLabel('stage3', 22);
+  tl.addLabel('stage3', 78);
 
   tl.to(el.couplerFront, {
     x: 0, y: 0, opacity: 1,
@@ -437,15 +446,15 @@ document.addEventListener('DOMContentLoaded', () => {
     duration: 2, ease: 'power3.out',
   }, 'stage3+=5.5');
 
-  // HUD Callout — Stage 3
+  // HUD Callout — Stage 3 (extended hold so user can read it)
   tl.to('#callout-stage3-svg', { opacity: 1, y: 0, duration: 2, ease: 'power2.out' }, 'stage3+=2');
-  tl.to('#callout-stage3-svg', { opacity: 0, y: -10, duration: 1.5, ease: 'power1.in' }, 'stage3+=7');
+  tl.to('#callout-stage3-svg', { opacity: 0, y: -10, duration: 2, ease: 'power1.in' }, 'stage3+=28');
 
 
   // ============================================================
-  //  STAGE 4 — SKID FRAME LOCK (30–38 units)
+  //  STAGE 4 — SKID FRAME LOCK (113–148 units, 35-unit span)
   // ============================================================
-  tl.addLabel('stage4', 30);
+  tl.addLabel('stage4', 113);
 
   tl.to(el.skidFrame, {
     y: 0, opacity: 1,
@@ -455,9 +464,9 @@ document.addEventListener('DOMContentLoaded', () => {
   tl.to(el.skidFrame, { y: -3, duration: 0.3, ease: 'power3.out' }, 'stage4+=5');
   tl.to(el.skidFrame, { y: 0, duration: 1.5, ease: 'elastic.out(1, 0.5)' }, 'stage4+=5.3');
 
-  // HUD Callout — Stage 4
+  // HUD Callout — Stage 4 (extended hold so user can read it)
   tl.to('#callout-stage4-svg', { opacity: 1, y: 0, duration: 2, ease: 'power2.out' }, 'stage4+=2');
-  tl.to('#callout-stage4-svg', { opacity: 0, y: 10, duration: 1.5, ease: 'power1.in' }, 'stage4+=7');
+  tl.to('#callout-stage4-svg', { opacity: 0, y: 10, duration: 2, ease: 'power1.in' }, 'stage4+=28');
 
   // Fade out tech overlays as assembly completes
   if (!isMobile) {
@@ -468,9 +477,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ============================================================
-  //  STAGE 5 — HOSES CONNECT (38–80 units)
+  //  STAGE 5 — HOSES CONNECT (148–190 units, 42-unit span — UNCHANGED feel)
   // ============================================================
-  tl.addLabel('stage5', 38);
+  tl.addLabel('stage5', 148);
 
   tl.to(el.hoseGroup, { opacity: 1, duration: 1 }, 'stage5');
 
@@ -547,9 +556,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ============================================================
-  //  STAGE 6 — FINAL LOCK (80–95 units)
+  //  STAGE 6 — FINAL LOCK (190–225 units, 35-unit span)
   // ============================================================
-  tl.addLabel('stage6', 80);
+  tl.addLabel('stage6', 190);
 
   tl.to(el.clampFront, {
     x: 0, y: 0, scaleY: 1, opacity: 1,
@@ -614,15 +623,15 @@ document.addEventListener('DOMContentLoaded', () => {
     duration: 2, ease: 'power1.inOut',
   }, 'stage6+=12');
 
-  // HUD Callout — Stage 6 (big highlight callout)
+  // HUD Callout — Stage 6 (big highlight callout, extended hold)
   tl.to('#callout-stage6-svg', { opacity: 1, y: 0, scale: 1, duration: 3, ease: 'power2.out' }, 'stage6+=9');
-  tl.to('#callout-stage6-svg', { opacity: 0, duration: 2, ease: 'power1.in' }, 'stage6+=13');
+  tl.to('#callout-stage6-svg', { opacity: 0, duration: 2, ease: 'power1.in' }, 'stage6+=30');
 
 
   // ============================================================
-  //  STAGE 7 — HERO STATE (95–100 units)
+  //  STAGE 7 — HERO STATE (225–240 units, 15-unit span)
   // ============================================================
-  tl.addLabel('stage7', 95);
+  tl.addLabel('stage7', 225);
 
   tl.to(el.labelPlate, {
     y: 0, opacity: 1,
@@ -657,7 +666,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ScrollTrigger.create({
     trigger: '#assembly-viewport',
     start: 'top top',
-    end: '+=' + TOTAL_SCROLL,
+    end: '+=' + TOTAL_SCROLL_PX,
     onLeave: function() {
       gsap.set(gpuSelector, { willChange: 'auto' });
     },
@@ -787,7 +796,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ScrollTrigger.create({
       trigger: '#assembly-viewport',
       start: 'top top',
-      end: '+=' + TOTAL_SCROLL,
+      end: '+=' + TOTAL_SCROLL_PX,
       onEnter: function() {
         // Subtle continuous ambient shimmer on body sections
         gsap.to('#energy-scanline', {
