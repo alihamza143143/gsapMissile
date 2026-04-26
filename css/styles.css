@@ -319,107 +319,27 @@ body {
 /* Tech overlay elements */
 .tech-overlay { pointer-events: none; }
 
-/* ===== HUD CALLOUTS ===== */
-.hud-callouts {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 8;
-}
-
-.hud-callout {
-  position: absolute;
-  opacity: 0;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
-}
-
-.hud-line {
-  width: 90px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent));
-  flex-shrink: 0;
-  margin-top: 0.85rem;
-}
-
-.hud-box {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  padding: 0.7rem 1rem;
-  background: rgba(10, 12, 16, 0.9);
-  border: 1px solid var(--border-active);
-  border-left: 2px solid var(--accent);
-  backdrop-filter: blur(8px);
-  max-width: 290px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03);
-}
-
-.hud-box-highlight {
-  border-color: var(--accent);
-  box-shadow: 0 0 30px var(--accent-glow), 0 0 60px rgba(57, 255, 20, 0.08), inset 0 0 20px rgba(57, 255, 20, 0.05);
-}
-
-.hud-label {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: var(--accent);
-}
-
-.hud-detail {
-  font-size: 0.8rem;
-  font-weight: 400;
-  color: var(--text-muted);
-  letter-spacing: 0.03em;
-  line-height: 1.4;
-}
-
-/* Callout positions — pulled in toward missile, lines lengthened to point at parts */
-.hud-callout-left { left: 11%; top: 36%; flex-direction: row-reverse; align-items: center; }
-.hud-callout-left .hud-line { background: linear-gradient(90deg, var(--accent), transparent); width: 110px; margin-top: 0; }
-.hud-callout-left .hud-box { border-left: none; border-right: 2px solid var(--accent); text-align: right; }
-
-.hud-callout-top { left: 32%; top: 18%; flex-direction: column; align-items: flex-start; }
-.hud-callout-top .hud-line { width: 1px; height: 70px; background: linear-gradient(180deg, transparent, var(--accent)); margin-top: 0; align-self: flex-end; margin-right: 1.4rem; }
-
-.hud-callout-right { right: 13%; top: 36%; align-items: center; }
-.hud-callout-right .hud-line { width: 110px; margin-top: 0; }
-
-.hud-callout-bottom { left: 42%; bottom: 22%; flex-direction: column-reverse; align-items: flex-start; }
-.hud-callout-bottom .hud-line { width: 1px; height: 70px; background: linear-gradient(0deg, transparent, var(--accent)); margin-top: 0; align-self: center; }
-
-.hud-callout-top-right { right: 14%; top: 20%; align-items: center; }
-.hud-callout-top-right .hud-line { width: 100px; margin-top: 0; }
-
-.hud-callout-center {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  flex-direction: column;
-  align-items: center;
-}
-.hud-callout-center .hud-line { display: none; }
-.hud-callout-center .hud-box { text-align: center; border-left: 1px solid var(--accent); max-width: 360px; }
+/* HUD callouts now live inside the SVG (#hud-callouts-svg) so they
+   scale with the missile and the leader lines anchor on actual parts.
+   See index.html for the SVG-based callout markup. */
 
 /* ===== STAGE INDICATOR ===== */
 .stage-indicator {
   position: absolute;
-  bottom: 2rem;
+  bottom: 14vh;
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
+  font-size: clamp(1rem, 1.6vw, 1.4rem);
+  font-weight: 700;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--accent);
   white-space: nowrap;
   transition: opacity 0.3s ease;
   pointer-events: none;
   z-index: 12;
+  text-shadow: 0 0 14px var(--accent-glow);
 }
 
 /* ===== PROGRESS BAR ===== */
@@ -983,17 +903,6 @@ body {
 
   .footer-brand { text-align: center; }
 
-  /* HUD callouts — reposition + shrink for tablet */
-  .hud-callout-left { left: 2%; top: 8%; }
-  .hud-callout-right { right: 2%; top: 8%; }
-  .hud-callout-top { left: 5%; top: 3%; }
-  .hud-callout-bottom { left: 5%; bottom: 10%; }
-  .hud-callout-top-right { right: 2%; top: 3%; }
-  .hud-box { max-width: 180px; padding: 0.4rem 0.6rem; }
-  .hud-label { font-size: 0.55rem; }
-  .hud-detail { font-size: 0.5rem; }
-  .hud-line { width: 25px; }
-
   /* CTA */
   .cta-section { padding: 4rem 1.5rem; }
   .cta-section h2 { font-size: clamp(1.4rem, 4vw, 2rem); }
@@ -1081,18 +990,6 @@ body {
   .footer-logo { font-size: 1rem; }
   .footer-tagline { font-size: 0.65rem; }
 
-  /* HUD callouts — minimal on small screens */
-  .hud-callout-left { left: 3%; top: 5%; }
-  .hud-callout-right { right: 3%; top: 5%; }
-  .hud-callout-top { left: 3%; top: 2%; }
-  .hud-callout-bottom { left: 3%; bottom: 6%; }
-  .hud-callout-top-right { right: 3%; top: 2%; }
-  .hud-callout-center .hud-box { max-width: 220px; }
-  .hud-box { max-width: 150px; padding: 0.3rem 0.5rem; }
-  .hud-label { font-size: 0.5rem; letter-spacing: 0.1em; }
-  .hud-detail { font-size: 0.45rem; }
-  .hud-line { width: 15px; }
-
   .stage-indicator { font-size: 0.5rem; bottom: 0.5rem; }
   .progress-track { right: 0.4rem; height: 40vh; }
   .progress-label { font-size: 0.5rem; }
@@ -1113,8 +1010,6 @@ body {
 
   .specs-grid { grid-template-columns: 1fr; }
   .spec-card { padding: 1.2rem 0.6rem; }
-
-  .hud-callout { display: none; }
 }
 
 /* Landscape mobile — prevent hero from being too cramped */
@@ -1167,13 +1062,12 @@ body {
   }
 
   .stage-indicator {
-    bottom: calc(1.5rem + env(safe-area-inset-bottom));
+    bottom: calc(14vh + env(safe-area-inset-bottom));
   }
 }
 
 /* High DPI screens — sharper borders */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .hud-box,
   .spec-card,
   .hero-stats {
     border-width: 0.5px;
@@ -1202,7 +1096,7 @@ body {
   .scroll-indicator,
   .progress-track,
   .stage-indicator,
-  .hud-callouts {
+  #hud-callouts-svg {
     display: none !important;
   }
 

@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (prefersReducedMotion) {
     gsap.set('#cta-section', { opacity: 1, y: 0 });
-    gsap.set('#label-text-mask', { attr: { width: 160 } });
+    gsap.set('#label-text-mask', { attr: { width: 340 } });
     gsap.set('#progress-fill', { height: '100%' });
     gsap.set('.advantage-item', { opacity: 1, x: 0 });
     return;
@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
   gsap.set('#cta-section', { opacity: 0, y: 50 });
 
   // HUD callouts start hidden
-  gsap.set('.hud-callout', { opacity: 0, y: 15 });
+  gsap.set('#hud-callouts-svg > g', { opacity: 0, y: 15 });
 
 
   // ============================================================
@@ -378,8 +378,8 @@ document.addEventListener('DOMContentLoaded', () => {
   tl.to(el.bodyC, { x: 0, duration: 1, ease: 'elastic.out(1, 0.5)' }, 'stage1+=8.3');
 
   // HUD Callout — Stage 1
-  tl.to('#callout-stage1', { opacity: 1, y: 0, duration: 2, ease: 'power2.out' }, 'stage1+=6');
-  tl.to('#callout-stage1', { opacity: 0, y: -10, duration: 2, ease: 'power1.in' }, 'stage1+=12');
+  tl.to('#callout-stage1-svg', { opacity: 1, y: 0, duration: 2, ease: 'power2.out' }, 'stage1+=6');
+  tl.to('#callout-stage1-svg', { opacity: 0, y: -10, duration: 2, ease: 'power1.in' }, 'stage1+=12');
 
 
   // ============================================================
@@ -404,8 +404,8 @@ document.addEventListener('DOMContentLoaded', () => {
   tl.to(el.portFitting2, { rotation: 0, duration: 1, ease: 'elastic.out(1, 0.3)' }, 'stage2+=6');
 
   // HUD Callout — Stage 2
-  tl.to('#callout-stage2', { opacity: 1, y: 0, duration: 2, ease: 'power2.out' }, 'stage2+=2');
-  tl.to('#callout-stage2', { opacity: 0, y: -10, duration: 1.5, ease: 'power1.in' }, 'stage2+=6');
+  tl.to('#callout-stage2-svg', { opacity: 1, y: 0, duration: 2, ease: 'power2.out' }, 'stage2+=2');
+  tl.to('#callout-stage2-svg', { opacity: 0, y: -10, duration: 1.5, ease: 'power1.in' }, 'stage2+=6');
 
 
   // ============================================================
@@ -438,8 +438,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 'stage3+=5.5');
 
   // HUD Callout — Stage 3
-  tl.to('#callout-stage3', { opacity: 1, y: 0, duration: 2, ease: 'power2.out' }, 'stage3+=2');
-  tl.to('#callout-stage3', { opacity: 0, y: -10, duration: 1.5, ease: 'power1.in' }, 'stage3+=7');
+  tl.to('#callout-stage3-svg', { opacity: 1, y: 0, duration: 2, ease: 'power2.out' }, 'stage3+=2');
+  tl.to('#callout-stage3-svg', { opacity: 0, y: -10, duration: 1.5, ease: 'power1.in' }, 'stage3+=7');
 
 
   // ============================================================
@@ -456,8 +456,8 @@ document.addEventListener('DOMContentLoaded', () => {
   tl.to(el.skidFrame, { y: 0, duration: 1.5, ease: 'elastic.out(1, 0.5)' }, 'stage4+=5.3');
 
   // HUD Callout — Stage 4
-  tl.to('#callout-stage4', { opacity: 1, y: 0, duration: 2, ease: 'power2.out' }, 'stage4+=2');
-  tl.to('#callout-stage4', { opacity: 0, y: 10, duration: 1.5, ease: 'power1.in' }, 'stage4+=7');
+  tl.to('#callout-stage4-svg', { opacity: 1, y: 0, duration: 2, ease: 'power2.out' }, 'stage4+=2');
+  tl.to('#callout-stage4-svg', { opacity: 0, y: 10, duration: 1.5, ease: 'power1.in' }, 'stage4+=7');
 
   // Fade out tech overlays as assembly completes
   if (!isMobile) {
@@ -542,8 +542,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 'stage5+=39');
 
   // HUD Callout — Stage 5 (stays longer since this is the big stage)
-  tl.to('#callout-stage5', { opacity: 1, y: 0, duration: 3, ease: 'power2.out' }, 'stage5+=5');
-  tl.to('#callout-stage5', { opacity: 0, y: -10, duration: 3, ease: 'power1.in' }, 'stage5+=35');
+  tl.to('#callout-stage5-svg', { opacity: 1, y: 0, duration: 3, ease: 'power2.out' }, 'stage5+=5');
+  tl.to('#callout-stage5-svg', { opacity: 0, y: -10, duration: 3, ease: 'power1.in' }, 'stage5+=35');
 
 
   // ============================================================
@@ -615,8 +615,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 'stage6+=12');
 
   // HUD Callout — Stage 6 (big highlight callout)
-  tl.to('#callout-stage6', { opacity: 1, y: 0, scale: 1, duration: 3, ease: 'power2.out' }, 'stage6+=9');
-  tl.to('#callout-stage6', { opacity: 0, duration: 2, ease: 'power1.in' }, 'stage6+=13');
+  tl.to('#callout-stage6-svg', { opacity: 1, y: 0, scale: 1, duration: 3, ease: 'power2.out' }, 'stage6+=9');
+  tl.to('#callout-stage6-svg', { opacity: 0, duration: 2, ease: 'power1.in' }, 'stage6+=13');
 
 
   // ============================================================
@@ -630,7 +630,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 'stage7');
 
   tl.to('#label-text-mask', {
-    attr: { width: 160 },
+    attr: { width: 340 },
     duration: 4, ease: 'power1.inOut',
   }, 'stage7+=0.5');
 

@@ -79,63 +79,6 @@
   <!-- ===== ASSEMBLY VIEWPORT (pinned during scroll) ===== -->
   <section id="assembly-viewport" class="assembly-section">
 
-    <!-- HUD Callout overlays — positioned via CSS, animated via GSAP -->
-    <div id="hud-callouts" class="hud-callouts">
-      <!-- Stage 1: Pipe Formation -->
-      <div class="hud-callout hud-callout-left" id="callout-stage1" aria-hidden="true">
-        <div class="hud-line"></div>
-        <div class="hud-box">
-          <span class="hud-label">MODULAR BODY</span>
-          <span class="hud-detail">3-Section Design &bull; 7" High-Pressure Bore</span>
-        </div>
-      </div>
-
-      <!-- Stage 2: Pump Ports -->
-      <div class="hud-callout hud-callout-top" id="callout-stage2" aria-hidden="true">
-        <div class="hud-line"></div>
-        <div class="hud-box">
-          <span class="hud-label">SPLIT-STREAM PORTS</span>
-          <span class="hud-detail">Sand-Laden &amp; Clean Fluid Separation</span>
-        </div>
-      </div>
-
-      <!-- Stage 3: Valves -->
-      <div class="hud-callout hud-callout-right" id="callout-stage3" aria-hidden="true">
-        <div class="hud-line"></div>
-        <div class="hud-box">
-          <span class="hud-label">API 6A FLANGES</span>
-          <span class="hud-detail">DC-15 Connections &bull; Zero Hammer Unions</span>
-        </div>
-      </div>
-
-      <!-- Stage 4: Skid Frame -->
-      <div class="hud-callout hud-callout-bottom" id="callout-stage4" aria-hidden="true">
-        <div class="hud-line"></div>
-        <div class="hud-box">
-          <span class="hud-label">RAPID DEPLOY SKID</span>
-          <span class="hud-detail">4-Pump 5-Skid Assembly &bull; Modular Config</span>
-        </div>
-      </div>
-
-      <!-- Stage 5: Hoses -->
-      <div class="hud-callout hud-callout-top-right" id="callout-stage5" aria-hidden="true">
-        <div class="hud-line"></div>
-        <div class="hud-box">
-          <span class="hud-label">HYDRAULIC LINES</span>
-          <span class="hud-detail">Dual Low-Pressure Redundancy &bull; 56 Actuators</span>
-        </div>
-      </div>
-
-      <!-- Stage 6: Final Lock -->
-      <div class="hud-callout hud-callout-center" id="callout-stage6" aria-hidden="true">
-        <div class="hud-line"></div>
-        <div class="hud-box hud-box-highlight">
-          <span class="hud-label">SYSTEM LOCKED</span>
-          <span class="hud-detail">15,000 PSI &bull; 135+ BPM &bull; Mission Ready</span>
-        </div>
-      </div>
-    </div>
-
     <svg id="missile-svg"
          xmlns="http://www.w3.org/2000/svg"
          viewBox="0 0 1200 500"
@@ -460,7 +403,7 @@
 
         <!-- Label text clip mask -->
         <clipPath id="labelTextClip">
-          <rect id="label-text-mask" x="520" y="282" width="0" height="24"/>
+          <rect id="label-text-mask" x="432" y="264" width="0" height="48"/>
         </clipPath>
       </defs>
 
@@ -471,9 +414,6 @@
       <ellipse cx="600" cy="360" rx="350" ry="12" fill="#39FF14" opacity="0.04" filter="url(#ambientGlow)"/>
       <!-- Overhead light cone (subtle top-down illumination) -->
       <ellipse cx="600" cy="220" rx="200" ry="80" fill="white" opacity="0.008"/>
-      <!-- Side atmospheric haze -->
-      <rect x="0" y="180" width="1200" height="140" fill="white" opacity="0.005"/>
-
       <!-- ===== Energy scan line (animated via CSS) ===== -->
       <g id="energy-scanline" opacity="0.06">
         <line x1="130" y1="250" x2="1070" y2="250" stroke="#39FF14" stroke-width="0.5"/>
@@ -908,32 +848,32 @@
       <!-- ===== COMPONENT 14: Label / Markings Plate ===== -->
       <g id="label-plate" filter="url(#shadowFilterLight)">
         <!-- Plate background (glass-like panel) -->
-        <rect x="519" y="281" width="162" height="28" rx="2" ry="2"
-              fill="#080a0e" stroke="#39FF14" stroke-width="0.6" opacity="0.95"/>
+        <rect x="430" y="262" width="340" height="56" rx="3" ry="3"
+              fill="#080a0e" stroke="#39FF14" stroke-width="0.8" opacity="0.95"/>
         <!-- Inner subtle gradient -->
-        <rect x="520" y="282" width="160" height="26" rx="1.5" ry="1.5"
+        <rect x="432" y="264" width="336" height="52" rx="2" ry="2"
               fill="rgba(57,255,20,0.02)"/>
         <!-- Inner border -->
-        <rect x="522" y="284" width="156" height="22" rx="1" ry="1"
-              fill="none" stroke="#39FF14" stroke-width="0.3" opacity="0.25"/>
+        <rect x="436" y="268" width="328" height="44" rx="1.5" ry="1.5"
+              fill="none" stroke="#39FF14" stroke-width="0.4" opacity="0.25"/>
         <!-- Corner accents (brighter, longer) -->
-        <line x1="519" y1="285" x2="527" y2="285" stroke="#39FF14" stroke-width="1" opacity="0.6"/>
-        <line x1="519" y1="285" x2="519" y2="293" stroke="#39FF14" stroke-width="1" opacity="0.6"/>
-        <line x1="681" y1="285" x2="673" y2="285" stroke="#39FF14" stroke-width="1" opacity="0.6"/>
-        <line x1="681" y1="285" x2="681" y2="293" stroke="#39FF14" stroke-width="1" opacity="0.6"/>
+        <line x1="430" y1="268" x2="446" y2="268" stroke="#39FF14" stroke-width="1.2" opacity="0.6"/>
+        <line x1="430" y1="268" x2="430" y2="284" stroke="#39FF14" stroke-width="1.2" opacity="0.6"/>
+        <line x1="770" y1="268" x2="754" y2="268" stroke="#39FF14" stroke-width="1.2" opacity="0.6"/>
+        <line x1="770" y1="268" x2="770" y2="284" stroke="#39FF14" stroke-width="1.2" opacity="0.6"/>
         <!-- Bottom corner accents -->
-        <line x1="519" y1="305" x2="527" y2="305" stroke="#39FF14" stroke-width="0.6" opacity="0.3"/>
-        <line x1="519" y1="305" x2="519" y2="298" stroke="#39FF14" stroke-width="0.6" opacity="0.3"/>
-        <line x1="681" y1="305" x2="673" y2="305" stroke="#39FF14" stroke-width="0.6" opacity="0.3"/>
-        <line x1="681" y1="305" x2="681" y2="298" stroke="#39FF14" stroke-width="0.6" opacity="0.3"/>
+        <line x1="430" y1="312" x2="446" y2="312" stroke="#39FF14" stroke-width="0.8" opacity="0.3"/>
+        <line x1="430" y1="312" x2="430" y2="298" stroke="#39FF14" stroke-width="0.8" opacity="0.3"/>
+        <line x1="770" y1="312" x2="754" y2="312" stroke="#39FF14" stroke-width="0.8" opacity="0.3"/>
+        <line x1="770" y1="312" x2="770" y2="298" stroke="#39FF14" stroke-width="0.8" opacity="0.3"/>
         <!-- Text content (clipped for print-on animation) -->
         <g clip-path="url(#labelTextClip)">
-          <text x="530" y="295" font-family="Inter, sans-serif" font-size="7"
-                letter-spacing="2" fill="#e8ecf4" font-weight="700">
+          <text x="450" y="292" font-family="Inter, sans-serif" font-size="15"
+                letter-spacing="2.5" fill="#e8ecf4" font-weight="700">
             FLX LARGE BORE MISSILE
           </text>
-          <text x="530" y="304" font-family="'JetBrains Mono', monospace" font-size="5"
-                letter-spacing="1.2" fill="#39FF14" opacity="0.7">
+          <text x="450" y="308" font-family="'JetBrains Mono', monospace" font-size="9"
+                letter-spacing="1.5" fill="#39FF14" opacity="0.75">
             P/N: LBM-2024  |  API 6A  |  DC-15
           </text>
         </g>
@@ -1013,8 +953,72 @@
         <line x1="930" y1="170" x2="930" y2="188" stroke="#00ccff" stroke-width="0.3" opacity="0.2"/>
       </g>
 
-      <!-- ===== VIGNETTE (focus center) ===== -->
-      <rect width="1200" height="500" fill="url(#vignetteGrad)" pointer-events="none"/>
+      <!-- ===== HUD CALLOUTS (in-SVG, scale with the missile, leader lines anchor to the actual part) ===== -->
+      <g id="hud-callouts-svg">
+
+        <!-- Stage 1: MODULAR BODY (anchor: body center) -->
+        <g id="callout-stage1-svg" opacity="0">
+          <line x1="40" y1="105" x2="40" y2="155" stroke="#39FF14" stroke-width="1.8"/>
+          <rect x="40" y="105" width="270" height="50" rx="2" ry="2" fill="rgba(10,12,16,0.92)" stroke="#39FF14" stroke-width="0.5"/>
+          <text x="52" y="126" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="700" letter-spacing="1.4" fill="#39FF14">MODULAR BODY</text>
+          <text x="52" y="145" font-family="Inter, sans-serif" font-size="10" fill="#909EAE">3-Section &#183; 7&quot; High-Pressure Bore</text>
+          <line x1="310" y1="155" x2="595" y2="245" stroke="#39FF14" stroke-width="0.9" opacity="0.8"/>
+          <circle cx="600" cy="245" r="4" fill="#39FF14" opacity="0.9"/>
+          <circle cx="600" cy="245" r="8" fill="none" stroke="#39FF14" stroke-width="0.7" opacity="0.4"/>
+        </g>
+
+        <!-- Stage 2: SPLIT-STREAM PORTS (anchor: port-fitting-1 at ~290,200) -->
+        <g id="callout-stage2-svg" opacity="0">
+          <rect x="170" y="20" width="290" height="50" rx="2" ry="2" fill="rgba(10,12,16,0.92)" stroke="#39FF14" stroke-width="0.5"/>
+          <line x1="170" y1="20" x2="170" y2="70" stroke="#39FF14" stroke-width="1.8"/>
+          <text x="182" y="41" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="700" letter-spacing="1.4" fill="#39FF14">SPLIT-STREAM PORTS</text>
+          <text x="182" y="60" font-family="Inter, sans-serif" font-size="10" fill="#909EAE">Sand-Laden &amp; Clean Fluid Separation</text>
+          <line x1="285" y1="70" x2="290" y2="195" stroke="#39FF14" stroke-width="0.9" opacity="0.8"/>
+          <circle cx="290" cy="200" r="4" fill="#39FF14" opacity="0.9"/>
+          <circle cx="290" cy="200" r="8" fill="none" stroke="#39FF14" stroke-width="0.7" opacity="0.4"/>
+        </g>
+
+        <!-- Stage 3: API 6A FLANGES (anchor: coupler-rear at ~1050,250) -->
+        <g id="callout-stage3-svg" opacity="0">
+          <rect x="890" y="20" width="290" height="50" rx="2" ry="2" fill="rgba(10,12,16,0.92)" stroke="#39FF14" stroke-width="0.5"/>
+          <line x1="1180" y1="20" x2="1180" y2="70" stroke="#39FF14" stroke-width="1.8"/>
+          <text x="902" y="41" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="700" letter-spacing="1.4" fill="#39FF14">API 6A FLANGES</text>
+          <text x="902" y="60" font-family="Inter, sans-serif" font-size="10" fill="#909EAE">DC-15 Connections &#183; Zero Hammer Unions</text>
+          <line x1="1050" y1="70" x2="1050" y2="240" stroke="#39FF14" stroke-width="0.9" opacity="0.8"/>
+          <circle cx="1050" cy="245" r="4" fill="#39FF14" opacity="0.9"/>
+          <circle cx="1050" cy="245" r="8" fill="none" stroke="#39FF14" stroke-width="0.7" opacity="0.4"/>
+        </g>
+
+        <!-- Stage 4: RAPID DEPLOY SKID (anchor: skid-frame center at ~600,320) -->
+        <g id="callout-stage4-svg" opacity="0">
+          <rect x="430" y="425" width="340" height="50" rx="2" ry="2" fill="rgba(10,12,16,0.92)" stroke="#39FF14" stroke-width="0.5"/>
+          <line x1="430" y1="425" x2="430" y2="475" stroke="#39FF14" stroke-width="1.8"/>
+          <text x="442" y="446" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="700" letter-spacing="1.4" fill="#39FF14">RAPID DEPLOY SKID</text>
+          <text x="442" y="465" font-family="Inter, sans-serif" font-size="10" fill="#909EAE">4-Pump 5-Skid Assembly &#183; Modular</text>
+          <line x1="600" y1="425" x2="600" y2="335" stroke="#39FF14" stroke-width="0.9" opacity="0.8"/>
+          <circle cx="600" cy="330" r="4" fill="#39FF14" opacity="0.9"/>
+          <circle cx="600" cy="330" r="8" fill="none" stroke="#39FF14" stroke-width="0.7" opacity="0.4"/>
+        </g>
+
+        <!-- Stage 5: HYDRAULIC LINES (anchor: hose junction at center top of bore) -->
+        <g id="callout-stage5-svg" opacity="0">
+          <rect x="610" y="20" width="290" height="50" rx="2" ry="2" fill="rgba(10,12,16,0.92)" stroke="#39FF14" stroke-width="0.5"/>
+          <line x1="610" y1="20" x2="610" y2="70" stroke="#39FF14" stroke-width="1.8"/>
+          <text x="622" y="41" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="700" letter-spacing="1.4" fill="#39FF14">HYDRAULIC LINES</text>
+          <text x="622" y="60" font-family="Inter, sans-serif" font-size="10" fill="#909EAE">Dual Low-Pressure &#183; 56 Actuators</text>
+          <line x1="755" y1="70" x2="605" y2="170" stroke="#39FF14" stroke-width="0.9" opacity="0.8"/>
+          <circle cx="600" cy="175" r="4" fill="#39FF14" opacity="0.9"/>
+          <circle cx="600" cy="175" r="8" fill="none" stroke="#39FF14" stroke-width="0.7" opacity="0.4"/>
+        </g>
+
+        <!-- Stage 6: SYSTEM LOCKED (centered, no leader line — final reveal callout) -->
+        <g id="callout-stage6-svg" opacity="0">
+          <rect x="370" y="20" width="460" height="60" rx="2" ry="2" fill="rgba(10,12,16,0.95)" stroke="#39FF14" stroke-width="1"/>
+          <text x="600" y="46" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="700" letter-spacing="2.5" fill="#39FF14" text-anchor="middle">SYSTEM LOCKED</text>
+          <text x="600" y="68" font-family="Inter, sans-serif" font-size="11" fill="#909EAE" text-anchor="middle">15,000 PSI &#183; 135+ BPM &#183; Mission Ready</text>
+        </g>
+
+      </g>
 
     </svg>
 
