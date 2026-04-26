@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== CONFIG =====
   const isMobile = window.innerWidth < 768;
   const isSmallMobile = window.innerWidth < 400;
-  const TOTAL_SCROLL = isMobile ? '250vh' : '750vh';
+  const TOTAL_SCROLL = isMobile ? '250vh' : '1200vh';
   const SCRUB_SMOOTHING = isMobile ? 0.5 : 0.8;
 
 
@@ -694,6 +694,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const specNumbers = document.querySelectorAll('.spec-number');
 
   if (specNumbers.length > 0) {
+    // Set initial state explicitly so the entrance tween is deterministic
+    // even if the section was offscreen when the script first ran.
+    gsap.set('.spec-card', { y: 40, opacity: 0 });
+
     ScrollTrigger.create({
       trigger: '#specs-section',
       start: 'top 75%',
@@ -712,9 +716,10 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         });
 
-        // Animate spec cards in
-        gsap.from('.spec-card', {
-          y: 40, opacity: 0,
+        // Animate spec cards in (fromTo with explicit values — guarantees
+        // every card reaches opacity:1 regardless of computed-style state)
+        gsap.to('.spec-card', {
+          y: 0, opacity: 1,
           duration: 0.8,
           stagger: 0.15,
           ease: 'power2.out',
